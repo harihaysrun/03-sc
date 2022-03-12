@@ -5,9 +5,9 @@ router.get('/', function(req,res) {
     res.render('landing/index')
 })
 
-router.get('/products', function(req,res) {
-    res.render('products/index')
-})
+// router.get('/products', function(req,res) {
+//     res.render('products/index')
+// })
 
 
 module.exports = router;

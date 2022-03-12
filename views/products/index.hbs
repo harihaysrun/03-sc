@@ -4,6 +4,36 @@
 
     <h1>All Kuihs here!</h1>
 
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Ingredients</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.cost}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.ingredients}}</td>
+            <td>
+                <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
+                <a href="/products/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
+                <a href="/products/{{this.id}}/delete" class="btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
 {{/block}}
 
 {{/extends}}
