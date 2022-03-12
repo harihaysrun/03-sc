@@ -29,7 +29,8 @@ exports.up = function(db) {
     },
     "cost":"int",
     "description":"text",
-    "ingredients":"text"
+    "ingredients":"text",
+    "expiry":"int"
   });
 };
 

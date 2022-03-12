@@ -44,6 +44,11 @@ const createProductForm = function(categories, tags){
             'required':true,
             'errorAfterField':true
         }),
+        "expiry":fields.string({
+            'required':true,
+            'errorAfterField':true,
+            'validators': [validators.integer(), validators.min(2022)]
+        })
     })
 }
 
