@@ -3,6 +3,6 @@
       "driver": "mysql",
       "user": "foo",
       "password":"bar",
-      "database":"matcha"
+      "database":"sunscreen"
     }
   }

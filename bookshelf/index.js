@@ -3,7 +3,7 @@ const knex = require('knex')({
     'connection':{
         'user':'foo',
         'password': 'bar',
-        'database': 'matcha'
+        'database': 'sunscreen'
     }
 });
 
