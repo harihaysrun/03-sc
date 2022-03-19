@@ -43,10 +43,12 @@ app.use(function (req, res, next) {
 
 const homePage = require('./routes/landing')
 const productRoutes = require('./routes/products')
+const userRoutes = require('./routes/users');
 
 async function main() {
   app.use('/', homePage);
   app.use('/products', productRoutes);
+  app.use('/users', userRoutes);
 }
 
 main();
