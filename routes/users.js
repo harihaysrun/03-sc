@@ -1,10 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const crypto = require('crypto');
 
 const { User } = require('../models');
 const {bootstrapField, createRegistrationForm, createLoginForm } = require('../forms');
 
 // const productDataLayer = require('../dal/products')
+
+
+function getHashedPassword(password){
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    return hash;
+}
 
 router.get('/register', function(req,res){
 
@@ -27,7 +35,7 @@ router.post('/register', function(req,res) {
                 'address_line_2': form.data.address_line_2,
                 'postal_code': form.data.postal_code,
                 'phone_number': form.data.phone_number,
-                'password': form.data.password,
+                'password': getHashedPassword(form.data.password),
             });
             await user.save();
             req.flash("success_messages", "You have signed up successfully!");
@@ -63,7 +71,7 @@ router.post('/login', async function(req, res) {
                 req.flash("error_messages", "Sorry, your account or password is incorrect")
                 res.redirect('/users/login');
             } else {
-                if (user.get('password') === form.data.password) {
+                if (user.get('password') === getHashedPassword(form.data.password)) {
 
                     req.session.user = {
                         id: user.get('id'),
