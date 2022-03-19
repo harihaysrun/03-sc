@@ -8,7 +8,7 @@ const productDataLayer = require('../dal/products')
 
 router.get('/', async function(req,res){
     let products = await Product.collection().fetch({
-        withRelated:['brand', 'type', 'skinTypes']
+        withRelated:['brand', 'type', 'skinTypes', 'status']
     });
     res.render('products/index',{
         'products': products.toJSON()
@@ -20,8 +20,9 @@ router.get('/create', async function(req,res){
     const allBrands = await productDataLayer.getAllBrands();
     const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
+    const allStatus = await productDataLayer.getAllStatus();
 
-    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes, allStatus);
 
     res.render('products/create',{
         'form': productForm.toHTML(bootstrapField)
@@ -33,8 +34,9 @@ router.post('/create', async function(req,res){
     const allBrands = await productDataLayer.getAllBrands();
     const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
+    const allStatus = await productDataLayer.getAllStatus();
 
-    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes, allStatus);
     
     productForm.handle(req,{
         'success':async function(form){
@@ -46,6 +48,7 @@ router.post('/create', async function(req,res){
             newProduct.set('description', form.data.description);
             newProduct.set('ingredients', form.data.ingredients);
             newProduct.set('expiry', form.data.expiry);
+            newProduct.set('status_id', form.data.status_id);
             await newProduct.save();
 
             // console.log(form.data.skin_types)
@@ -72,14 +75,15 @@ router.get('/:product_id/update', async function(req,res){
         'id':productId
     }).fetch({
         require:true,
-        withRelated:['type', 'skinTypes']
+        withRelated:['type', 'skinTypes', 'status']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
     const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
+    const allStatus = await productDataLayer.getAllStatus();
 
-    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes, allStatus);
 
     productForm.fields.brand_id.value = product.get('brand_id');
     productForm.fields.name.value = product.get('name');
@@ -88,6 +92,7 @@ router.get('/:product_id/update', async function(req,res){
     productForm.fields.description.value = product.get('description');
     productForm.fields.ingredients.value = product.get('ingredients');
     productForm.fields.expiry.value = product.get('expiry');
+    productForm.fields.status_id.value = product.get('status_id');
 
    const selectedSkinTypes = await product.related('skinTypes').pluck('id');
    productForm.fields.skin_types.value = selectedSkinTypes;
@@ -105,14 +110,15 @@ router.post('/:product_id/update', async function(req,res){
         'id': req.params.product_id
     }).fetch({
         require: true,
-        withRelated:['type', 'skinTypes']
+        withRelated:['type', 'skinTypes', 'status']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
     const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
+    const allStatus = await productDataLayer.getAllStatus();
 
-    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes, allStatus);
     
     productForm.handle(req,{
         'success':async function(form){
@@ -123,6 +129,7 @@ router.post('/:product_id/update', async function(req,res){
             product.set('description', form.data.description);
             product.set('ingredients', form.data.ingredients);
             product.set('expiry', form.data.expiry);
+            product.set('status_id', form.data.status_id);
             // product.set(form.data);
             product.save();
 

@@ -1,4 +1,4 @@
-const { Product, Brand, Type, SkinType  } = require('../models');
+const { Product, Brand, Type, SkinType, Status  } = require('../models');
 
 async function getAllBrands(){
     
@@ -30,4 +30,14 @@ async function getAllSkinTypes(){
 
 }
 
-module.exports = { getAllBrands, getAllTypes, getAllSkinTypes }
+async function getAllStatus(){
+    
+    const allStatus = await Status.fetchAll().map(function(category){
+        return [ category.get('id'), category.get('name') ]
+    })
+
+    return allStatus;
+
+}
+
+module.exports = { getAllBrands, getAllTypes, getAllSkinTypes, getAllStatus }

@@ -10,7 +10,10 @@ const Product = bookshelf.model('Product',{
     },
     skinTypes(){
         return this.belongsToMany('SkinType')
-    }
+    },
+    status(){
+        return this.belongsTo('Status')
+    },
 })
 
 const Brand = bookshelf.model('Brand',{
@@ -34,5 +37,12 @@ const SkinType = bookshelf.model('SkinType',{
     }
 })
 
+const Status = bookshelf.model('Status',{
+    tableName:'status',
+    products(){
+        return this.hasMany('Product')
+    }
+})
 
-module.exports = { Product, Brand, Type, SkinType }
+
+module.exports = { Product, Brand, Type, SkinType, Status }

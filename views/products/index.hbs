@@ -4,6 +4,8 @@
 
     <h1>All sunscreens here!</h1>
 
+    <a href="/products/create" class="btn btn-primary">Add New Sunscreen</a>
+
     
 <table class="table">
     <thead>
@@ -17,6 +19,7 @@
             <th>Skin Types</th>
             <th>Ingredients</th>
             <th>Expiry</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,7 @@
             </td>
             <td>{{this.ingredients}}</td>
             <td>{{this.expiry}}</td>
+            <td>{{this.status.name}}</td>
             <td>
                 <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
                 <a href="/products/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
