@@ -1,0 +1,18 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Deleting {{user.username}}</h1>
+
+    <form method="POST">
+        <div class="alert alert-danger">
+            <p>Are you sure you want to delete {{user.username}}?</p>
+            <input type="submit" value="Yes" class="btn btn-primary"/ >
+            <a href="/products">No</a>
+        </div>
+    </form>
+
+
+{{/block}}
+
+{{/extends}}

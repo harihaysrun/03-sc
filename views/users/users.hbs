@@ -1,0 +1,30 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Users</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each user}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.username}}</td>
+                <td>
+                    <a href="/users/{{this.id}}/delete" class="btn-sm btn-danger">Remove User</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+{{/block}}
+
+{{/extends}}

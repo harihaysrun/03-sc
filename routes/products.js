@@ -4,7 +4,8 @@ const router = express.Router();
 const { Product, Brand, SkinType } = require('../models');
 const {bootstrapField, createProductForm } = require('../forms');
 
-const productDataLayer = require('../dal/products')
+const productDataLayer = require('../dal/products');
+const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', async function(req,res){
     let products = await Product.collection().fetch({
@@ -15,7 +16,7 @@ router.get('/', async function(req,res){
     })
 });
 
-router.get('/create', async function(req,res){
+router.get('/create', checkIfAuthenticated, async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
     const allCountries = await productDataLayer.getAllCountries();
@@ -28,9 +29,10 @@ router.get('/create', async function(req,res){
     res.render('products/create',{
         'form': productForm.toHTML(bootstrapField)
     })
+    
 });
 
-router.post('/create', async function(req,res){
+router.post('/create', checkIfAuthenticated, async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
     const allCountries = await productDataLayer.getAllCountries();
@@ -73,7 +75,7 @@ router.post('/create', async function(req,res){
     })
 });
 
-router.get('/:product_id/update', async function(req,res){
+router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
 
     const productId = req.params.product_id;
     const product = await Product.where({
@@ -111,7 +113,7 @@ router.get('/:product_id/update', async function(req,res){
     
 });
 
-router.post('/:product_id/update', async function(req,res){
+router.post('/:product_id/update', checkIfAuthenticated, async function(req,res){
     
     const product = await Product.where({
         'id': req.params.product_id
@@ -167,7 +169,7 @@ router.post('/:product_id/update', async function(req,res){
     })
 });
 
-router.get('/:product_id/delete', async function(req,res){
+router.get('/:product_id/delete', checkIfAuthenticated, async function(req,res){
 
     const productId = req.params.product_id;
     const product = await Product.where({
@@ -182,7 +184,7 @@ router.get('/:product_id/delete', async function(req,res){
     
 });
 
-router.post('/:product_id/delete', async function(req,res){
+router.post('/:product_id/delete', checkIfAuthenticated, async function(req,res){
 
     const productId = req.params.product_id;
     const product = await Product.where({

@@ -9,9 +9,43 @@
   </head>
   <body>
 
-    <h1>Hello, world!</h1>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+    {{#if user}}
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/products">Products</a>
+            <a class="nav-link" href="/users">Users</a>
+            <a class="nav-link" href="/orders">Orders</a>
+            <a class="nav-link" href="/enquiries">Enquiries</a>
+          </div>
+        </div>
+        
+        <div class="ml-auto">
+          <a href="/users/profile" class="mr-3">{{user.username}}</a>
+          <a href="/users/logout" class="btn btn-primary">Log out</a>
+        </div>
+
+    {{else}}
+
+        <a class="navbar-brand" href="/">Home</a>
+        
+        <div class="ml-auto">
+          <a href="/users/register" class="btn btn-primary">Register</a>
+          <a href="/users/login" class="btn btn-primary">Login</a>
+        </div>
+
+    {{/if}}
+
+      </div>
+    </nav>
     
-    <div class="container"> 
+    <div class="container pt-5"> 
       {{#if success_messages }}        
         {{#each success_messages}}
           <div class="alert alert-success">

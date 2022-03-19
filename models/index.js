@@ -54,7 +54,6 @@ const Status = bookshelf.model('Status',{
     }
 })
 
-
 const User = bookshelf.model('User',{
     tableName:'users'
 })

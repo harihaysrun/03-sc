@@ -41,6 +41,11 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(function(req, res, next){
+  res.locals.user = req.session.user;
+  next();
+});
+
 const homePage = require('./routes/landing')
 const productRoutes = require('./routes/products')
 const userRoutes = require('./routes/users');

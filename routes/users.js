@@ -5,7 +5,8 @@ const crypto = require('crypto');
 const { User } = require('../models');
 const {bootstrapField, createRegistrationForm, createLoginForm } = require('../forms');
 
-// const productDataLayer = require('../dal/products')
+const userDataLayer = require('../dal/users');
+const { checkIfAuthenticated } = require('../middlewares');
 
 
 function getHashedPassword(password){
@@ -13,6 +14,50 @@ function getHashedPassword(password){
     const hash = sha256.update(password).digest('base64');
     return hash;
 }
+
+
+router.get('/', checkIfAuthenticated, async function(req,res){
+
+    const allUsers = await userDataLayer.getAllUsers();
+    console.log(allUsers)
+    res.render('users/users',{
+        'user': allUsers.toJSON()
+    })
+
+})
+
+router.get('/:user_id/delete', checkIfAuthenticated, async function(req,res){
+
+    const userId = req.params.user_id;
+    const user = await User.where({
+        'id':userId
+    }).fetch({
+        require:true,
+    });
+
+    res.render('users/delete', {
+        'user': user.toJSON()
+    })
+    
+});
+
+router.post('/:user_id/delete', checkIfAuthenticated, async function(req,res){
+
+    const userId = req.params.user_id;
+    const user = await User.where({
+        'id':userId
+    }).fetch({
+        require:true,
+    })
+    
+    await user.destroy();
+
+
+    req.flash("success_messages", `You have removed ${user.username}`);
+    res.redirect('/users');
+    
+});
+
 
 router.get('/register', function(req,res){
 
@@ -111,7 +156,6 @@ router.get('/profile', async function(req, res) {
     }
 
 })
-
 
 
 router.get('/logout', function(req, res) {
