@@ -61,6 +61,8 @@ router.post('/create', async function(req,res){
                 await newProduct.skinTypes().attach(selectedSkinTypes);
             }
 
+            req.flash("success_messages", `New product ${newProduct.get('name')} has been created`);
+
             res.redirect('/products');
         },
         'error':function(form){
@@ -99,8 +101,8 @@ router.get('/:product_id/update', async function(req,res){
     productForm.fields.expiry.value = product.get('expiry');
     productForm.fields.status_id.value = product.get('status_id');
 
-   const selectedSkinTypes = await product.related('skinTypes').pluck('id');
-   productForm.fields.skin_types.value = selectedSkinTypes;
+    const selectedSkinTypes = await product.related('skinTypes').pluck('id');
+    productForm.fields.skin_types.value = selectedSkinTypes;
 
     res.render('products/update', {
         'form': productForm.toHTML(bootstrapField),
@@ -151,6 +153,8 @@ router.post('/:product_id/update', async function(req,res){
 
             await product.skinTypes().detach(toRemove);
             await product.skinTypes().attach(skinTypeIds)
+
+            req.flash("success_messages", `${product.get('name')} has been successfully edited`);
 
             res.redirect('/products');
         },
