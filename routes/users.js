@@ -87,5 +87,29 @@ router.post('/login', async function(req, res) {
     })
 })
 
+router.get('/profile', async function(req, res) {
+    if (req.session.user) {
+        const user = await User.where({
+            'id': req.session.user.id
+        }).fetch({
+            require: true
+        })
+        res.render('users/profile',{
+            'user': user.toJSON()
+        })
+    } else {
+        req.flash('error_messages', 'Please log in to view this page');
+        res.redirect('/users/login');
+    }
+
+})
+
+
+
+router.get('/logout', function(req, res) {
+    req.session.user = null;
+    req.flash('success_messages', "You have successfully logged out");
+    res.redirect('/users/login');
+})
 
 module.exports = router;

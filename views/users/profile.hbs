@@ -1,0 +1,17 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Hi, {{user.username}}!</h1>
+
+    <ul>
+        <li>Name: {{user.first_name}} {{user.first_name}}</li>
+        <li>Address: {{user.address_line_1}}, {{user.address_line_2}}, Singapore {{user.postal_code}}</li>
+        <li>Phone number: {{user.phone_number}}</li>
+    </ul>
+
+    <a href="/users/logout" class="btn btn-primary">Log out</a>
+
+{{/block}}
+
+{{/extends}}
