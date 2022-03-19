@@ -126,6 +126,7 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             newProduct.set('ingredients', form.data.ingredients);
             newProduct.set('expiry', form.data.expiry);
             newProduct.set('status_id', form.data.status_id);
+            newProduct.set('stock_no', form.data.stock_no);
             await newProduct.save();
 
             // console.log(form.data.skin_types)
@@ -175,6 +176,7 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
     productForm.fields.ingredients.value = product.get('ingredients');
     productForm.fields.expiry.value = product.get('expiry');
     productForm.fields.status_id.value = product.get('status_id');
+    productForm.fields.stock_no.value = product.get('stock_no');
     productForm.fields.image_url.value = product.get('image_url');
 
     const selectedSkinTypes = await product.related('skinTypes').pluck('id');
@@ -221,6 +223,7 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
             product.set('ingredients', form.data.ingredients);
             product.set('expiry', form.data.expiry);
             product.set('status_id', form.data.status_id);
+            product.set('stock_no', form.data.stock_no);
             product.set('image_url', form.data.image_url);
             // product.set(form.data);
             product.save();

@@ -23,6 +23,13 @@ async function getAllBrands(){
 
 }
 
+async function getBrands(){
+    
+    const allBrands = await Brand.collection().fetch();
+    return allBrands;
+
+}
+
 async function getAllCountries(){
     
     const allCountries = await Country.fetchAll().map(function(category){
@@ -63,4 +70,4 @@ async function getAllStatus(){
 
 }
 
-module.exports = { getProductByID, getAllBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }
+module.exports = { getProductByID, getAllBrands, getBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }

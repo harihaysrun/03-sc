@@ -1,0 +1,21 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Brands</h1>
+
+    <a href="/brands/add" class="btn btn-primary">Add New Brand</a>
+
+    <ol>
+        {{#each brands}}
+            <li>{{this.name}}</li>
+            <div style="display:inline-block">
+                <a href="/brands/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
+                <a href="/brands/{{this.id}}/delete" class="btn-sm btn-danger">Delete</a>
+            </div>
+        {{/each}}
+    </ol>
+
+{{/block}}
+
+{{/extends}}

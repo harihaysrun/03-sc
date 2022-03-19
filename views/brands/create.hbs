@@ -1,0 +1,17 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Add new brand</h1>
+
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        {{{brandForm}}}
+
+        <input type="submit" value="Add New Brand" class="btn btn-primary"/ >
+    </form>
+
+
+{{/block}}
+
+{{/extends}}

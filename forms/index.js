@@ -83,6 +83,11 @@ const createProductForm = function(brands, countries, types, skin_types, status)
             'widget': widgets.select(),
             'choices': status
         }),
+        "stock_no":fields.string({
+            'required':true,
+            'errorAfterField':true,
+            'validators': [validators.integer(), validators.min(0)]
+        }),
         "image_url":fields.string({
             'required':true,
             'errorAfterField':true,
@@ -228,4 +233,13 @@ const createSearchForm = function(brands, countries, types, status){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm };
+const createBrandForm = function(){
+    return forms.create({
+        "brand_name":fields.string({
+            'required':true,
+            'errorAfterField':true
+        })
+    })
+}
+
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createBrandForm };

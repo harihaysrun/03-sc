@@ -26,6 +26,7 @@
             <th>Ingredients</th>
             <th>Expiry</th>
             <th>Status</th>
+            <th>Stock</th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +48,7 @@
             <td>{{this.ingredients}}</td>
             <td>{{this.expiry}}</td>
             <td>{{this.status.name}}</td>
+            <td>{{this.stock_no}}</td>
             <td>
                 <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
                 <a href="/products/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
