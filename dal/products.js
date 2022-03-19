@@ -10,4 +10,14 @@ async function getAllBrands(){
 
 }
 
-module.exports = { getAllBrands }
+async function getAllSkinTypes(){
+    
+    const allSkinTypes = await SkinType.fetchAll().map(function(category){
+        return [ category.get('id'), category.get('name') ]
+    })
+
+    return allSkinTypes;
+
+}
+
+module.exports = { getAllBrands, getAllSkinTypes }

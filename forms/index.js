@@ -47,6 +47,12 @@ const createProductForm = function(brands){
             'required':true,
             'errorAfterField':true
         }),
+        "skin_type_id":fields.string({
+            'required': true,
+            'errorAfterField':true,
+            'widget': widgets.multipleSelect(),
+            'choices':skin_types
+        }),
         "ingredients":fields.string({
             'required':true,
             'errorAfterField':true

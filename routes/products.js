@@ -8,7 +8,7 @@ const productDataLayer = require('../dal/products')
 
 router.get('/', async function(req,res){
     let products = await Product.collection().fetch({
-        withRelated:['brand']
+        withRelated:['brand', 'skin_types']
     });
     res.render('products/index',{
         'products': products.toJSON()
@@ -18,7 +18,9 @@ router.get('/', async function(req,res){
 router.get('/create', async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
-    const productForm = createProductForm(allBrands);
+    const allSkinTypes = await productDataLayer.getAllSkinTypes();
+
+    const productForm = createProductForm(allBrands, allSkinTypes);
 
     res.render('products/create',{
         'form': productForm.toHTML(bootstrapField)
@@ -28,7 +30,9 @@ router.get('/create', async function(req,res){
 router.post('/create', async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
-    const productForm = createProductForm(allBrands);
+    const allSkinTypes = await productDataLayer.getAllSkinTypes();
+
+    const productForm = createProductForm(allBrands, allSkinTypes);
     
     productForm.handle(req,{
         'success':async function(form){
@@ -40,6 +44,13 @@ router.post('/create', async function(req,res){
             // newProduct.set('ingredients', form.data.ingredients);
             // newProduct.set('expiry', form.data.expiry);
             await newProduct.save();
+            
+            if (form.data.skin_types) {
+                let selectedSkinTypes = form.data.skin_types.split(',');
+                // attach the product with the categories
+                // which ids are in the array argument 
+                await newProduct.tags().attach(selectedSkinTypes);
+            }
 
             res.redirect('/products');
         },
@@ -57,11 +68,14 @@ router.get('/:product_id/update', async function(req,res){
     const product = await Product.where({
         'id':productId
     }).fetch({
-        require:true
+        require:true,
+        withRelated:['skin_types']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
-    const productForm = createProductForm(allBrands);
+    const allSkinTypes = await productDataLayer.getAllSkinTypes();
+
+    const productForm = createProductForm(allBrands, allSkinTypes);
 
     productForm.fields.brand_id.value = product.get('brand_id');
     productForm.fields.name.value = product.get('name');
@@ -69,6 +83,9 @@ router.get('/:product_id/update', async function(req,res){
     productForm.fields.description.value = product.get('description');
     productForm.fields.ingredients.value = product.get('ingredients');
     productForm.fields.expiry.value = product.get('expiry');
+
+   const selectedSkinTypes = await product.related('skin_types').pluck('id');
+   productForm.fields.skin_type.value = selectedSkinTypes;
 
     res.render('products/update', {
         'form': productForm.toHTML(bootstrapField),
@@ -86,12 +103,28 @@ router.post('/:product_id/update', async function(req,res){
     })
     
     const allBrands = await productDataLayer.getAllBrands();
-    const productForm = createProductForm(allBrands);
+    const allSkinTypes = await productDataLayer.getAllSkinTypes();
+
+    const productForm = createProductForm(allBrands, allSkinTypes);
     
     productForm.handle(req,{
         'success':async function(form){
             product.set(form.data);
             product.save();
+
+            let skinTypeIds = skin_types.split(',');
+
+            let existingSkinTypeIds = await product.related('skin_types').pluck('id');
+            console.log("existingSkinTypeIds=",existingSkinTypeIds);
+            
+            let toRemove = existingSkinTypeIds.filter( function(id){
+                return skinTypeIds.includes(id) === false;
+            });
+            
+            console.log("toremove=", toRemove);
+            await product.skinTypes().detach(toRemove);
+            await product.skinTypes().attach(skinTypeIds)
+
             res.redirect('/products');
         },
         'error':function(form){
