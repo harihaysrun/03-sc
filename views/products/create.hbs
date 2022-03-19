@@ -5,6 +5,7 @@
     <h1>Add new sunscreen</h1>
 
     <form method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         {{{form}}}
         <input type="submit" value="Add Product" class="btn btn-primary"/ >
     </form>

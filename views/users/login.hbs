@@ -5,6 +5,8 @@
     <h1>Login</h1>
 
     <form method="POST">
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         {{{form}}}
         <input type="submit" value="Log in" class="btn btn-primary"/ >
     </form>

@@ -1,6 +1,8 @@
 const express = require("express");
 const hbs = require("hbs");
 const wax = require("wax-on");
+const csrf = require('csurf');
+
 require("dotenv").config();
 
 const session = require('express-session');
@@ -45,6 +47,22 @@ app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
 });
+
+app.use(csrf());
+app.use(function(req,res,next){
+  res.locals.csrfToken = req.csrfToken();
+  next();
+})
+
+app.use(function(err, req, res, next){
+  if(err && err.code == "EBADCSRFTOKEN"){
+    req.flash('error_messages', 'The form has expired. Please try again.')
+    res.redirect('back')
+  } else{
+    next();
+  }
+})
+
 
 const homePage = require('./routes/landing')
 const productRoutes = require('./routes/products')
