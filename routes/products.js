@@ -8,7 +8,7 @@ const productDataLayer = require('../dal/products')
 
 router.get('/', async function(req,res){
     let products = await Product.collection().fetch({
-        withRelated:['brand', 'skinTypes']
+        withRelated:['brand', 'type', 'skinTypes']
     });
     res.render('products/index',{
         'products': products.toJSON()
@@ -18,9 +18,10 @@ router.get('/', async function(req,res){
 router.get('/create', async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
+    const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
 
-    const productForm = createProductForm(allBrands, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
 
     res.render('products/create',{
         'form': productForm.toHTML(bootstrapField)
@@ -30,22 +31,24 @@ router.get('/create', async function(req,res){
 router.post('/create', async function(req,res){
 
     const allBrands = await productDataLayer.getAllBrands();
+    const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
 
-    const productForm = createProductForm(allBrands, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
     
     productForm.handle(req,{
         'success':async function(form){
             const newProduct = new Product();
             newProduct.set('brand_id', form.data.brand_id);
             newProduct.set('name', form.data.name);
+            newProduct.set('type_id', form.data.type_id);
             newProduct.set('cost', form.data.cost);
             newProduct.set('description', form.data.description);
             newProduct.set('ingredients', form.data.ingredients);
             newProduct.set('expiry', form.data.expiry);
             await newProduct.save();
 
-            console.log(form.data.skin_types)
+            // console.log(form.data.skin_types)
             
             if (form.data.skin_types) {
                 let selectedSkinTypes = form.data.skin_types.split(',');
@@ -69,16 +72,18 @@ router.get('/:product_id/update', async function(req,res){
         'id':productId
     }).fetch({
         require:true,
-        withRelated:['skinTypes']
+        withRelated:['type', 'skinTypes']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
+    const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
 
-    const productForm = createProductForm(allBrands, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
 
     productForm.fields.brand_id.value = product.get('brand_id');
     productForm.fields.name.value = product.get('name');
+    productForm.fields.type_id.value = product.get('type_id');
     productForm.fields.cost.value = product.get('cost');
     productForm.fields.description.value = product.get('description');
     productForm.fields.ingredients.value = product.get('ingredients');
@@ -100,18 +105,20 @@ router.post('/:product_id/update', async function(req,res){
         'id': req.params.product_id
     }).fetch({
         require: true,
-        withRelated:['skinTypes']
+        withRelated:['type', 'skinTypes']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
+    const allTypes = await productDataLayer.getAllTypes();
     const allSkinTypes = await productDataLayer.getAllSkinTypes();
 
-    const productForm = createProductForm(allBrands, allSkinTypes);
+    const productForm = createProductForm(allBrands, allTypes, allSkinTypes);
     
     productForm.handle(req,{
         'success':async function(form){
             product.set('brand_id', form.data.brand_id);
             product.set('name', form.data.name);
+            product.set('type_id', form.data.type_id);
             product.set('cost', form.data.cost);
             product.set('description', form.data.description);
             product.set('ingredients', form.data.ingredients);
@@ -120,10 +127,7 @@ router.post('/:product_id/update', async function(req,res){
             product.save();
 
             let skinTypeIds = form.data.skin_types.split(',');
-            // console.log("skinTypeIds=",skinTypeIds);
-
             let existingSkinTypeIds = await product.related('skinTypes').pluck('id');
-            // console.log("existingSkinTypeIds=",existingSkinTypeIds);
             
             let toRemove = existingSkinTypeIds.filter( function(id){
                 return skinTypeIds.includes(id) === false;
