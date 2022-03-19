@@ -191,16 +191,16 @@ const createSearchForm = function(brands, countries, types, status){
         'name': fields.string({
             required: false
         }),
-        'min_cost': fields.string({
-            required:false,
-            errorAfterField: true,
-            validators: [validators.integer(), validators.min(0)]
-        }),
-        'max_cost': fields.string({
-            required:false,
-            errorAfterField: true,
-            validators: [validators.integer(), validators.min(0)]
-        }),
+        // 'min_cost': fields.string({
+        //     required:false,
+        //     errorAfterField: true,
+        //     validators: [validators.integer(), validators.min(0)]
+        // }),
+        // 'max_cost': fields.string({
+        //     required:false,
+        //     errorAfterField: true,
+        //     validators: [validators.integer(), validators.min(0)]
+        // }),
         'brand_id': fields.string({
             label: 'Brand',
             required:false,
