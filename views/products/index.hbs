@@ -9,6 +9,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Brand</th>
             <th>Name</th>
             <th>Price</th>
             <th>Description</th>
@@ -21,6 +22,7 @@
         {{#each products}}
         <tr>
             <td>{{this.id}}</td>
+            <td>{{this.brand.name}}</td>
             <td>{{this.name}}</td>
             <td>{{this.cost}}</td>
             <td>{{this.description}}</td>

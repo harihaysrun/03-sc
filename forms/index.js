@@ -24,9 +24,16 @@ const bootstrapField = function (name, object) {
     return '<div class="form-group">' + label + widget + error + '</div>';
 };
 
-const createProductForm = function(categories, tags){
+const createProductForm = function(brands){
     return forms.create({
-        // create text input called "name" etc.
+        // create text input called "name" etc.,
+        "brand_id":fields.string({
+            'label': 'Brand',
+            'required':true,
+            'errorAfterField':true,
+            'widget': widgets.select(), // dropdown select
+            'choices': brands
+        }),
         "name":fields.string({
             'required':true,
             'errorAfterField':true

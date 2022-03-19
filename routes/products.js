@@ -4,31 +4,41 @@ const router = express.Router();
 const { Product } = require('../models');
 const {bootstrapField, createProductForm } = require('../forms');
 
+const productDataLayer = require('../dal/products')
+
 router.get('/', async function(req,res){
-    let products = await Product.collection().fetch();
+    let products = await Product.collection().fetch({
+        withRelated:['brand']
+    });
     res.render('products/index',{
         'products': products.toJSON()
     })
 });
 
 router.get('/create', async function(req,res){
-    const productForm = createProductForm();
+
+    const allBrands = await productDataLayer.getAllBrands();
+    const productForm = createProductForm(allBrands);
+
     res.render('products/create',{
         'form': productForm.toHTML(bootstrapField)
     })
 });
 
 router.post('/create', async function(req,res){
-    const productForm = createProductForm();
+
+    const allBrands = await productDataLayer.getAllBrands();
+    const productForm = createProductForm(allBrands);
     
     productForm.handle(req,{
         'success':async function(form){
-            const newProduct = new Product();
-            newProduct.set('name', form.data.name);
-            newProduct.set('cost', form.data.cost);
-            newProduct.set('description', form.data.description);
-            newProduct.set('ingredients', form.data.ingredients);
-            newProduct.set('expiry', form.data.expiry);
+            const newProduct = new Product(form.data);
+            // newProduct.set('name', form.data.name);
+            // newProduct.set('name', form.data.name);
+            // newProduct.set('cost', form.data.cost);
+            // newProduct.set('description', form.data.description);
+            // newProduct.set('ingredients', form.data.ingredients);
+            // newProduct.set('expiry', form.data.expiry);
             await newProduct.save();
 
             res.redirect('/products');
@@ -50,8 +60,10 @@ router.get('/:product_id/update', async function(req,res){
         require:true
     })
     
-    const productForm = createProductForm();
+    const allBrands = await productDataLayer.getAllBrands();
+    const productForm = createProductForm(allBrands);
 
+    productForm.fields.brand_id.value = product.get('brand_id');
     productForm.fields.name.value = product.get('name');
     productForm.fields.cost.value = product.get('cost');
     productForm.fields.description.value = product.get('description');
@@ -73,7 +85,8 @@ router.post('/:product_id/update', async function(req,res){
         require: true
     })
     
-    const productForm = createProductForm();
+    const allBrands = await productDataLayer.getAllBrands();
+    const productForm = createProductForm(allBrands);
     
     productForm.handle(req,{
         'success':async function(form){

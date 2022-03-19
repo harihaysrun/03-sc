@@ -1,7 +1,18 @@
 const bookshelf = require('../bookshelf');
 
 const Product = bookshelf.model('Product',{
-    tableName:'products'
+    tableName:'products',
+    brand(){
+        return this.belongsTo('Brand')
+    }
 })
 
-module.exports = { Product }
+const Brand = bookshelf.model('Brand',{
+    tableName:'brands',
+    products(){
+        return this.hasMany('Product')
+    }
+})
+
+
+module.exports = { Product, Brand }
