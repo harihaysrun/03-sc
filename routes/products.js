@@ -2,17 +2,86 @@ const express = require("express");
 const router = express.Router();
 
 const { Product, Brand, SkinType } = require('../models');
-const {bootstrapField, createProductForm } = require('../forms');
+const {bootstrapField, createProductForm, createSearchForm } = require('../forms');
 
 const productDataLayer = require('../dal/products');
 const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', async function(req,res){
-    let products = await Product.collection().fetch({
-        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
-    });
-    res.render('products/index',{
-        'products': products.toJSON()
+    // let products = await Product.collection().fetch({
+    //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    // });
+
+    const allBrands = await productDataLayer.getAllBrands();
+    allBrands.unshift([0, "N/A"]);
+    const allCountries = await productDataLayer.getAllCountries();
+    allCountries.unshift([0, "N/A"]);
+    const allTypes = await productDataLayer.getAllTypes();
+    allTypes.unshift([0, "N/A"]);
+    const allStatus = await productDataLayer.getAllStatus();
+    allStatus.unshift([0, "N/A"]);
+
+    const searchForm = createSearchForm(allBrands, allCountries, allTypes, allStatus);
+
+    let query = Product.collection();
+    searchForm.handle(req,{
+        'empty':async function(form){
+            let products = await query.fetch({
+                withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+            })
+            res.render('products/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'products': products.toJSON()
+            })
+        },
+        'success': async function(form){
+            if (form.data.name){
+                query.where('name', 'like', '%' + req.query.name + '%')
+            }
+
+            // if(form.data.min_cost){
+            //     query.where('cost', '>=', form.data.min_cost);
+            // }
+
+            // if(form.data.max_cost){
+            //     query.where('cost', '<=', form.data.max_cost);
+            // }
+
+            if(form.data.brand_id && form.data.brand_id != "0"){
+                query.where('brand_id', '=', form.data.brand_id)
+            }
+
+            if(form.data.country_id && form.data.country_id != "0"){
+                query.where('country_id', '=', form.data.country_id)
+            }
+
+            if(form.data.type_id && form.data.type_id != "0"){
+                query.where('type_id', '=', form.data.type_id)
+            }
+
+            if(form.data.status_id && form.data.status_id != "0"){
+                query.where('status_id', '=', form.data.status_id)
+            }
+
+            // search the query
+            let products = await query.fetch({
+                withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+            })
+
+            res.render('products/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'products': products.toJSON() // important!
+            });
+        },
+        'error':async function(form){
+            let products = await query.fetch({
+                withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+            })
+            res.render('products/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'products': products.toJSON()
+            })
+        }
     })
 });
 

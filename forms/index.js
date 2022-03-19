@@ -186,5 +186,46 @@ const createLoginForm = function() {
     })
 }
 
+const createSearchForm = function(brands, countries, types, status){
+    return forms.create({
+        'name': fields.string({
+            required: false
+        }),
+        'min_cost': fields.string({
+            required:false,
+            errorAfterField: true,
+            validators: [validators.integer(), validators.min(0)]
+        }),
+        'max_cost': fields.string({
+            required:false,
+            errorAfterField: true,
+            validators: [validators.integer(), validators.min(0)]
+        }),
+        'brand_id': fields.string({
+            label: 'Brand',
+            required:false,
+            widget: widgets.select(),
+            choices: brands
+        }),
+        'country_id': fields.string({
+            label: 'Country',
+            required:false,
+            widget: widgets.select(),
+            choices: countries
+        }),
+        'type_id': fields.string({
+            label: 'Type',
+            required:false,
+            widget: widgets.select(),
+            choices: types
+        }),
+        'status_id': fields.string({
+            label: 'Status',
+            required:false,
+            widget: widgets.select(),
+            choices: status
+        })
+    })
+}
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm };
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm };
