@@ -150,12 +150,13 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
 router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
 
     const productId = req.params.product_id;
-    const product = await Product.where({
-        'id':productId
-    }).fetch({
-        require:true,
-        withRelated:['country', 'type', 'skinTypes', 'status']
-    })
+    const product = await productDataLayer.getProductByID(productId);
+    // const product = await Product.where({
+    //     'id':productId
+    // }).fetch({
+    //     require:true,
+    //     withRelated:['country', 'type', 'skinTypes', 'status']
+    // })
     
     const allBrands = await productDataLayer.getAllBrands();
     const allCountries = await productDataLayer.getAllCountries();
@@ -191,12 +192,15 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
 
 router.post('/:product_id/update', checkIfAuthenticated, async function(req,res){
     
-    const product = await Product.where({
-        'id': req.params.product_id
-    }).fetch({
-        require: true,
-        withRelated:['country','type', 'skinTypes', 'status']
-    })
+    // const product = await Product.where({
+    //     'id': req.params.product_id
+    // }).fetch({
+    //     require: true,
+    //     withRelated:['country','type', 'skinTypes', 'status']
+    // })
+
+    const productId = req.params.product_id;
+    const product = await productDataLayer.getProductByID(productId);
     
     const allBrands = await productDataLayer.getAllBrands();
     const allCountries = await productDataLayer.getAllCountries();
@@ -248,12 +252,15 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
 
 router.get('/:product_id/delete', checkIfAuthenticated, async function(req,res){
 
+    // const productId = req.params.product_id;
+    // const product = await Product.where({
+    //     'id':productId
+    // }).fetch({
+    //     require:true
+    // })
+
     const productId = req.params.product_id;
-    const product = await Product.where({
-        'id':productId
-    }).fetch({
-        require:true
-    })
+    const product = await productDataLayer.getProductByID(productId);
 
     res.render('products/delete', {
         'product': product.toJSON()
@@ -263,12 +270,15 @@ router.get('/:product_id/delete', checkIfAuthenticated, async function(req,res){
 
 router.post('/:product_id/delete', checkIfAuthenticated, async function(req,res){
 
+    // const productId = req.params.product_id;
+    // const product = await Product.where({
+    //     'id':productId
+    // }).fetch({
+    //     require:true
+    // })
+
     const productId = req.params.product_id;
-    const product = await Product.where({
-        'id':productId
-    }).fetch({
-        require:true
-    })
+    const product = await productDataLayer.getProductByID(productId);
 
     await product.destroy();
     res.redirect('/products');

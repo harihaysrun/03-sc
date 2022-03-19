@@ -1,5 +1,18 @@
 const { Product, Brand, Country, Type, SkinType, Status  } = require('../models');
 
+async function getProductByID(productId){
+    
+    const product = await Product.where({
+        'id':parseInt(productId)
+    }).fetch({
+        require:true,
+        withRelated:['country', 'type', 'skinTypes', 'status']
+    })
+
+    return product;
+
+}
+
 async function getAllBrands(){
     
     const allBrands = await Brand.fetchAll().map(function(category){
@@ -50,4 +63,4 @@ async function getAllStatus(){
 
 }
 
-module.exports = { getAllBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }
+module.exports = { getProductByID, getAllBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }
