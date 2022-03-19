@@ -13,6 +13,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Description</th>
+            <th>Skin Types</th>
             <th>Ingredients</th>
             <th>Expiry</th>
             <th></th>
@@ -26,6 +27,11 @@
             <td>{{this.name}}</td>
             <td>{{this.cost}}</td>
             <td>{{this.description}}</td>
+            <td>
+                {{#each this.skinTypes}}
+                    <span class="badge bg-primary">{{this.name}}</span>
+                {{/each}}</td>
+            </td>
             <td>{{this.ingredients}}</td>
             <td>{{this.expiry}}</td>
             <td>

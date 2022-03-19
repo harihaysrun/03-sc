@@ -24,7 +24,7 @@ const bootstrapField = function (name, object) {
     return '<div class="form-group">' + label + widget + error + '</div>';
 };
 
-const createProductForm = function(brands){
+const createProductForm = function(brands, skin_types){
     return forms.create({
         // create text input called "name" etc.,
         "brand_id":fields.string({
@@ -47,7 +47,7 @@ const createProductForm = function(brands){
             'required':true,
             'errorAfterField':true
         }),
-        "skin_type_id":fields.string({
+        "skin_types":fields.string({
             'required': true,
             'errorAfterField':true,
             'widget': widgets.multipleSelect(),

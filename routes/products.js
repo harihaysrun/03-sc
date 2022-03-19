@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { Product } = require('../models');
+const { Product, Brand, SkinType } = require('../models');
 const {bootstrapField, createProductForm } = require('../forms');
 
 const productDataLayer = require('../dal/products')
 
 router.get('/', async function(req,res){
     let products = await Product.collection().fetch({
-        withRelated:['brand', 'skin_types']
+        withRelated:['brand', 'skinTypes']
     });
     res.render('products/index',{
         'products': products.toJSON()
@@ -36,20 +36,20 @@ router.post('/create', async function(req,res){
     
     productForm.handle(req,{
         'success':async function(form){
-            const newProduct = new Product(form.data);
-            // newProduct.set('name', form.data.name);
-            // newProduct.set('name', form.data.name);
-            // newProduct.set('cost', form.data.cost);
-            // newProduct.set('description', form.data.description);
-            // newProduct.set('ingredients', form.data.ingredients);
-            // newProduct.set('expiry', form.data.expiry);
+            const newProduct = new Product();
+            newProduct.set('brand_id', form.data.brand_id);
+            newProduct.set('name', form.data.name);
+            newProduct.set('cost', form.data.cost);
+            newProduct.set('description', form.data.description);
+            newProduct.set('ingredients', form.data.ingredients);
+            newProduct.set('expiry', form.data.expiry);
             await newProduct.save();
+
+            console.log(form.data.skin_types)
             
             if (form.data.skin_types) {
                 let selectedSkinTypes = form.data.skin_types.split(',');
-                // attach the product with the categories
-                // which ids are in the array argument 
-                await newProduct.tags().attach(selectedSkinTypes);
+                await newProduct.skinTypes().attach(selectedSkinTypes);
             }
 
             res.redirect('/products');
@@ -69,7 +69,7 @@ router.get('/:product_id/update', async function(req,res){
         'id':productId
     }).fetch({
         require:true,
-        withRelated:['skin_types']
+        withRelated:['skinTypes']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
@@ -84,8 +84,8 @@ router.get('/:product_id/update', async function(req,res){
     productForm.fields.ingredients.value = product.get('ingredients');
     productForm.fields.expiry.value = product.get('expiry');
 
-   const selectedSkinTypes = await product.related('skin_types').pluck('id');
-   productForm.fields.skin_type.value = selectedSkinTypes;
+   const selectedSkinTypes = await product.related('skinTypes').pluck('id');
+   productForm.fields.skin_types.value = selectedSkinTypes;
 
     res.render('products/update', {
         'form': productForm.toHTML(bootstrapField),
@@ -99,7 +99,8 @@ router.post('/:product_id/update', async function(req,res){
     const product = await Product.where({
         'id': req.params.product_id
     }).fetch({
-        require: true
+        require: true,
+        withRelated:['skinTypes']
     })
     
     const allBrands = await productDataLayer.getAllBrands();
@@ -109,19 +110,27 @@ router.post('/:product_id/update', async function(req,res){
     
     productForm.handle(req,{
         'success':async function(form){
-            product.set(form.data);
+            product.set('brand_id', form.data.brand_id);
+            product.set('name', form.data.name);
+            product.set('cost', form.data.cost);
+            product.set('description', form.data.description);
+            product.set('ingredients', form.data.ingredients);
+            product.set('expiry', form.data.expiry);
+            // product.set(form.data);
             product.save();
 
-            let skinTypeIds = skin_types.split(',');
+            let skinTypeIds = form.data.skin_types.split(',');
+            // console.log("skinTypeIds=",skinTypeIds);
 
-            let existingSkinTypeIds = await product.related('skin_types').pluck('id');
-            console.log("existingSkinTypeIds=",existingSkinTypeIds);
+            let existingSkinTypeIds = await product.related('skinTypes').pluck('id');
+            // console.log("existingSkinTypeIds=",existingSkinTypeIds);
             
             let toRemove = existingSkinTypeIds.filter( function(id){
                 return skinTypeIds.includes(id) === false;
             });
             
-            console.log("toremove=", toRemove);
+            // console.log("toremove=", toRemove);
+
             await product.skinTypes().detach(toRemove);
             await product.skinTypes().attach(skinTypeIds)
 

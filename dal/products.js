@@ -1,4 +1,4 @@
-const { Product, Brand  } = require('../models');
+const { Product, Brand, SkinType  } = require('../models');
 
 async function getAllBrands(){
     
