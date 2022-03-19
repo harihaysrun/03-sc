@@ -10,9 +10,66 @@
 
         {{{form}}}
 
+        <div class="mt-3">
+        
+            {{!-- display product image if it exists --}}
+            {{#if product.image_url}}
+                <img src="{{product.image_url}}" id="uploaded-image" />
+            {{else}}
+                <img src="" style="display:none" id="uploaded-image">
+            {{/if}}
+
+
+            <a href="#" class="btn btn-primary" id="upload-widget">Upload</a>
+
+        </div>
+
         <input type="submit" class="btn btn-primary mt-3">
     </form>
     
 {{/block}}
 
 {{/extends}}
+
+{{#block 'js'}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+    <script>
+        async function generateSignature(callback, params_to_sign){
+            
+            let response = await axios.get('/cloudinary/sign',{
+                'params': {
+                    'params_to_sign': params_to_sign
+                }
+            })
+            callback(response.data);
+        }
+
+        let cloudinaryConfig = {
+            'cloudName': "{{cloudinaryName}}",
+            'apiKey': "{{cloudinaryApiKey}}",
+            'uploadPreset': "{{cloudinaryUploadPreset}}",
+            'uploadSignature': generateSignature
+        }
+
+        const myWidget = cloudinary.createUploadWidget(cloudinaryConfig, function(error,result){
+            
+            if (!error && result && result.event == 'success'){
+                console.log(result)
+                let url = result.info.secure_url;
+                
+                document.getElementById("id_image_url").value = url;
+                document.getElementById("uploaded-image").src = url;
+                document.getElementById("uploaded-image").style = "display:block";
+            }
+        });
+
+        document.getElementById("upload-widget").addEventListener('click', function(){
+            myWidget.open();
+        })
+
+    </script>
+    
+{{/block}}

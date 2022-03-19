@@ -11,6 +11,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Image</th>
             <th>Brand</th>
             <th>Name</th>
             <th>Type</th>
@@ -27,6 +28,7 @@
         {{#each products}}
         <tr>
             <td>{{this.id}}</td>
+            <td><img style="width:100px" src="{{this.image_url}}" alt=""></td>
             <td>{{this.brand.name}}</td>
             <td>{{this.name}}</td>
             <td>{{this.type.name}}</td>

@@ -27,7 +27,10 @@ router.get('/create', checkIfAuthenticated, async function(req,res){
     const productForm = createProductForm(allBrands, allCountries, allTypes, allSkinTypes, allStatus);
 
     res.render('products/create',{
-        'form': productForm.toHTML(bootstrapField)
+        'form': productForm.toHTML(bootstrapField),
+        'cloudinaryName': process.env.CLOUDINARY_NAME,
+        'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+        'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET,
     })
     
 });
@@ -102,13 +105,17 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
     productForm.fields.ingredients.value = product.get('ingredients');
     productForm.fields.expiry.value = product.get('expiry');
     productForm.fields.status_id.value = product.get('status_id');
+    productForm.fields.image_url.value = product.get('image_url');
 
     const selectedSkinTypes = await product.related('skinTypes').pluck('id');
     productForm.fields.skin_types.value = selectedSkinTypes;
 
     res.render('products/update', {
         'form': productForm.toHTML(bootstrapField),
-        'product': product.toJSON()
+        'product': product.toJSON(),
+        'cloudinaryName': process.env.CLOUDINARY_NAME,
+        'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+        'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET
     })
     
 });
@@ -141,6 +148,7 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
             product.set('ingredients', form.data.ingredients);
             product.set('expiry', form.data.expiry);
             product.set('status_id', form.data.status_id);
+            product.set('image_url', form.data.image_url);
             // product.set(form.data);
             product.save();
 

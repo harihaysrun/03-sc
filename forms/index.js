@@ -82,6 +82,11 @@ const createProductForm = function(brands, countries, types, skin_types, status)
             'errorAfterField':true,
             'widget': widgets.select(),
             'choices': status
+        }),
+        "image_url":fields.string({
+            'required':true,
+            'errorAfterField':true,
+            'widget': widgets.hidden()
         })
     })
 }
