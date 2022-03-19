@@ -5,6 +5,9 @@ const Product = bookshelf.model('Product',{
     brand(){
         return this.belongsTo('Brand')
     },
+    country(){
+        return this.belongsTo('Country')
+    },
     type(){
         return this.belongsTo('Type')
     },
@@ -18,6 +21,13 @@ const Product = bookshelf.model('Product',{
 
 const Brand = bookshelf.model('Brand',{
     tableName:'brands',
+    products(){
+        return this.hasMany('Product')
+    }
+})
+
+const Country = bookshelf.model('Country',{
+    tableName:'countries',
     products(){
         return this.hasMany('Product')
     }
@@ -45,4 +55,4 @@ const Status = bookshelf.model('Status',{
 })
 
 
-module.exports = { Product, Brand, Type, SkinType, Status }
+module.exports = { Product, Brand, Country, Type, SkinType, Status }
