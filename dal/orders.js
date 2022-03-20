@@ -1,4 +1,4 @@
-const { OrderItem, Product } = require('../models');
+const { OrderItem, Product, Shipping } = require('../models');
 
 const createOrderItem = async function( userId, items, amount, paymentStatus){
     const orderItem = new OrderItem({
@@ -15,8 +15,33 @@ const createOrderItem = async function( userId, items, amount, paymentStatus){
 
 async function getAllOrders(){
     
-    const allOrders = await OrderItem.collection().fetch();
+    const allOrders = await OrderItem.collection().fetch({
+        withRelated:['shipping', 'user']
+    });
     return allOrders;
+    
+}
+
+async function getOrderByID(orderId){
+    
+    const product = await OrderItem.where({
+        'id':parseInt(orderId)
+    }).fetch({
+        require:true,
+        withRelated:['shipping']
+    })
+
+    return product;
+
+}
+
+async function getShippingStatus(){
+    
+    const allStatus = await Shipping.fetchAll().map(function(category){
+        return [ category.get('id'), category.get('name') ]
+    })
+
+    return allStatus;
 
 }
 
@@ -43,4 +68,4 @@ async function getUserOrder(userId){
     return order;
 }
 
-module.exports = { createOrderItem, getAllOrders, getUserOrder }
+module.exports = { createOrderItem, getAllOrders, getOrderByID, getShippingStatus, getUserOrder }

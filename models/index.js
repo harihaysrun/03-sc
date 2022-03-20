@@ -55,7 +55,7 @@ const Status = bookshelf.model('Status',{
 })
 
 const User = bookshelf.model('User',{
-    tableName:'users'
+    tableName:'users',
 })
 
 const CartItem = bookshelf.model("CartItem",{
@@ -66,7 +66,20 @@ const CartItem = bookshelf.model("CartItem",{
 })
 
 const OrderItem = bookshelf.model('OrderItem',{
-    tableName:'orders'
+    tableName:'orders',
+    shipping(){
+        return this.belongsTo('Shipping')
+    },
+    user(){
+        return this.belongsTo('User')
+    },
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, CartItem, OrderItem }
+const Shipping = bookshelf.model('Shipping',{
+    tableName:'shipping',
+    orders(){
+        return this.hasMany('OrderItem')
+    }
+})
+
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, CartItem, OrderItem, Shipping }

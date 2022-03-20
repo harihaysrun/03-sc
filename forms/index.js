@@ -242,4 +242,16 @@ const createBrandForm = function(){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createBrandForm };
+const createShippingForm = function(shipping){
+    return forms.create({
+        "shipping_id":fields.string({
+            'label': 'Shipping',
+            'required':true,
+            'errorAfterField':true,
+            'widget': widgets.select(), // dropdown select
+            'choices': shipping
+        }),
+    })
+}
+
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createBrandForm, createShippingForm };

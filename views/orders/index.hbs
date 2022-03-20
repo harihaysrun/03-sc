@@ -1,0 +1,57 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>{{order.length}} orders</h1>
+
+    <a href="/products/create" class="btn btn-primary">Add New Sunscreen</a>
+
+
+<form method="GET">
+    {{{searchForm}}}
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order No.</th>
+            <th>Username</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+            <th>Shipping Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each order}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.user.username}}</td>
+            <td>{{this.date}}</td>
+            <td>
+                {{{items}}}
+                {{!-- <ol>
+                {{#each items}}
+                    <li>{{@index}}: {{this}}</li>
+                    <li>{{@value}}: {{this}}</li>
+                {{/each}}
+                </ol> --}}
+            </td>
+            <td>{{this.amount}}</td>
+            <td>{{this.payment_status}}</td>
+            <td>{{this.shipping.name}}</td>
+            <td>
+                <a href="/orders/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
+                {{!-- <a href="/products/{{this.id}}/delete" class="btn-sm btn-danger">Delete</a> --}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{/block}}
+
+{{/extends}}
