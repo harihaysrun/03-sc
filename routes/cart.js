@@ -21,7 +21,6 @@ router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
     let userId = req.session.user.id;
     let productId = req.params.product_id;
     let quantity = 1;
-
         
     const product = await Product.where({
         'id': productId
@@ -30,22 +29,21 @@ router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
         withRelated:['country', 'type', 'skinTypes', 'status']
     })
 
-    console.log(product.attributes.stock_no)
+    // get current stock number
+    let productQuantity = product.get('stock_no');
 
-    let currentStockNo = product.attributes.stock_no;
-    let updatedStockNo = currentStockNo - quantity;
+    if(quantity <= productQuantity) {
 
-    console.log(currentStockNo, updatedStockNo)
+        // check if cart item with the same product id and user id is already in the database
+        let cartServices = new CartServices(userId)
+        await cartServices.addToCart(productId, quantity);
 
-
-    // check if cart item with the same product id and user id is already in the database
-    let cartServices = new CartServices(userId)
-    await cartServices.addToCart(productId, quantity);
-
-
-    // todo: check if there's enough stock
-    req.flash('success_messages', 'Product has been added to cart');
-    res.redirect('/products');
+        req.flash('success_messages', 'Product has been added to cart');
+        res.redirect('/products');
+    } else{
+        req.flash('error_messages',`Only ${productQuantity} left in stock`);
+        res.redirect('/products');
+    }
 
 })
 
