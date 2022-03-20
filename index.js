@@ -19,6 +19,8 @@ app.set("view engine", "hbs");
 // static folder
 app.use(express.static("public"));
 
+app.use(cors());
+
 app.use(session({
   store: new FileStore(),
   secret: process.env.SESSION_SECRET_KEY,
@@ -30,7 +32,6 @@ app.use(session({
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
 
-app.use(cors());
 
 // enable forms
 app.use(
@@ -51,9 +52,26 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use(csrf());
+// app.use(csrf());
+const csrfInstance = csrf();
 app.use(function(req,res,next){
-  res.locals.csrfToken = req.csrfToken();
+  if(req.url === "/checkout/process_payment"){
+    return next()
+  } else{
+    csrfInstance(req,res,next);
+  }
+})
+
+// app.use(function(req,res,next){
+//   res.locals.csrfToken = req.csrfToken();
+//   next();
+// })
+
+app.use(function(req,res,next){
+  // check if curent request has csrf enabled or not
+  if(req.csrfToken){
+    res.locals.csrfToken = req.csrfToken();
+  }
   next();
 })
 
@@ -73,6 +91,7 @@ const userRoutes = require('./routes/users');
 const cloudinaryRoutes = require('./routes/cloudinary');
 const cartRoutes = require('./routes/cart');
 const brandRoutes = require('./routes/brands');
+const checkoutRoutes = require('./routes/checkout');
 
 async function main() {
   app.use('/', homePage);
@@ -81,6 +100,7 @@ async function main() {
   app.use('/cloudinary', cloudinaryRoutes);	
   app.use('/cart', cartRoutes);	
   app.use('/brands', brandRoutes);	
+  app.use('/checkout', checkoutRoutes);	
 }
 
 main();

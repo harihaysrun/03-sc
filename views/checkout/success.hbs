@@ -1,0 +1,28 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Order successfully placed!</h1>
+    <h2>Order number {{order.id}}</h2>
+
+    {{!-- {{#each order}}
+    {{/each}} --}}
+
+    You bought: 
+    <p>
+        ${{order.amount}}
+        <br>
+        {{orderItems.length}}
+        <ol>
+            {{#each orderItems}}
+                <li>
+                    <img src="{{this.image_url}}" alt="">
+                    {{this.quantity}} x {{this.product_name}}
+                </li>
+            {{/each}}
+        </ol>
+    </p>
+
+{{/block}}
+
+{{/extends}}

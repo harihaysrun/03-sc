@@ -65,4 +65,8 @@ const CartItem = bookshelf.model("CartItem",{
     }
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, CartItem }
+const OrderItem = bookshelf.model('OrderItem',{
+    tableName:'orders'
+})
+
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, CartItem, OrderItem }
