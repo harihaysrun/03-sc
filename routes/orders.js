@@ -31,7 +31,7 @@ router.get('/', checkIfAuthenticated, async function(req,res){
     let quantity;
     let productName;
 
-    let itemz;
+    let itemList = [];
     
     for (let o of allOrders){
         // console.log(o.attributes.items)
@@ -47,12 +47,14 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             productName = items[i].product_name;
         }
 
-        itemz = `${quantity} x ${productName}`;
+        item = `${quantity} x ${productName}`;
+        itemList.push(item)
 
         // console.log(quantity, productName)
 
     }
 
+    console.log(itemList)
     // console.log(allOrders)
 
     // // for (i=0; i < allOrders.length; i++){
@@ -62,7 +64,7 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
     res.render('orders/index',{
         'order': allOrders.toJSON(),
-        'itemz': itemz
+        'itemList': itemList
         // 'quantity': quantity,
         // 'productName': productName,
         // 'items': 

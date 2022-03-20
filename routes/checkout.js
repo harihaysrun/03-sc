@@ -133,6 +133,7 @@ router.post('/process_payment', express.raw({
         // console.log(orders, amountTotal, paymentStatus)
         // console.log(orders,orders.length)
         let items = [];
+        let itemsTextArray = [];
         let userId;
         
         for (let o of orders){
@@ -140,7 +141,8 @@ router.post('/process_payment', express.raw({
             let product = await productDataLayer.getProductByID(o.product_id);
             let productName = product.get('name');
             
-            // orders = `${o.quantity} x ${productName}`;
+            itemsText = `${o.quantity} x ${productName}`;
+            itemsTextArray.push(itemsText);
 
             orders = {
                 'quantity': o.quantity,
@@ -163,7 +165,7 @@ router.post('/process_payment', express.raw({
         // for each line item, store the quantity order
 
         // await orderDataLayer.createOrderItem(userId, items.join(', '), amountTotal, paymentStatus);
-        await orderDataLayer.createOrderItem(userId, JSON.stringify(items), amountTotal, paymentStatus);
+        await orderDataLayer.createOrderItem(userId, JSON.stringify(items), itemsTextArray.join(', '), amountTotal, paymentStatus);
         // console.log(orderItem)
     }
     res.send({

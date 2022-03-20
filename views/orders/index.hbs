@@ -4,8 +4,6 @@
 
     <h1>{{order.length}} orders</h1>
 
-    <a href="/products/create" class="btn btn-primary">Add New Sunscreen</a>
-
 
 <form method="GET">
     {{{searchForm}}}
@@ -21,6 +19,7 @@
             <th>Items</th>
             <th>Amount</th>
             <th>Payment Status</th>
+            <th>Shipping Address</th>
             <th>Shipping Status</th>
             <th></th>
         </tr>
@@ -32,7 +31,7 @@
             <td>{{this.user.username}}</td>
             <td>{{this.date}}</td>
             <td>
-                {{{items}}}
+                {{this.items_text}}
                 {{!-- <ol>
                 {{#each items}}
                     <li>{{@index}}: {{this}}</li>
@@ -42,6 +41,7 @@
             </td>
             <td>{{this.amount}}</td>
             <td>{{this.payment_status}}</td>
+            <td>{{this.user.address_line_1}}, {{this.user.address_line_2}}, {{this.user.postal_code}}</td>
             <td>{{this.shipping.name}}</td>
             <td>
                 <a href="/orders/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>

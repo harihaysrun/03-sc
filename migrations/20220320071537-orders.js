@@ -37,7 +37,8 @@ exports.up = function(db) {
       }
     },
     'date': {
-      'type': 'date'
+      'type': 'string',
+      'length':1000
     },
     'items': {
       'type': 'string',

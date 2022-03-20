@@ -1,10 +1,11 @@
 const { OrderItem, Product, Shipping } = require('../models');
 
-const createOrderItem = async function( userId, items, amount, paymentStatus){
+const createOrderItem = async function( userId, items, itemsText, amount, paymentStatus){
     const orderItem = new OrderItem({
         'user_id':userId,
-        'date': new Date(),
+        'date': new Date().toDateString(),
         'items': items,
+        'items_text': itemsText,
         'amount': amount,
         'payment_status': paymentStatus,
     })
