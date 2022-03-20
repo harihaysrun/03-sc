@@ -5,6 +5,7 @@ const router = express.Router();
 const { Product } = require('../models');
 
 const CartServices = require('../services/cart_services');
+const productDataLayer = require('../dal/products');
 
 router.get('/', checkIfAuthenticated, async function(req,res){
     let userId = req.session.user.id;
@@ -36,17 +37,6 @@ router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
 
     console.log(currentStockNo, updatedStockNo)
 
-    // const productForm = createProductForm();
-    // productForm.handle(req,{
-    //     'success':async function(form){
-    //         product.set('stock_no', form.data.stock_no);
-    //         product.save();
-    //         console.log(currentStockNo)
-    //     },
-    //     'error':function(form){
-    //         console.log('failed to update stock no')
-    //     }
-    // })
 
     // check if cart item with the same product id and user id is already in the database
     let cartServices = new CartServices(userId)
@@ -60,11 +50,22 @@ router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
 })
 
 router.post('/:product_id/update', checkIfAuthenticated, async function(req,res){
+
+    // get current stock number
+    let product = await productDataLayer.getProductByID(req.params.product_id,);
+    let productQuantity = product.get('stock_no');
+
     let newQuantity = req.body.newQuantity;
-    const cartServices = new CartServices(req.session.user.id);
-    await cartServices.updateNewQuantity(req.params.product_id, newQuantity);
-    req.flash('success_messages', 'Quantity has been updated');
-    res.redirect('/cart');
+
+    if (newQuantity <= productQuantity){
+        const cartServices = new CartServices(req.session.user.id);
+        await cartServices.updateNewQuantity(req.params.product_id, newQuantity);
+        req.flash('success_messages', 'Quantity has been updated');
+        res.redirect('/cart');
+    } else{
+        req.flash('error_messages',`Only ${productQuantity} left in stock`);
+        res.redirect('/cart');
+    }
 })
 
 router.get('/:product_id/remove', checkIfAuthenticated, async function(req,res){

@@ -65,9 +65,6 @@ router.get('/', async function (req,res){
 
 router.get('/success/:sessionId', async function(req,res){
 
-
-    // deduct stock
-
     let cart = new CartServices(req.session.user.id);
 
     // console.log('req.session.user.id: ' + req.session.user.id)
