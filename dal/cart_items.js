@@ -1,4 +1,4 @@
-const { CartItem  } = require('../models');
+const { CartItem, Product } = require('../models');
 
 const getCart = async function(userId){
     let allCartItems = await CartItem.collection()
@@ -45,6 +45,32 @@ const updateQuantity = async function(userId, productId, newQuantity){
     return false;
 }
 
+const updateStock = async function(productId, updatedStock){
+
+    const product = await Product.where({
+        'id': productId
+    }).fetch({
+        require:true,
+    })
+
+    product.set('stock_no', updatedStock);
+    await product.save();
+
+    return true;
+
+    const allStatus = await Product.fetchAll().map(function(category){
+        return [ category.get('id'), category.get('stock_no') ]
+    })
+
+    let cartItem = await getCartItemByUserAndProduct(userId, productId);
+    if(cartItem){
+        cartItem.set('quantity', updatedStock);
+        await cartItem.save();
+        return true;
+    }
+    return false;
+}
+
 const removeFromCart = async function(userId, productId){
     let cartItem = await getCartItemByUserAndProduct(userId, productId);
     if(cartItem){
@@ -55,4 +81,4 @@ const removeFromCart = async function(userId, productId){
     }
 }
 
-module.exports = { getCart, getCartItemByUserAndProduct, createCartItem, updateQuantity, removeFromCart }
+module.exports = { getCart, getCartItemByUserAndProduct, createCartItem, updateQuantity, updateStock, removeFromCart }

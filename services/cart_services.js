@@ -1,4 +1,5 @@
 const cartDataLayer = require('../dal/cart_items');
+const productDataLayer = require('../dal/products');
 
 class CartServices{
 
@@ -29,9 +30,14 @@ class CartServices{
         return await cartDataLayer.updateQuantity(this.user_id, productId, newQuantity);
     }
 
+    async updateStockNo(productId, updatedStock){
+        return await cartDataLayer.updateStock(productId, updatedStock);
+    }
+
     async removeCartItem(productId){
         return await cartDataLayer.removeFromCart(this.user_id, productId);
     }
+
 }
 
 module.exports = CartServices;
