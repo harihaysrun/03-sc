@@ -65,14 +65,27 @@ router.get('/', async function (req,res){
 
 router.get('/success/:sessionId', async function(req,res){
 
+
+    // deduct stock
+
     // console.log('req.session.user.id: ' + req.session.user.id)
 
     const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
     // console.log(userOrders.get('items'), userOrders.get('amount'));
+    let orders = JSON.parse(userOrders.get('items'));
+    let productId;
+    for (let o of orders){
+        productId = o.product_id;
+    }
+    console.log(productId)
+
+    // empty user_id cart
+    let cart = new CartServices(req.session.user.id);
+    await cart.removeCartItem(productId);
 
     res.render('checkout/success',{
         'order': userOrders.toJSON(),
-        'orderItems': JSON.parse(userOrders.get('items'))
+        'orderItems': orders
     })
 })
 
