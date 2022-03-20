@@ -76,12 +76,13 @@ router.get('/success/:sessionId', async function(req,res){
     let productId;
     for (let o of orders){
         productId = o.product_id;
-    }
-    console.log(productId)
 
-    // empty user_id cart
-    let cart = new CartServices(req.session.user.id);
-    await cart.removeCartItem(productId);
+        // empty user cart
+        let cart = new CartServices(req.session.user.id);
+        await cart.removeCartItem(productId);
+    }
+    // console.log(productId)
+
 
     res.render('checkout/success',{
         'order': userOrders.toJSON(),
