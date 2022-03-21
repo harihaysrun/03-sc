@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require('crypto');
 
 const jwt = require('jsonwebtoken');
-const { User } = require('../../models')
+const { User, BlackListedToken } = require('../../models')
 const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
 
 const generateToken = function(user, secret, expiresIn){
@@ -35,10 +35,10 @@ router.post('/login', async function(req,res){
 
     if (user && user.get('password') == getHashedPassword(password)){
         let accessToken = generateToken(user.toJSON(), process.env.TOKEN_SECRET, "15min");
-        // let refreshToken = generateToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, "1h");
+        let refreshToken = generateToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, "1h");
         res.json({
             'accessToken': accessToken,
-            // 'refreshToken': refreshToken
+            'refreshToken': refreshToken
         })
     } else {
         res.sendStatus = 401;
@@ -56,5 +56,61 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     })
 })
 
+router.post('/refresh', async function(req,res){
+    let refreshToken = req.body.refreshToken;
+
+    if(!refreshToken){
+        res.sendStatus(401);
+        return;
+    }
+
+    let result = await BlackListedToken.where({
+        'token': refreshToken,
+    }).fetch({
+        require: false
+    })
+
+    if(result){
+        res.status(401);
+        res.json({
+            'message': 'The refresh token has already expired or logged out'
+        });
+        return;
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, function(err,user){
+        if (err){
+            res.sendStatus(403);
+        } else{
+            let accessToken = generateToken(user, process.env.TOKEN_SECRET, "15min");
+            res.json({
+                'accessToken': accessToken
+            })
+        }
+    });
+})
+
+router.post('/logout', async function(req,res){
+    let refreshToken = req.body.refreshToken;
+
+    if (!refreshToken){
+        res.sendStatus(401);
+    } else{
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async function(err,user){
+            if (err){
+                res.sendStatus(403);
+                return;
+            } else {
+                const token = new BlackListedToken();
+                token.set('token', refreshToken);
+                token.set('date_created', new Date());
+                await token.save();
+                res.json({
+                    'message': 'You have been logged out'
+                })
+            }
+        })
+    }
+})
 
 module.exports = router;
