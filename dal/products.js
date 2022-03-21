@@ -1,5 +1,10 @@
 const { Product, Brand, Country, Type, SkinType, Status  } = require('../models');
 
+async function getAllProducts(){
+    let products = await Product.fetchAll();
+    return products;
+}
+
 async function getProductByID(productId){
     
     const product = await Product.where({
@@ -70,4 +75,4 @@ async function getAllStatus(){
 
 }
 
-module.exports = { getProductByID, getAllBrands, getBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }
+module.exports = { getAllProducts, getProductByID, getAllBrands, getBrands, getAllCountries, getAllTypes, getAllSkinTypes, getAllStatus }
