@@ -60,7 +60,8 @@ router.post('/:product_id/update', async function(req,res){
 
     // // // get current stock number
     let product = await productDataLayer.getProductByID(productId);
-    console.log(product)
+    // console.log(product)
+    res.json(product)
     // let productQuantity = product.get('stock_no');
 
     // res.json(`${userId}, ${productId}, ${newQuantity}, ${productQuantity}`)
