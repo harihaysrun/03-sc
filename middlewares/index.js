@@ -17,9 +17,12 @@ const checkIfAuthenticatedWithJWT = function(req,res,next){
         const token = authHeader.split(" ")[1]
         jwt.verify(token, process.env.TOKEN_SECRET, function(err, user){
             if(err){
-                res.send("401").json({
+                res.json({
                     'message': 'Forbidden'
                 })
+                // res.send("401").json({
+                //     'message': 'Forbidden'
+                // })
             } else{
                 req.user = user;
                 next();
