@@ -49,9 +49,9 @@ router.post('/:product_id/update', async function(req,res){
 
     let userId = req.body.user_id;
     let productId = req.params.product_id;
-    let productQuantity = req.body.quantity;
-    let newQuantity = req.body.newQuantity;
-
+    let productQuantity = parseInt(req.body.quantity);
+    let newQuantity = parseInt(req.body.newQuantity);
+    
     // const product = await Product.where({
     //     'id': productId
     // }).fetch({

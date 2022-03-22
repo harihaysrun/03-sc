@@ -27,10 +27,7 @@ class CartServices{
     }
 
     async updateNewQuantity(productId, newQuantity){
-        let cartItem = await cartDataLayer.getCartItemByUserAndProduct(this.user_id, productId);
-        if(cartItem){
-            return await cartDataLayer.updateItemQuantity(this.user_id, productId, cartItem.get('quantity') + newQuantity);
-        }
+        return await cartDataLayer.updateItemQuantity(this.user_id, productId, newQuantity);
     }
 
     async updateStockNo(productId, updatedStock){
