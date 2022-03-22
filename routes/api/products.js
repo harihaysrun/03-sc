@@ -8,7 +8,7 @@ router.get('/', async function(req,res){
     res.send(await productDataLayer.getAllProducts())
 })
 
-router.get('/products/:product_id', async function(req,res){
+router.get('/:product_id', async function(req,res){
 
     let productId = req.params.product_id;
         
