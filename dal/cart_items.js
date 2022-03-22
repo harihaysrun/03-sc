@@ -36,7 +36,15 @@ const createCartItem = async function(userId, productId, quantity){
 }
 
 const updateItemQuantity = async function(userId, productId, newQuantity){
-    let cartItem = await getCartItemByUserAndProduct(userId, productId);
+    // let cartItem = await getCartItemByUserAndProduct(userId, productId);
+    const cartItem = await CartItem.where({
+        'user_id': userId,
+        'product_id': productId
+    }).fetch({
+        'require':false,
+        'withRelated': ['product']
+    });
+
     if(cartItem){
         cartItem.set('quantity', newQuantity);
         await cartItem.save();
