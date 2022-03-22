@@ -7,8 +7,9 @@ const productDataLayer = require('../../dal/products');
 const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
 const { Product } = require('../../models');
 
-router.get('/', checkIfAuthenticatedWithJWT, async function(req,res){
-    let userId = req.session.user.id;
+router.post('/', async function(req,res){
+    // let userId = req.session.user.id;
+    let userId = req.body.user_id;
     const cartServices = new CartServices(userId);
     const allCartItems = await cartServices.getAllCartItems();
     res.json({
