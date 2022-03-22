@@ -70,7 +70,8 @@ router.post('/login', async function(req,res){
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     res.json({
-        'username': req.user.username,
+        'user': req.user,
+        // 'username': req.user.username,
         // 'email': req.user.email,
         // 'first_name': req.user.first_name,
         // 'last_name': req.user.last_name,
