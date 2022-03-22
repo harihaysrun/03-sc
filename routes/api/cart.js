@@ -38,7 +38,6 @@ router.post('/:product_id/add', async function(req,res){
         // check if cart item with the same product id and user id is already in the database
         let cartServices = new CartServices(userId)
         await cartServices.addToCart(productId, quantity);
-
         res.json("Product has been added to cart")
     } else{
         res.json(`Only ${productQuantity} left in stock`);
@@ -66,13 +65,17 @@ router.post('/:product_id/update', async function(req,res){
 
     // res.json(`${newQuantity}, ${productQuantity}`)
 
-    if (newQuantity <= productQuantity){
-        const cartServices = new CartServices(userId);
-        await cartServices.updateNewQuantity(productId, newQuantity);
-        res.json("Product quantity has been updated")
-    } else{
-        res.json(`Only ${productQuantity} left in stock`);
-    }
+
+    const cartServices = new CartServices(userId);
+    await cartServices.updateNewQuantity(productId, newQuantity);
+
+    // if (newQuantity <= productQuantity){
+    //     const cartServices = new CartServices(userId);
+    //     await cartServices.updateNewQuantity(productId, newQuantity);
+    //     res.json("Product quantity has been updated")
+    // } else{
+    //     res.json(`Only ${productQuantity} left in stock`);
+    // }
 })
 
 module.exports = router;
