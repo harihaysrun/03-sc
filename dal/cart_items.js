@@ -6,7 +6,7 @@ const getCart = async function(userId){
             'user_id':userId
         }).fetch({
             'require':false,
-            'withRelated': ['product']
+            'withRelated': ['brand', 'country', 'type', 'skinTypes', 'status']
         })
 
     return allCartItems;
@@ -18,7 +18,7 @@ const getCartItemByUserAndProduct = async function(userId, productId){
         'product_id': productId
     }).fetch({
         'require':false,
-        'withRelated': ['product']
+        'withRelated': ['brand', 'country', 'type', 'skinTypes', 'status']
     });
 
     return cartItem;
@@ -37,12 +37,12 @@ const createCartItem = async function(userId, productId, quantity){
 
 const updateItemQuantity = async function(userId, productId, newQuantity){
     let cartItem = await getCartItemByUserAndProduct(userId, productId);
-    // if(cartItem){
+    if(cartItem){
         cartItem.set('quantity', newQuantity);
         await cartItem.save();
         return true;
-    // }
-    // return false;
+    }
+    return false;
 }
 
 const updateStock = async function(productId, updatedStock){
