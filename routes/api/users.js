@@ -70,13 +70,13 @@ router.post('/login', async function(req,res){
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     res.json({
-        'username': req.user.username,
-        'email': req.user.email,
-        'first_name': req.user.first_name,
-        'last_name': req.user.last_name,
-        'address_line_1': req.user.address_line_1,
-        'address_line_2': req.user.address_line_2,
-        'postal_code': req.user.postal_code,
+        // 'username': req.user.username,
+        // 'email': req.user.email,
+        // 'first_name': req.user.first_name,
+        // 'last_name': req.user.last_name,
+        // 'address_line_1': req.user.address_line_1,
+        // 'address_line_2': req.user.address_line_2,
+        // 'postal_code': req.user.postal_code,
         'phone_number': req.user.phone_number
     })
 })
