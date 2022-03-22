@@ -68,10 +68,24 @@ router.post('/login', async function(req,res){
 })
 
 
-router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
+// router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
+//     res.json({
+//         'username':req.user.username,
+//         'email':req.user.email
+//     })
+// })
+
+router.get('/profile', function(req,res){
+    let username = req.body.username;
+
+    let user = await User.where({
+        'username': username
+    }).fetch({
+        'require': false
+    })
+
     res.json({
-        'username':req.user.username,
-        'email':req.user.email
+        'user':user
     })
 })
 
