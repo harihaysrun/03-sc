@@ -60,10 +60,7 @@ router.post('/:product_id/update', async function(req,res){
     if (newQuantity <= productQuantity){
         const cartServices = new CartServices(userId);
         await cartServices.updateNewQuantity(productId, newQuantity);
-        res.json({
-            // "quantity": product.get("stock_no"),
-            "message":"Product quantity has been updated"
-        })
+        res.json("Product quantity has been updated")
     } else{
         res.json(`Only ${productQuantity} left in stock`);
     }
