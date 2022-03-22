@@ -52,15 +52,21 @@ const updateItemQuantity = async function(userId, productId, newQuantity){
     // }
 
     // return cartItem;
-    let cartItem = await CartItem.where ({
+    let cartItem = await CartItem.where({
             'user_id':userId,
             'product_id': productId
         }).fetch({
             'require':false,
             'withRelated': ['product']
         })
+    
+    if(cartItem){
+        cartItem.set('quantity', newQuantity);
+        await cartItem.save();
+        return cartItem;
+    }
 
-    return cartItem;
+    return false;
 }
 
 const updateStock = async function(productId, updatedStock){
