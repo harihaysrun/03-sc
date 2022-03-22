@@ -45,12 +45,13 @@ const updateItemQuantity = async function(userId, productId, newQuantity){
         'withRelated': ['product']
     });
 
-    if(cartItem){
-        cartItem.set('quantity', newQuantity);
-        await cartItem.save();
-        return true;
-    }
-    return false;
+    // if(cartItem){
+    //     cartItem.set('quantity', newQuantity);
+    //     await cartItem.save();
+    //     return true;
+    // }
+
+    return cartItem;
 }
 
 const updateStock = async function(productId, updatedStock){
