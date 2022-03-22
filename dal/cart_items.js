@@ -41,8 +41,8 @@ const updateItemQuantity = async function(userId, productId, newQuantity){
         'user_id': userId,
         'product_id': productId
     }).fetch({
-        'require':false,
-        'withRelated': ['product']
+        'require':true,
+        'withRelated': ['product', 'user']
     });
 
     // if(cartItem){
