@@ -37,12 +37,12 @@ const createCartItem = async function(userId, productId, quantity){
 
 const updateItemQuantity = async function(userId, productId, newQuantity){
     let cartItem = await getCartItemByUserAndProduct(userId, productId);
-    if(cartItem){
+    // if(cartItem){
         cartItem.set('quantity', newQuantity);
         await cartItem.save();
         return true;
-    }
-    return false;
+    // }
+    // return false;
 }
 
 const updateStock = async function(productId, updatedStock){
