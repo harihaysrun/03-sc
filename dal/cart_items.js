@@ -54,7 +54,8 @@ const updateItemQuantity = async function(userId, productId, newQuantity){
     // return cartItem;
     let allCartItems = await CartItem.collection()
         .where ({
-            'user_id':userId
+            'user_id':userId,
+            'product_id': productId
         }).fetch({
             'require':false,
             'withRelated': ['product']
