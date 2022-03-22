@@ -9,9 +9,15 @@ const {bootstrapField, createRegistrationForm } = require('../../forms');
 
 const generateToken = function(user, secret, expiresIn){
     const token = jwt.sign({
-        'username': user.username,
         'id': user.id,
-        'email': user.email
+        'username': user.username,
+        'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'address_line_1': user.address_line_1,
+        'address_line_2': user.address_line_2,
+        'postal_code': user.postal_code,
+        'phone_number': user.phone_number
     }, secret,{
         'expiresIn': expiresIn
     });
