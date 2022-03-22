@@ -17,7 +17,7 @@ class CartServices{
             // cartItem.set('quantity', cartItem.get('quantity') + quantity);
             // await cartItem.save()
 
-            return await cartDataLayer.updateQuantity(this.user_id, productId, cartItem.get('quantity') + quantity);
+            return await cartDataLayer.updateItemQuantity(this.user_id, productId, cartItem.get('quantity') + quantity);
 
         } else{
             // todo: check whether there is enough stock
@@ -27,7 +27,7 @@ class CartServices{
     }
 
     async updateNewQuantity(productId, newQuantity){
-        return await cartDataLayer.updateQuantity(this.user_id, productId, newQuantity);
+        return await cartDataLayer.updateItemQuantity(this.user_id, productId, newQuantity);
     }
 
     async updateStockNo(productId, updatedStock){

@@ -35,14 +35,14 @@ const createCartItem = async function(userId, productId, quantity){
     return cartItem;
 }
 
-const updateQuantity = async function(userId, productId, newQuantity){
+const updateItemQuantity = async function(userId, productId, newQuantity){
     let cartItem = await getCartItemByUserAndProduct(userId, productId);
-    // if(cartItem){
+    if(cartItem){
         cartItem.set('quantity', newQuantity);
         await cartItem.save();
-        return cartItem;
-    // }
-    // return false;
+        return true;
+    }
+    return false;
 }
 
 const updateStock = async function(productId, updatedStock){
@@ -81,4 +81,4 @@ const removeFromCart = async function(userId, productId){
     }
 }
 
-module.exports = { getCart, getCartItemByUserAndProduct, createCartItem, updateQuantity, updateStock, removeFromCart }
+module.exports = { getCart, getCartItemByUserAndProduct, createCartItem, updateItemQuantity, updateStock, removeFromCart }
