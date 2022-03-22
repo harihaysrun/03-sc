@@ -47,27 +47,24 @@ router.post('/:product_id/add', async function(req,res){
 
 router.post('/:product_id/update', async function(req,res){
 
-    let userId = req.body.user_id;
-    let productId = req.params.product_id;
-    // let newQuantity = req.body.newQuantity;
-    let newQuantity = 5;
+    res.json("this route works")
+    // let userId = req.body.user_id;
+    // let productId = req.params.product_id;
+    // // let newQuantity = req.body.newQuantity;
+    // let newQuantity = 5;
 
-    const product = await Product.where({
-        'id': productId
-    }).fetch({
-        require:true,
-        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
-    })
+    // const product = await Product.where({
+    //     'id': productId
+    // }).fetch({
+    //     require:true,
+    //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    // })
 
-    // // get current stock number
-    // let product = await productDataLayer.getProductByID(productId);
-    let productQuantity = product.get('stock_no');
+    // // // get current stock number
+    // // let product = await productDataLayer.getProductByID(productId);
+    // let productQuantity = product.get('stock_no');
 
-    // res.json(`${newQuantity}, ${productQuantity}`)
-
-
-    const cartServices = new CartServices(userId);
-    await cartServices.updateNewQuantity(productId, newQuantity);
+    // // res.json(`${newQuantity}, ${productQuantity}`)
 
     // if (newQuantity <= productQuantity){
     //     const cartServices = new CartServices(userId);
