@@ -16,9 +16,10 @@ router.get('/', async function(req,res){
     })
 })
 
-router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
+router.get('/:product_id/add', async function(req,res){
 
-    let userId = req.session.user.id;
+    // let userId = req.session.user.id;
+    let userId = req.body.user_id;
     let productId = req.params.product_id;
     let quantity = 1;
         
@@ -38,7 +39,9 @@ router.get('/:product_id/add', checkIfAuthenticated, async function(req,res){
         let cartServices = new CartServices(userId)
         await cartServices.addToCart(productId, quantity);
 
-        res.json("Product has been added to cart")
+        res.json({
+            "message":"Product has been added to cart"
+        })
         // req.flash('success_messages', 'Product has been added to cart');
         // res.redirect('/products');
     } else{
