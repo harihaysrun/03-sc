@@ -50,10 +50,18 @@ router.post('/:product_id/update', async function(req,res){
 
     let userId = req.body.user_id;
     let productId = req.params.product_id;
-    let newQuantity = req.body.newQuantity;
+    // let newQuantity = req.body.newQuantity;
+    let newQuantity = 5;
 
-    // get current stock number
-    let product = await productDataLayer.getProductByID(productId);
+    const product = await Product.where({
+        'id': productId
+    }).fetch({
+        require:true,
+        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    })
+
+    // // get current stock number
+    // let product = await productDataLayer.getProductByID(productId);
     let productQuantity = product.get('stock_no');
 
     // res.json(`${newQuantity}, ${productQuantity}`)
