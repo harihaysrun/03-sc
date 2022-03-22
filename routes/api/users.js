@@ -88,20 +88,6 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     })
 })
 
-// router.get('/profile', function(req,res){
-//     let username = req.body.username;
-
-//     let user = await User.where({
-//         'username': username
-//     }).fetch({
-//         'require': false
-//     })
-
-//     res.json({
-//         'user':user
-//     })
-// })
-
 router.post('/refresh', async function(req,res){
     let refreshToken = req.body.refreshToken;
 
