@@ -16,7 +16,7 @@ router.get('/:product_id', async function(req,res){
         'id': productId
     }).fetch({
         require:true,
-        withRelated:['country', 'type', 'skinTypes', 'status']
+        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     })
 
     res.json({product})
