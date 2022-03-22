@@ -27,7 +27,8 @@ class CartServices{
     }
 
     async updateNewQuantity(productId, newQuantity){
-        return await cartDataLayer.updateItemQuantity(this.user_id, productId, newQuantity);
+        let status = await cartDataLayer.updateItemQuantity(this.user_id, productId, newQuantity);
+        return status;
     }
 
     async updateStockNo(productId, updatedStock){

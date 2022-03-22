@@ -6,7 +6,7 @@ const getCart = async function(userId){
             'user_id':userId
         }).fetch({
             'require':false,
-            'withRelated': ['brand', 'country', 'type', 'skinTypes', 'status']
+            'withRelated': ['product']
         })
 
     return allCartItems;
@@ -18,7 +18,7 @@ const getCartItemByUserAndProduct = async function(userId, productId){
         'product_id': productId
     }).fetch({
         'require':false,
-        'withRelated': ['brand', 'country', 'type', 'skinTypes', 'status']
+        'withRelated': ['product']
     });
 
     return cartItem;
