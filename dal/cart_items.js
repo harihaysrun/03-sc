@@ -37,13 +37,13 @@ const createCartItem = async function(userId, productId, quantity){
 
 const updateItemQuantity = async function(userId, productId, newQuantity){
     // let cartItem = await getCartItemByUserAndProduct(userId, productId);
-    const cartItem = await CartItem.where({
-        'user_id': userId,
-        'product_id': productId
-    }).fetch({
-        'require':true,
-        'withRelated': ['product', 'user']
-    });
+    // const cartItem = await CartItem.where({
+    //     'user_id': userId,
+    //     'product_id': productId
+    // }).fetch({
+    //     'require':true,
+    //     'withRelated': ['product']
+    // });
 
     // if(cartItem){
     //     cartItem.set('quantity', newQuantity);
@@ -51,7 +51,16 @@ const updateItemQuantity = async function(userId, productId, newQuantity){
     //     return true;
     // }
 
-    return cartItem;
+    // return cartItem;
+    let allCartItems = await CartItem.collection()
+        .where ({
+            'user_id':userId
+        }).fetch({
+            'require':false,
+            'withRelated': ['product']
+        })
+
+    return allCartItems;
 }
 
 const updateStock = async function(productId, updatedStock){
