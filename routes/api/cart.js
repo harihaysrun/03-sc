@@ -19,7 +19,6 @@ router.get('/', async function(req,res){
 router.get('/:product_id/add', checkIfAuthenticatedWithJWT, async function(req,res){
 
     let userId = req.session.user.id;
-    // let userId = req.body.user_id;
     let productId = req.params.product_id;
     let quantity = 1;
         
