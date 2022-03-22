@@ -61,7 +61,7 @@ router.post('/:product_id/update', async function(req,res){
         const cartServices = new CartServices(userId);
         await cartServices.updateNewQuantity(productId, newQuantity);
         res.json({
-            "quantity": product.get("stock_no"),
+            // "quantity": product.get("stock_no"),
             "message":"Product quantity has been updated"
         })
     } else{
