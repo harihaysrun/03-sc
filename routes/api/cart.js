@@ -16,41 +16,33 @@ router.get('/', async function(req,res){
     })
 })
 
-router.post('/:product_id/add', async function(req,res){
+router.get('/:product_id/add', async function(req,res){
 
     // let userId = req.session.user.id;
-    // let userId = req.body.user_id;
+    let userId = req.body.user_id;
     let productId = req.params.product_id;
-    // let quantity = 1;
-
-    res.json(`${productId}`)
+    let quantity = 1;
         
-    // const product = await Product.where({
-    //     'id': productId
-    // }).fetch({
-    //     require:true,
-    //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
-    // })
+    const product = await Product.where({
+        'id': productId
+    }).fetch({
+        require:true,
+        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    })
 
-    // // get current stock number
-    // let productQuantity = product.get('stock_no');
+    // get current stock number
+    let productQuantity = product.get('stock_no');
 
-    // if(quantity <= productQuantity) {
+    if(quantity <= productQuantity) {
 
-    //     // check if cart item with the same product id and user id is already in the database
-    //     let cartServices = new CartServices(userId)
-    //     await cartServices.addToCart(productId, quantity);
+        // check if cart item with the same product id and user id is already in the database
+        let cartServices = new CartServices(userId)
+        await cartServices.addToCart(productId, quantity);
 
-    //     res.json({
-    //         "message":"Product has been added to cart"
-    //     })
-    //     // req.flash('success_messages', 'Product has been added to cart');
-    //     // res.redirect('/products');
-    // } else{
-    //     res.json(`Only ${productQuantity} left in stock`)
-    //     // req.flash('error_messages',`Only ${productQuantity} left in stock`);
-    //     // res.redirect('/products');
-    // }
+        res.json("Product has been added to cart")
+    } else{
+        res.json(`Only ${productQuantity} left in stock`);
+    }
 
 })
 
