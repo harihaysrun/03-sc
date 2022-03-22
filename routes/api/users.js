@@ -43,7 +43,6 @@ router.post('/register', async function(req,res) {
         'phone_number': req.body.phone_number,
         'password': getHashedPassword(req.body.password),
     });
-
     await user.save();
 
     res.json(user);
