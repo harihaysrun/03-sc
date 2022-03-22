@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { User, BlackListedToken } = require('../../models')
 const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
+const {bootstrapField, createRegistrationForm } = require('../../forms');
 
 const generateToken = function(user, secret, expiresIn){
     const token = jwt.sign({
@@ -22,6 +23,49 @@ function getHashedPassword(password){
     const hash = sha256.update(password).digest('base64');
     return hash;
 }
+
+
+router.post('/register', async function(req,res) {
+    // const registerForm = createRegistrationForm();
+    // registerForm.handle(req, {
+    //     success: async function(form){
+    //         const user = new User({
+    //             'username': form.data.username,
+    //             'email': form.data.email,
+    //             'first_name': form.data.first_name,
+    //             'last_name': form.data.last_name,
+    //             'address_line_1': form.data.address_line_1,
+    //             'address_line_2': form.data.address_line_2,
+    //             'postal_code': form.data.postal_code,
+    //             'phone_number': form.data.phone_number,
+    //             'password': getHashedPassword(form.data.password),
+    //         });
+    //         await user.save();
+    //         req.flash("success_messages", "You have signed up successfully!");
+    //         res.redirect('/users/login')
+    //     },
+    //     'error': function(form) {
+    //         res.render('users/register', {
+    //             'form': form.toHTML(bootstrapField)
+    //         })
+    //     }
+    // })
+
+    const user = new User({
+        'username': req.body.username,
+        'email': req.body.email,
+        'first_name': req.body.first_name,
+        'last_name': req.body.last_name,
+        'address_line_1': req.body.address_line_1,
+        'address_line_2': req.body.address_line_2,
+        'postal_code': req.body.postal_code,
+        'phone_number': req.body.phone_number,
+        'password': getHashedPassword(req.body.password),
+    });
+    await user.save();
+
+    res.json(user);
+})
 
 router.post('/login', async function(req,res){
     let username = req.body.username;
