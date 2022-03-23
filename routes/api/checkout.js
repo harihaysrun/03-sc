@@ -62,7 +62,7 @@ router.post('/process_payment', express.raw({
     'type': 'application/json'
 }), async function(req,res){
     let payLoad = req.body;
-    let endpoint = process.env.STRIPE_ENDPOINT_SECRET;
+    let endpoint = process.env.API_STRIPE_ENDPOINT_SECRET;
     let signHeader = req.headers['stripe-signature'];
     let event;
 
