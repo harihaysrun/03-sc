@@ -62,12 +62,10 @@ router.post('/', async function (req,res){
     //     'sessionId': stripeSession.id
     // });
 
-    // res.json({
-    //     'stripeSession': stripeSession,
-    //     // 'stripe': stripe
-    // })
-
-    res.redirect(303, stripeSession.url);
+    res.json({
+        'stripeSession': stripeSession,
+        // 'stripe': stripe
+    })
 
 })
 
