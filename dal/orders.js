@@ -63,6 +63,7 @@ async function getUserOrder(userId){
         'user_id':parseInt(userId)
     }).fetch({
         require:true,
+        withRelated:['shipping', 'user']
     })
 
 
