@@ -102,10 +102,6 @@ router.post('/success/:sessionId', async function(req,res){
         'orderItems': orders
     })
 
-    // res.render('checkout/success',{
-    //     'order': userOrders.toJSON(),
-    //     'orderItems': orders
-    // })
 })
 
 router.post('/process_payment', express.raw({
