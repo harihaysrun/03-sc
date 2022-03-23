@@ -75,46 +75,46 @@ router.post('/success/:sessionId', async function(req,res){
     let userId = req.body.user_id;
 
     // res.json("test")
-    let cart = new CartServices(userId);
+    // let cart = new CartServices(userId);
 
     const userOrders = await orderDataLayer.getUserOrder(userId);
     // console.log(userOrders.get('items'), userOrders.get('amount'));
-    if (userOrders){
+    // if (userOrders){
 
-        localStorage.setItem("order_viewed", "");
+        // localStorage.setItem("order_viewed", "");
 
-        let orders = JSON.parse(userOrders.get('items'));
-        let productId;
-        for (let o of orders){
-            let orderQuantity = o.quantity;
-            productId = o.product_id;
+        const orders = JSON.parse(userOrders.get('items'));
+        // let productId;
+        // for (let o of orders){
+        //     let orderQuantity = o.quantity;
+        //     productId = o.product_id;
             
-            if (localStorage.getItem("order_viewed" != userOrders.id)){
-                // auto update stock no
-                let product = await productDataLayer.getProductByID(productId);
-                let productQuantity = product.get('stock_no');
-                let updatedStock = productQuantity - orderQuantity;
+            // if (localStorage.getItem("order_viewed" != userOrders.id)){
+            //     // auto update stock no
+            //     let product = await productDataLayer.getProductByID(productId);
+            //     let productQuantity = product.get('stock_no');
+            //     let updatedStock = productQuantity - orderQuantity;
 
-                console.log(productId, updatedStock)
-                // console.log(orderQuantity, productQuantity, updatedStock)
-                await cart.updateStockNo(productId, updatedStock)
+            //     console.log(productId, updatedStock)
+            //     // console.log(orderQuantity, productQuantity, updatedStock)
+            //     await cart.updateStockNo(productId, updatedStock)
 
-                // empty user cart
-                await cart.removeCartItem(productId);
+            //     // empty user cart
+            //     await cart.removeCartItem(productId);
 
-                localStorage.setItem("order_viewed", userOrders.id);
-            }
+            //     localStorage.setItem("order_viewed", userOrders.id);
+            // }
 
-        }
+        // }
 
         res.json({
             'order': userOrders.toJSON(),
             'orderItems': orders
         })
-    }
-    else{
-        res.json("error")
-    }
+    // }
+    // else{
+    //     res.json("error")
+    // }
 
 })
 
@@ -161,7 +161,8 @@ router.post('/process_payment', express.raw({
             let product = await productDataLayer.getProductByID(o.product_id);
             let productName = product.get('name');
             let productBrand = product.get('brand');
-            let productCost = parseStr(product.get('cost'));
+            let productCost = parseInt(product.get('cost'));
+            let productQuantity= parseInt(product.get('stock_no'));
             
             itemsText = `${o.quantity} x ${productName}`;
             itemsTextArray.push(itemsText);
@@ -176,10 +177,28 @@ router.post('/process_payment', express.raw({
             };
 
             items.push(orders);
+
+            // update stock no & remove items from cart
+            let cart = new CartServices(userId);
+            let updatedStock = productQuantity - parseInt(o.quantity);
+            await cart.updateStockNo(productId, updatedStock)
+            await cart.removeCartItem(productId);
         }
 
         await orderDataLayer.createOrderItem(userId, JSON.stringify(items), itemsTextArray.join(', '), amountTotal, paymentStatus);
-        // console.log(orderItem)
+        
+        // update stock no
+        let product = await productDataLayer.getProductByID(productId);
+        let productQuantity = product.get('stock_no');
+        let updatedStock = productQuantity - orderQuantity;
+
+        // console.log(productId, updatedStock)
+        // console.log(orderQuantity, productQuantity, updatedStock)
+        await cart.updateStockNo(productId, updatedStock)
+
+        // empty user cart
+        await cart.removeCartItem(productId);
+            
     }
     res.send({
         'received': true
