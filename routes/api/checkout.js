@@ -75,8 +75,6 @@ router.post('/success/:sessionId', async function(req,res){
     let userId = req.body.user_id;
     let cart = new CartServices(userId);
 
-    // console.log('req.session.user.id: ' + req.session.user.id)
-
     const userOrders = await orderDataLayer.getUserOrder(userId);
     // console.log(userOrders.get('items'), userOrders.get('amount'));
     let orders = JSON.parse(userOrders.get('items'));
@@ -96,7 +94,6 @@ router.post('/success/:sessionId', async function(req,res){
 
         // empty user cart
         await cart.removeCartItem(productId);
-
 
     }
 
