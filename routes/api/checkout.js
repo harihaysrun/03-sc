@@ -114,7 +114,7 @@ router.post('/success/:sessionId', async function(req,res){
 router.post('/process_payment', express.raw({
     'type': 'application/json'
 }), async function(req,res){
-    let payLoad = req.body;
+    let payLoad = req.body.toString();
     let endpoint = process.env.API_STRIPE_ENDPOINT_SECRET;
     let signHeader = req.headers['stripe-signature'];
     let event;
