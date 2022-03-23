@@ -100,11 +100,17 @@ router.get('/success/:sessionId', async function(req,res){
 
     }
 
+    res.redirect('https://www.youtube.com/');
 
-    res.render('checkout/success',{
-        'order': userOrders.toJSON(),
-        'orderItems': orders
-    })
+    // res.json({
+    //     'order': userOrders.toJSON(),
+    //     'orderItems': orders
+    // })
+
+    // res.render('checkout/success',{
+    //     'order': userOrders.toJSON(),
+    //     'orderItems': orders
+    // })
 })
 
 router.post('/process_payment', express.raw({
