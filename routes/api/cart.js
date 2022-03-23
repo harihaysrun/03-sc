@@ -62,7 +62,7 @@ router.post('/:product_id/update', async function(req,res){
     }
 })
 
-router.get('/:product_id/remove', async function(req,res){
+router.post('/:product_id/remove', async function(req,res){
 
     let userId = req.body.user_id;
     let productId = req.params.product_id;
