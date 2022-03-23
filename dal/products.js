@@ -11,7 +11,7 @@ async function getProductByID(productId){
         'id':parseInt(productId)
     }).fetch({
         require:true,
-        withRelated:['country', 'type', 'skinTypes', 'status']
+        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     })
 
     return product;

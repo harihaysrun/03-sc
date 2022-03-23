@@ -153,6 +153,8 @@ router.post('/process_payment', express.raw({
             userId = o.user_id;
             let product = await productDataLayer.getProductByID(o.product_id);
             let productName = product.get('name');
+            let productBrand = product.get('brand');
+            let productCost = parseStr(product.get('cost'));
             
             itemsText = `${o.quantity} x ${productName}`;
             itemsTextArray.push(itemsText);
@@ -160,7 +162,9 @@ router.post('/process_payment', express.raw({
             orders = {
                 'quantity': o.quantity,
                 'product_id': o.product_id,
+                'product_brand': productBrand.name,
                 'product_name': productName,
+                'totalCost': productCost * parseInt(o.quantity),
                 'image_url': o.image_url
             };
 
