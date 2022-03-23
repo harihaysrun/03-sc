@@ -51,10 +51,18 @@ router.post('/', async function (req,res){
     }
 
     const stripeSession = await Stripe.checkout.sessions.create(payment);
-    res.render('checkout/checkout',{
-        'sessionId': stripeSession.id,
-        'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
-    })
+    // res.render('checkout/checkout',{
+    //     'sessionId': stripeSession.id,
+    //     'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
+    // })
+
+    const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
+
+    let response = await stripe.redirectToCheckout({
+        'sessionId': stripeSession.id
+    });
+
+    res.json(response)
 
 })
 
