@@ -55,4 +55,60 @@ router.post('/', async function (req,res){
 
 })
 
+router.post('/process_payment', express.raw({
+    'type': 'application/json'
+}), async function(req,res){
+    let payLoad = req.body;
+    let endpoint = process.env.STRIPE_ENDPOINT_SECRET;
+    let signHeader = req.headers['stripe-signature'];
+    let event;
+
+    try {
+        event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
+
+    } catch(e){
+        res.send({
+            'error': e.message
+        })
+        console.log(e)
+    }
+    if (event.type == 'checkout.session.completed'){
+        
+        let stripeSession = event.data.object;
+        console.log(stripeSession)
+        let orders = JSON.parse(stripeSession.metadata.orders);
+        let amountTotal = stripeSession.amount_total / 100;
+        let paymentStatus = stripeSession.payment_status;
+        
+        let items = [];
+        let itemsTextArray = [];
+        let userId;
+        
+        for (let o of orders){
+            userId = o.user_id;
+            let product = await productDataLayer.getProductByID(o.product_id);
+            let productName = product.get('name');
+            
+            itemsText = `${o.quantity} x ${productName}`;
+            itemsTextArray.push(itemsText);
+
+            orders = {
+                'quantity': o.quantity,
+                'product_id': o.product_id,
+                'product_name': productName,
+                'image_url': o.image_url
+            };
+
+            items.push(orders);
+        }
+
+        await orderDataLayer.createOrderItem(userId, JSON.stringify(items), itemsTextArray.join(', '), amountTotal, paymentStatus);
+        // console.log(orderItem)
+    }
+    res.send({
+        'received': true
+    })
+
+})
+
 module.exports = router;
