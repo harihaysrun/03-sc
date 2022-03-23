@@ -9,8 +9,8 @@ const orderDataLayer = require('../../dal/orders');
 
 router.post('/', async function (req,res){
 
-    let userId = req.body.user_id;
-    const cartServices = new CartServices(userId);
+    // let userId = req.body.user_id;
+    const cartServices = new CartServices(req.session.user.id);
     const items = await cartServices.getAllCartItems();
 
     const lineItems = [];
@@ -32,7 +32,7 @@ router.post('/', async function (req,res){
         console.log(lineItem.amount)
 
         meta.push({
-            'user_id': userId,
+            'user_id': req.session.user.id,
             'product_id': i.get('product_id'),
             'quantity': i.get('quantity'),
             'image_url': i.related('product').get('image_url')
