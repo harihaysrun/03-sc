@@ -160,7 +160,7 @@ router.post('/process_payment', express.raw({
         let userId;
         
         for (let o of orders){
-            // userId = o.user_id;
+            userId = o.user_id;
             // let product = await productDataLayer.getProductByID(o.product_id);
             // let productName = product.get('name');
             // let productBrand = product.get('brand');
@@ -192,7 +192,7 @@ router.post('/process_payment', express.raw({
             // update stock no & remove items from cart
             let product = await productDataLayer.getProductByID(o.product_id);
             let productQuantity= parseInt(product.get('stock_no'));
-            let cart = new CartServices(o.user_id);
+            let cart = new CartServices(userId);
             let updatedStock = productQuantity - o.quantity;
             await cart.updateStockNo(o.product_id, updatedStock)
             await cart.removeCartItem(o.product_id);
