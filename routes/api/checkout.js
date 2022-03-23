@@ -43,8 +43,8 @@ router.post('/', async function (req,res){
     const payment = {
         'payment_method_types': ['card'],
         'line_items': lineItems,
-        'success_url': process.env.STRIPE_SUCCESS_URL,
-        'cancel_url': process.env.STRIPE_CANCEL_URL,
+        'success_url': process.env.API_STRIPE_SUCCESS_URL,
+        'cancel_url': process.env.API_STRIPE_CANCEL_URL,
         'metadata':{
             'orders': metaData
         }
