@@ -114,12 +114,12 @@ router.post('/success/:sessionId', async function(req,res){
 router.post('/process_payment', express.raw({
     'type': 'application/json'
 }), async function(req,res){
-    let payLoad = req.body.toString();
+    let event = req.body;
     let endpoint = process.env.API_STRIPE_ENDPOINT_SECRET;
     let signHeader = req.headers['stripe-signature'];
-    let event;
+    // let event;
     
-    event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
+    event = Stripe.webhooks.constructEvent(req.body, signHeader, endpoint)
 
     res.send({
         'received': true
