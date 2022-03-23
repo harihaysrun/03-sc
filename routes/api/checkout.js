@@ -72,33 +72,33 @@ router.post('/', async function (req,res){
 
 router.get('/success/:sessionId', async function(req,res){
 
-    // let userId = req.body.user_id;
-    let cart = new CartServices(req.session.user.id);
+    // // let userId = req.body.user_id;
+    // let cart = new CartServices(req.session.user.id);
 
-    // console.log('req.session.user.id: ' + req.session.user.id)
+    // // console.log('req.session.user.id: ' + req.session.user.id)
 
-    const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
-    // console.log(userOrders.get('items'), userOrders.get('amount'));
-    let orders = JSON.parse(userOrders.get('items'));
-    let productId;
-    for (let o of orders){
-        let orderQuantity = o.quantity;
-        productId = o.product_id;
+    // const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
+    // // console.log(userOrders.get('items'), userOrders.get('amount'));
+    // let orders = JSON.parse(userOrders.get('items'));
+    // let productId;
+    // for (let o of orders){
+    //     let orderQuantity = o.quantity;
+    //     productId = o.product_id;
         
-        // auto update stock no
-        let product = await productDataLayer.getProductByID(productId);
-        let productQuantity = product.get('stock_no');
-        let updatedStock = productQuantity - orderQuantity;
+    //     // auto update stock no
+    //     let product = await productDataLayer.getProductByID(productId);
+    //     let productQuantity = product.get('stock_no');
+    //     let updatedStock = productQuantity - orderQuantity;
 
-        console.log(productId, updatedStock)
-        // console.log(orderQuantity, productQuantity, updatedStock)
-        await cart.updateStockNo(productId, updatedStock)
+    //     console.log(productId, updatedStock)
+    //     // console.log(orderQuantity, productQuantity, updatedStock)
+    //     await cart.updateStockNo(productId, updatedStock)
 
-        // empty user cart
-        await cart.removeCartItem(productId);
+    //     // empty user cart
+    //     await cart.removeCartItem(productId);
 
 
-    }
+    // }
 
     res.redirect('https://www.youtube.com/');
 
