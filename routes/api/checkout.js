@@ -119,13 +119,13 @@ router.post('/process_payment', express.raw({
     let signHeader = req.headers['stripe-signature'];
     // let event;
     
-    if (endpoint){
-        event = Stripe.webhooks.constructEvent(req.body, signHeader, endpoint)
+    // if (endpoint){
+    //     event = Stripe.webhooks.constructEvent(req.body, signHeader, endpoint)
 
-        res.send({
-            'received': true
-        })
-    }
+    //     res.send({
+    //         'received': true
+    //     })
+    // }
 
     res.send(event.type)
     // try {
