@@ -58,7 +58,10 @@ router.post('/:product_id/update', async function(req,res){
         // res.json(product)
         res.json("Product quantity has been updated")
     } else{
-        res.json(`Only ${productQuantity} left in stock`);
+        // res.json(`Only ${productQuantity} left in stock`);
+        res.json({
+            'stock':'not enough'
+        });
     }
 })
 
