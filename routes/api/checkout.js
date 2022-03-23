@@ -56,7 +56,7 @@ router.post('/', async function (req,res){
     //     'publishableKey': process.env.STRIPE_PUBLISHABLE_KEY
     // })
 
-    const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
+    // const stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     // let response = await stripe.redirectToCheckout({
     //     'sessionId': stripeSession.id
@@ -64,7 +64,7 @@ router.post('/', async function (req,res){
 
     res.json({
         'stripeSession': stripeSession,
-        'stripe': stripe
+        // 'stripe': stripe
     })
 
 })
