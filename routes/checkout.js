@@ -45,7 +45,7 @@ router.get('/', async function (req,res){
     // 2. create stripe payment and get the stripe session
     let metaData = JSON.stringify(meta);
     const payment = {
-        'payment_method_types': ['card', 'grabpay'],
+        'payment_method_types': ['card'],
         'line_items': lineItems,
         'success_url': process.env.STRIPE_SUCCESS_URL,
         'cancel_url': process.env.STRIPE_CANCEL_URL,
