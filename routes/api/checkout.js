@@ -77,30 +77,35 @@ router.post('/success/:sessionId', async function(req,res){
 
     const userOrders = await orderDataLayer.getUserOrder(userId);
     // console.log(userOrders.get('items'), userOrders.get('amount'));
-    let orders = JSON.parse(userOrders.get('items'));
-    let productId;
-    for (let o of orders){
-        let orderQuantity = o.quantity;
-        productId = o.product_id;
-        
-        // auto update stock no
-        let product = await productDataLayer.getProductByID(productId);
-        let productQuantity = product.get('stock_no');
-        let updatedStock = productQuantity - orderQuantity;
+    if (userOrders){
+        let orders = JSON.parse(userOrders.get('items'));
+        let productId;
+        for (let o of orders){
+            let orderQuantity = o.quantity;
+            productId = o.product_id;
+            
+            // auto update stock no
+            let product = await productDataLayer.getProductByID(productId);
+            let productQuantity = product.get('stock_no');
+            let updatedStock = productQuantity - orderQuantity;
 
-        console.log(productId, updatedStock)
-        // console.log(orderQuantity, productQuantity, updatedStock)
-        await cart.updateStockNo(productId, updatedStock)
+            console.log(productId, updatedStock)
+            // console.log(orderQuantity, productQuantity, updatedStock)
+            await cart.updateStockNo(productId, updatedStock)
 
-        // empty user cart
-        await cart.removeCartItem(productId);
+            // empty user cart
+            await cart.removeCartItem(productId);
 
+        }
+
+        res.json({
+            'order': userOrders.toJSON(),
+            'orderItems': orders
+        })
     }
-
-    res.json({
-        'order': userOrders.toJSON(),
-        'orderItems': orders
-    })
+    else{
+        res.json("error")
+    }
 
 })
 
