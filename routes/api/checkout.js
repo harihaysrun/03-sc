@@ -118,11 +118,11 @@ router.post('/process_payment', express.raw({
     let endpoint = process.env.API_STRIPE_ENDPOINT_SECRET;
     let signHeader = req.headers['stripe-signature'];
     let event;
+    
+    event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
 
     res.send({
-        'payLoad': payLoad,
-        'endpoint': endpoint,
-        'signHeader': signHeader
+        'event': event,
     })
     // try {
     //     event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
