@@ -70,14 +70,14 @@ router.post('/', async function (req,res){
 
 })
 
-router.get('/success/:sessionId', async function(req,res){
+router.post('/success/:sessionId', async function(req,res){
 
-    // let userId = req.body.user_id;
-    let cart = new CartServices(req.session.user.id);
+    let userId = req.body.user_id;
+    let cart = new CartServices(userId);
 
     // console.log('req.session.user.id: ' + req.session.user.id)
 
-    const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
+    const userOrders = await orderDataLayer.getUserOrder(userId);
     // console.log(userOrders.get('items'), userOrders.get('amount'));
     let orders = JSON.parse(userOrders.get('items'));
     let productId;
@@ -99,8 +99,6 @@ router.get('/success/:sessionId', async function(req,res){
 
 
     }
-
-    // res.redirect('https://www.youtube.com/');
 
     res.json({
         'order': userOrders.toJSON(),
