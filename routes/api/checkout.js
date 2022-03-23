@@ -34,7 +34,10 @@ router.post('/', async function (req,res){
         meta.push({
             'user_id': userId,
             'product_id': i.get('product_id'),
+            'product_brand': i.related('product').related('brand').get('name'),
+            'product_name': i.related('product').get('name'),
             'quantity': i.get('quantity'),
+            'total_cost': i.get('quantity') * i.related('product').get('cost'),
             'image_url': i.related('product').get('image_url')
         })
     }
@@ -157,48 +160,46 @@ router.post('/process_payment', express.raw({
         let userId;
         
         for (let o of orders){
-            userId = o.user_id;
-            let product = await productDataLayer.getProductByID(o.product_id);
-            let productName = product.get('name');
-            let productBrand = product.get('brand');
-            let productCost = parseInt(product.get('cost'));
-            let productQuantity= parseInt(product.get('stock_no'));
+            // userId = o.user_id;
+            // let product = await productDataLayer.getProductByID(o.product_id);
+            // let productName = product.get('name');
+            // let productBrand = product.get('brand');
+            // let productCost = parseInt(product.get('cost'));
+            // let productQuantity= parseInt(product.get('stock_no'));
             
-            itemsText = `${o.quantity} x ${productName}`;
+            itemsText = `${o.quantity} x ${o.product_name}`;
             itemsTextArray.push(itemsText);
 
+            // 'user_id': userId,
+            // 'product_id': i.get('product_id'),
+            // 'product_brand': i.related('product').related('brand').get('name'),
+            // 'product_name': i.related('product').get('name'),
+            // 'quantity': i.get('quantity'),
+            // 'total_cost': i.get('quantity') * i.related('product').get('cost'),
+            // 'image_url': i.rela
+
             orders = {
-                'quantity': o.quantity,
                 'product_id': o.product_id,
-                'product_brand': productBrand.name,
-                'product_name': productName,
-                'totalCost': productCost * parseInt(o.quantity),
+                'product_brand': o.product_id,
+                'product_name': o.product_name,
+                'quantity': o.quantity,
+                'total_cost': o.total_cost,
                 'image_url': o.image_url
             };
 
             items.push(orders);
 
             // update stock no & remove items from cart
-            let cart = new CartServices(userId);
-            let updatedStock = productQuantity - parseInt(o.quantity);
-            await cart.updateStockNo(productId, updatedStock)
-            await cart.removeCartItem(productId);
+            let product = await productDataLayer.getProductByID(o.product_id);
+            let productQuantity= parseInt(product.get('stock_no'));
+            let cart = new CartServices(o.user_id);
+            let updatedStock = productQuantity - o.quantity;
+            await cart.updateStockNo(o.product_id, updatedStock)
+            await cart.removeCartItem(o.product_id);
         }
 
         await orderDataLayer.createOrderItem(userId, JSON.stringify(items), itemsTextArray.join(', '), amountTotal, paymentStatus);
         
-        // update stock no
-        let product = await productDataLayer.getProductByID(productId);
-        let productQuantity = product.get('stock_no');
-        let updatedStock = productQuantity - orderQuantity;
-
-        // console.log(productId, updatedStock)
-        // console.log(orderQuantity, productQuantity, updatedStock)
-        await cart.updateStockNo(productId, updatedStock)
-
-        // empty user cart
-        await cart.removeCartItem(productId);
-            
     }
     res.send({
         'received': true
