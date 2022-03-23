@@ -122,7 +122,7 @@ router.post('/process_payment', express.raw({
     event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
 
     res.send({
-        'event': event,
+        'received': true
     })
     // try {
     //     event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
