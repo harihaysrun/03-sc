@@ -7,7 +7,7 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const productDataLayer = require('../../dal/products');
 const orderDataLayer = require('../../dal/orders');
 
-router.get('/', async function (req,res){
+router.post('/', async function (req,res){
 
     let userId = req.body.user_id;
     const cartServices = new CartServices(userId);
