@@ -29,7 +29,7 @@ router.post('/', async function (req,res){
         console.log(lineItem.amount)
 
         meta.push({
-            'user_id': req.session.user.id,
+            'user_id': userId,
             'product_id': i.get('product_id'),
             'quantity': i.get('quantity'),
             'image_url': i.related('product').get('image_url')
