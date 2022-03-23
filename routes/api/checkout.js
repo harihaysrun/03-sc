@@ -63,7 +63,10 @@ router.post('/', async function (req,res){
     // });
 
     // res.json(stripeSession)
-    res.redirect(stripeSession.url)
+    // res.redirect(stripeSession.url)
+    res.writeHead({
+        Location: stripeSession.url
+    })
 
 })
 
