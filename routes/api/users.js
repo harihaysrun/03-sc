@@ -89,18 +89,6 @@ router.post('/profile', checkIfAuthenticatedWithJWT, function(req,res){
         'require': false
     })
 
-    // let newDetails = {
-    //     'username': req.body.username,
-    //     'email': req.body.email,
-    //     'first_name': req.body.first_name,
-    //     'last_name': req.body.last_name,
-    //     'address_line_1': req.body.address_line_1,
-    //     'address_line_2': req.body.address_line_2,
-    //     'postal_code': req.body.postal_code,
-    //     'phone_number': req.body.phone_number,
-    //     'password': getHashedPassword(req.body.password)
-    // }
-
     user.set('username', req.body.username);
     user.set('email', req.body.email);
     user.set('first_name', req.body.first_name);
