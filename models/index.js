@@ -62,7 +62,10 @@ const User = bookshelf.model('User',{
 })
 
 const Role = bookshelf.model('Role',{
-    tableName:'roles'
+    tableName:'roles',
+    users(){
+        return this.hasMany('User')
+    }
 })
 
 const CartItem = bookshelf.model("CartItem",{

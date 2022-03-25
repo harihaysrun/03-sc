@@ -26,12 +26,11 @@ const bootstrapField = function (name, object) {
 
 const createProductForm = function(brands, countries, types, skin_types, status){
     return forms.create({
-        // create text input called "name" etc.,
         "brand_id":fields.string({
             'label': 'Brand',
             'required':true,
             'errorAfterField':true,
-            'widget': widgets.select(), // dropdown select
+            'widget': widgets.select(),
             'choices': brands
         }),
         "name":fields.string({
@@ -96,8 +95,15 @@ const createProductForm = function(brands, countries, types, skin_types, status)
     })
 }
 
-const createRegistrationForm = function() {
+const createRegistrationForm = function(roles) {
     return forms.create({
+        "role_id":fields.string({
+            'label': 'Role',
+            'required':true,
+            'errorAfterField':true,
+            'widget': widgets.select(),
+            'choices': roles
+        }),
         'username': fields.string({
             required: true,
             errorAfterField: true,
@@ -126,34 +132,34 @@ const createRegistrationForm = function() {
                 label: ['form-label']
             }
         }),
-        'address_line_1': fields.string({
-            required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
-        }),
-        'address_line_2': fields.string({
-            required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
-        }),
-        'postal_code': fields.string({
-            required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
-        }),
-        'phone_number': fields.string({
-            required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
-        }),
+        // 'address_line_1': fields.string({
+        //     required: true,
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     }
+        // }),
+        // 'address_line_2': fields.string({
+        //     required: true,
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     }
+        // }),
+        // 'postal_code': fields.string({
+        //     required: true,
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     }
+        // }),
+        // 'phone_number': fields.string({
+        //     required: true,
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     }
+        // }),
         'password': fields.password({
             required: true,
             errorAfterField: true,

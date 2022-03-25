@@ -19,6 +19,7 @@ function getHashedPassword(password){
 router.get('/', checkIfAuthenticated, async function(req,res){
 
     const allUsers = await userDataLayer.getAllUsers();
+
     console.log(allUsers)
     res.render('users/users',{
         'user': allUsers.toJSON()
@@ -59,12 +60,16 @@ router.post('/:user_id/delete', checkIfAuthenticated, async function(req,res){
 });
 
 
-router.get('/register', function(req,res){
+router.get('/register', checkIfAuthenticated, async function(req,res){
 
-    const registerForm = createRegistrationForm();
+    const allRoles = await userDataLayer.getAllRoles();
+    allRoles.unshift([0, "N/A"]);
+
+    const registerForm = createRegistrationForm(allRoles);
     res.render('users/register', {
         'form': registerForm.toHTML(bootstrapField)
     })
+
 })
 
 router.post('/register', function(req,res) {
@@ -72,18 +77,19 @@ router.post('/register', function(req,res) {
     registerForm.handle(req, {
         success: async function(form){
             const user = new User({
+                'role_id': form.data.role_id,
                 'username': form.data.username,
                 'email': form.data.email,
                 'first_name': form.data.first_name,
                 'last_name': form.data.last_name,
-                'address_line_1': form.data.address_line_1,
-                'address_line_2': form.data.address_line_2,
-                'postal_code': form.data.postal_code,
-                'phone_number': form.data.phone_number,
+                'address_line_1': "N/A",
+                'address_line_2': "N/A",
+                'postal_code': "N/A",
+                'phone_number': "N/A",
                 'password': getHashedPassword(form.data.password),
             });
             await user.save();
-            req.flash("success_messages", "You have signed up successfully!");
+            req.flash("success_messages", "Role successfully added!");
             res.redirect('/users/login')
         },
         'error': function(form) {
