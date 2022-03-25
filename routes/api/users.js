@@ -82,7 +82,7 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
 router.post('/profile', async function(req,res){
 
     let user = await User.where({
-        'user_id': req.body.user_id
+        'id': req.body.user_id
     }).fetch({
         'require': false
     })
