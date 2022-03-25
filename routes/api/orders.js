@@ -5,16 +5,13 @@ const { OrderItem } = require('../../models');
 
 router.post('/', async function(req,res){
 
-    let ordersArray = [];
-    let order = await OrderItem.collection().where({
+    let orders = await OrderItem.collection().where({
         'user_id': req.body.user_id
     }).fetch({
         withRelated:['shipping', 'user']
     });
 
-    ordersArray.push(order)
-
-    res.send(ordersArray)
+    res.send(orders)
 })
 
 module.exports = router;
