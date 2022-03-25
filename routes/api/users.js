@@ -81,7 +81,7 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
 })
 
 
-router.post('/profile', checkIfAuthenticatedWithJWT, function(req,res){
+router.post('/profile', function(req,res){
 
     let user = await User.where({
         'user_id': req.body.user_id
