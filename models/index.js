@@ -19,6 +19,13 @@ const Product = bookshelf.model('Product',{
     }
 })
 
+const Brand = bookshelf.model('Brand',{
+    tableName:'brands',
+    products(){
+        return this.hasMany('Product')
+    }
+})
+
 const Country = bookshelf.model('Country',{
     tableName:'countries',
     products(){
