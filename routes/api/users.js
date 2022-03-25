@@ -77,7 +77,6 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     })
 })
 
-
 router.post('/profile/edit', async function(req,res){
 
     let user = await User.where({
