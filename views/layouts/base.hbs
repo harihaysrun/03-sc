@@ -9,9 +9,11 @@
   </head>
   <body>
 
+    {{!-- {{#block 'navbar'}}{{/block}} --}}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
+
     {{#if user}}
         <a class="navbar-brand" href="/">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +23,7 @@
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="/products">Products</a>
             <a class="nav-link" href="/users">Users</a>
+            <a class="nav-link" href="/users/employees">Employees</a>
             <a class="nav-link" href="/orders">Orders</a>
             <a class="nav-link" href="/enquiries">Enquiries</a>
           </div>

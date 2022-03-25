@@ -61,10 +61,20 @@ const User = bookshelf.model('User',{
     }
 })
 
+const Employee = bookshelf.model('Employee',{
+    tableName:'employees',
+    role(){
+        return this.belongsTo('Role')
+    }
+})
+
 const Role = bookshelf.model('Role',{
     tableName:'roles',
     users(){
         return this.hasMany('User')
+    },
+    employees(){
+        return this.hasMany('Employee')
     }
 })
 
@@ -96,4 +106,4 @@ const BlackListedToken = bookshelf.model('BlacklistedToken',{
     'tableName': 'blacklisted_tokens',
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Role, CartItem, OrderItem, Shipping, BlackListedToken }
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Employee, Role, CartItem, OrderItem, Shipping, BlackListedToken }

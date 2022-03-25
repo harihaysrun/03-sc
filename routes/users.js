@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const crypto = require('crypto');
 
-const { User } = require('../models');
+const { User, Employee } = require('../models');
 const {bootstrapField, createRegistrationForm, createLoginForm } = require('../forms');
 
 const userDataLayer = require('../dal/users');
-const { checkIfAuthenticated } = require('../middlewares');
+const { checkIfAuthenticated, checkIfAuthenticatedAdmin } = require('../middlewares');
 
 
 function getHashedPassword(password){
@@ -59,11 +59,10 @@ router.post('/:user_id/delete', checkIfAuthenticated, async function(req,res){
     
 });
 
-
-router.get('/register', checkIfAuthenticated, async function(req,res){
+router.get('/register', checkIfAuthenticatedAdmin, async function(req,res){
 
     const allRoles = await userDataLayer.getAllRoles();
-    allRoles.unshift([0, "N/A"]);
+    // allRoles.unshift([0, "N/A"]);
 
     const registerForm = createRegistrationForm(allRoles);
     res.render('users/register', {
@@ -76,21 +75,17 @@ router.post('/register', function(req,res) {
     const registerForm = createRegistrationForm();
     registerForm.handle(req, {
         success: async function(form){
-            const user = new User({
+            const employee = new Employee({
                 'role_id': form.data.role_id,
                 'username': form.data.username,
                 'email': form.data.email,
                 'first_name': form.data.first_name,
                 'last_name': form.data.last_name,
-                'address_line_1': "N/A",
-                'address_line_2': "N/A",
-                'postal_code': "N/A",
-                'phone_number': "N/A",
                 'password': getHashedPassword(form.data.password),
             });
-            await user.save();
-            req.flash("success_messages", "Role successfully added!");
-            res.redirect('/users/login')
+            await employee.save();
+            req.flash("success_messages", "New employee has been added successfully!");
+            res.redirect('/')
         },
         'error': function(form) {
             res.render('users/register', {
@@ -98,6 +93,18 @@ router.post('/register', function(req,res) {
             })
         }
     })
+})
+
+
+router.get('/employees', checkIfAuthenticatedAdmin, async function(req,res){
+
+    const allEmployees = await userDataLayer.getAllEmployees();
+
+    // console.log(allEmployees)
+    res.render('users/employees',{
+        'user': allEmployees.toJSON()
+    })
+
 })
 
 router.get('/login', function(req,res){
@@ -112,25 +119,26 @@ router.post('/login', async function(req, res) {
     loginForm.handle(req, {
         'success': async function(form) {
 
-            let user = await User.where({
+            let employee = await Employee.where({
                 'username': form.data.username
             }).fetch({
                require:false
             });
 
-            if (!user) {
+            if (!employee) {
                 req.flash("error_messages", "Sorry, your account or password is incorrect")
                 res.redirect('/users/login');
             } else {
-                if (user.get('password') === getHashedPassword(form.data.password)) {
+                if (employee.get('password') === getHashedPassword(form.data.password)) {
 
                     req.session.user = {
-                        id: user.get('id'),
-                        username: user.get('username'),
-                        email: user.get('email')
+                        id: employee.get('id'),
+                        username: employee.get('username'),
+                        email: employee.get('email'),
+                        role: employee.get('role_id')
                     }
 
-                    req.flash("success_messages", `Welcome, ${user.get('username')}!`);
+                    req.flash("success_messages", `Welcome, ${employee.get('username')}!`);
                     res.redirect('/users/profile');
                 } else {
                     req.flash("error_messages", "Sorry, your account or password is incorrect")
@@ -162,7 +170,6 @@ router.get('/profile', async function(req, res) {
     }
 
 })
-
 
 router.get('/logout', function(req, res) {
     req.session.user = null;

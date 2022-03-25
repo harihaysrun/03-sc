@@ -8,6 +8,16 @@ const checkIfAuthenticated = function(req,res,next){
     }
 }
 
+const checkIfAuthenticatedAdmin = function(req,res,next){
+    if(req.session.user && req.session.user.role === 1){
+        next(); // go to the middleware. if no more middleware then go to the route function
+    } else{
+        // no user has logged in
+        req.flash('error_messages', 'You are not allowed to view this page');
+        res.redirect('/')
+    }
+}
+
 // for API
 const jwt = require('jsonwebtoken');
 const checkIfAuthenticatedWithJWT = function(req,res,next){
@@ -33,4 +43,4 @@ const checkIfAuthenticatedWithJWT = function(req,res,next){
     }
 }
 
-module.exports = { checkIfAuthenticated, checkIfAuthenticatedWithJWT }
+module.exports = { checkIfAuthenticated, checkIfAuthenticatedAdmin, checkIfAuthenticatedWithJWT }
