@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-// const orderDataLayer = require('../../dal/products');
 const { OrderItem } = require('../../models');
 
 router.post('/', async function(req,res){
@@ -11,6 +10,5 @@ router.post('/', async function(req,res){
         withRelated:['shipping', 'user']
     });
 })
-
 
 module.exports = router;
