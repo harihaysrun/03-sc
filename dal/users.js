@@ -2,7 +2,9 @@ const { User } = require('../models');
 
 async function getAllUsers(){
     
-    const allUsers = await User.collection().fetch();
+    const allUsers = await User.collection().fetch({
+                        'withRelated': ['role']
+                    });
     return allUsers;
 
 }

@@ -19,13 +19,6 @@ const Product = bookshelf.model('Product',{
     }
 })
 
-const Brand = bookshelf.model('Brand',{
-    tableName:'brands',
-    products(){
-        return this.hasMany('Product')
-    }
-})
-
 const Country = bookshelf.model('Country',{
     tableName:'countries',
     products(){
@@ -56,6 +49,13 @@ const Status = bookshelf.model('Status',{
 
 const User = bookshelf.model('User',{
     tableName:'users',
+    role(){
+        return this.belongsTo('Role')
+    }
+})
+
+const Role = bookshelf.model('Role',{
+    tableName:'roles'
 })
 
 const CartItem = bookshelf.model("CartItem",{
@@ -86,4 +86,4 @@ const BlackListedToken = bookshelf.model('BlacklistedToken',{
     'tableName': 'blacklisted_tokens',
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, CartItem, OrderItem, Shipping, BlackListedToken }
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Role, CartItem, OrderItem, Shipping, BlackListedToken }
