@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { User, BlackListedToken } = require('../../models')
 const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
-const {bootstrapField, createRegistrationForm } = require('../../forms');
 
 const generateToken = function(user, secret, expiresIn){
     const token = jwt.sign({
@@ -29,7 +28,6 @@ function getHashedPassword(password){
     const hash = sha256.update(password).digest('base64');
     return hash;
 }
-
 
 router.post('/register', async function(req,res) {
     const user = new User({
@@ -81,7 +79,7 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
 })
 
 
-router.post('/profile', function(req,res){
+router.post('/profile', async function(req,res){
 
     let user = await User.where({
         'user_id': req.body.user_id
