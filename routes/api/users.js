@@ -80,6 +80,41 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     })
 })
 
+
+router.post('/profile', checkIfAuthenticatedWithJWT, function(req,res){
+
+    let user = await User.where({
+        'user_id': req.body.user_id
+    }).fetch({
+        'require': false
+    })
+
+    // let newDetails = {
+    //     'username': req.body.username,
+    //     'email': req.body.email,
+    //     'first_name': req.body.first_name,
+    //     'last_name': req.body.last_name,
+    //     'address_line_1': req.body.address_line_1,
+    //     'address_line_2': req.body.address_line_2,
+    //     'postal_code': req.body.postal_code,
+    //     'phone_number': req.body.phone_number,
+    //     'password': getHashedPassword(req.body.password)
+    // }
+
+    user.set('username', req.body.username);
+    user.set('email', req.body.email);
+    user.set('first_name', req.body.first_name);
+    user.set('last_name', req.body.last_name);
+    user.set('address_line_1', req.body.address_line_1);
+    user.set('address_line_2', req.body.address_line_2);
+    user.set('postal_code', req.body.postal_code);
+    user.set('phone_number', req.body.phone_number);
+    user.set('password', getHashedPassword(req.body.password));
+    await user.save();
+
+    res.json(user)
+})
+
 router.post('/refresh', async function(req,res){
     let refreshToken = req.body.refreshToken;
 
