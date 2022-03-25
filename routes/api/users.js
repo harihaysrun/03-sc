@@ -71,7 +71,6 @@ router.post('/login', async function(req,res){
     }
 })
 
-
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     res.json({
         'user': req.user
@@ -79,7 +78,7 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
 })
 
 
-router.post('/profile', async function(req,res){
+router.post('/profile/edit', async function(req,res){
 
     let user = await User.where({
         'id': req.body.user_id
@@ -95,7 +94,7 @@ router.post('/profile', async function(req,res){
     user.set('address_line_2', req.body.address_line_2);
     user.set('postal_code', req.body.postal_code);
     user.set('phone_number', req.body.phone_number);
-    user.set('password', getHashedPassword(req.body.password));
+    // user.set('password', getHashedPassword(req.body.password));
     await user.save();
 
     res.json(user)
