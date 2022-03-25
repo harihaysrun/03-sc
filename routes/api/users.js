@@ -90,11 +90,38 @@ router.post('/profile/edit', async function(req,res){
     user.set('email', req.body.email);
     user.set('first_name', req.body.first_name);
     user.set('last_name', req.body.last_name);
+    await user.save();
+
+    res.json(user)
+})
+
+router.post('/profile/password/edit', async function(req,res){
+
+    let user = await User.where({
+        'id': req.body.user_id
+    }).fetch({
+        'require': true
+    })
+
+    user.set('password', getHashedPassword(req.body.password));
+    await user.save();
+
+    res.json(user)
+})
+
+
+router.post('/profile/address/edit', async function(req,res){
+
+    let user = await User.where({
+        'id': req.body.user_id
+    }).fetch({
+        'require': true
+    })
+
     user.set('address_line_1', req.body.address_line_1);
     user.set('address_line_2', req.body.address_line_2);
     user.set('postal_code', req.body.postal_code);
     user.set('phone_number', req.body.phone_number);
-    // user.set('password', getHashedPassword(req.body.password));
     await user.save();
 
     res.json(user)
