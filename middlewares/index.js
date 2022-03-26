@@ -14,7 +14,7 @@ const checkIfAuthenticatedAdmin = function(req,res,next){
     } else{
         // no user has logged in
         req.flash('error_messages', 'You are not allowed to view this page');
-        res.redirect('/')
+        res.redirect('/dashboard')
     }
 }
 
