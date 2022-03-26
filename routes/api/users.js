@@ -73,10 +73,41 @@ router.post('/login', async function(req,res){
 })
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
-    res.json({
-        'user': req.user
-    })
+    if (req.user) {
+        const user = await User.where({
+            'id': req.session.user.id
+        }).fetch({
+            require: true
+        })
+
+        res.json({
+            'user': user.toJSON()
+        })
+    //     res.render('users/profile',{
+    //         'user': user.toJSON()
+    //     })
+    // } else {
+    //     req.flash('error_messages', 'Please log in to view this page');
+    //     res.redirect('/users/login');
+    }
 })
+
+// router.get('/profile', async function(req, res) {
+//     if (req.session.user) {
+//         const user = await User.where({
+//             'id': req.session.user.id
+//         }).fetch({
+//             require: true
+//         })
+//         res.render('users/profile',{
+//             'user': user.toJSON()
+//         })
+//     } else {
+//         req.flash('error_messages', 'Please log in to view this page');
+//         res.redirect('/users/login');
+//     }
+
+// })
 
 router.post('/profile/edit', async function(req,res){
 
