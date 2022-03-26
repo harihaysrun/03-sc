@@ -1,7 +1,8 @@
 const { Product, Brand, Country, Type, SkinType, Status  } = require('../models');
 
 async function getAllProducts(){
-    let products = await Product.fetchAll();
+    // let products = await Product.fetchAll();
+    const products = await Product.collection().fetch();
     return products;
 }
 

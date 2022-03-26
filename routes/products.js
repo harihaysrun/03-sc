@@ -4,6 +4,7 @@ const router = express.Router();
 const { Product, Brand, SkinType } = require('../models');
 const {bootstrapField, createProductForm, createSearchForm } = require('../forms');
 
+const brandDataLayer = require('../dal/brands');
 const productDataLayer = require('../dal/products');
 const { checkIfAuthenticated } = require('../middlewares');
 
@@ -12,6 +13,12 @@ router.get('/', async function(req,res){
     //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     // });
 
+    // get length of brands
+    const brands = await brandDataLayer.getAllBrands();
+
+    console.log(brands.length)
+
+    // for search
     const allBrands = await productDataLayer.getAllBrands();
     allBrands.unshift([0, "N/A"]);
     const allCountries = await productDataLayer.getAllCountries();
@@ -31,7 +38,8 @@ router.get('/', async function(req,res){
             })
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON()
+                'products': products.toJSON(),
+                'brands': brands.toJSON()
             })
         },
         'success': async function(form){
@@ -70,7 +78,8 @@ router.get('/', async function(req,res){
 
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON() // important!
+                'products': products.toJSON(),
+                'brands': brands.toJSON()
             });
         },
         'error':async function(form){
@@ -79,10 +88,12 @@ router.get('/', async function(req,res){
             })
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON()
+                'products': products.toJSON(),
+                'brands': brands.toJSON()
             })
         }
     })
+
 });
 
 router.get('/create', checkIfAuthenticated, async function(req,res){

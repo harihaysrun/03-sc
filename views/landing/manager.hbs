@@ -4,10 +4,39 @@
 
     <h1>Dashboard</h1>
 
-    <a href="/brands" class="btn btn-primary">{{brands.length}} Brands</a>
+    <a href="/products" class="btn btn-primary">{{products.length}} Products</a>
     <a href="/users" class="btn btn-primary">{{users.length}} Customers</a>
     <a href="/orders" class="btn btn-primary">{{orders.length}} Orders</a>
 
+    <h2 class="mt-5">Recent orders</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order No.</th>
+                <th>Username</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Amount</th>
+                <th>Payment Status</th>
+                <th>Shipping Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each orders}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.user.username}}</td>
+                <td>{{this.date}}</td>
+                <td>{{this.items_text}}</td>
+                <td>{{this.amount}}</td>
+                <td>{{this.payment_status}}</td>
+                <td>{{this.user.address_line_1}}, {{this.user.address_line_2}}, {{this.user.country}} {{this.user.postal_code}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    
 {{/block}}
 
 {{/extends}}

@@ -30,18 +30,11 @@
             <td>{{this.id}}</td>
             <td>{{this.user.username}}</td>
             <td>{{this.date}}</td>
-            <td>
-                {{this.items_text}}
-                {{!-- <ol>
-                {{#each items}}
-                    <li>{{@index}}: {{this}}</li>
-                    <li>{{@value}}: {{this}}</li>
-                {{/each}}
-                </ol> --}}
+            <td> {{this.items_text}}
             </td>
             <td>{{this.amount}}</td>
             <td>{{this.payment_status}}</td>
-            <td>{{this.user.address_line_1}}, {{this.user.address_line_2}}, {{this.user.postal_code}}</td>
+            <td>{{this.user.address_line_1}}, {{this.user.address_line_2}}, {{this.user.country}} {{this.user.postal_code}}</td>
             <td>{{this.shipping.name}}</td>
             <td>
                 <a href="/orders/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
