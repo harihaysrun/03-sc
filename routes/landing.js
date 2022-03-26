@@ -16,14 +16,25 @@ router.get('/dashboard', async function(req,res) {
 
     const allBrands = await productDataLayer.getAllBrands();
     const allUsers = await userDataLayer.getAllUsers();
+    const allEmployees = await userDataLayer.getAllEmployees();
     const allOrders = await orderDataLayer.getAllOrders();
     
-    res.render('landing/index',{
-        'brands': allBrands.toJSON(),
-        'users': allUsers.toJSON(),
-        'orders': allOrders.toJSON()
-    })
+    if(req.session.user && req.session.user.role === 1){
+        res.render('landing/admin',{
+            'brands': allBrands.toJSON(),
+            'users': allUsers.toJSON(),
+            'employees': allEmployees.toJSON(),
+            'orders': allOrders.toJSON()
+        })
+    } 
 
+    if(req.session.user && req.session.user.role === 2){
+        res.render('landing/manager',{
+            'brands': allBrands.toJSON(),
+            'users': allUsers.toJSON(),
+            'orders': allOrders.toJSON()
+        })
+    } 
 })
 
 module.exports = router;
