@@ -79,17 +79,17 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
         }).fetch({
             require: true
         })
-
         res.json({
             'user': user.toJSON()
         })
-    //     res.render('users/profile',{
-    //         'user': user.toJSON()
-    //     })
     // } else {
     //     req.flash('error_messages', 'Please log in to view this page');
     //     res.redirect('/users/login');
     }
+
+    // res.json({
+    //     'user': req.user
+    // })
 })
 
 // router.get('/profile', async function(req, res) {
