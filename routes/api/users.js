@@ -37,6 +37,7 @@ router.post('/register', async function(req,res) {
         'last_name': req.body.last_name,
         'address_line_1': req.body.address_line_1,
         'address_line_2': req.body.address_line_2,
+        'country': req.body.country,
         'postal_code': req.body.postal_code,
         'phone_number': req.body.phone_number,
         'password': getHashedPassword(req.body.password),
@@ -107,7 +108,6 @@ router.post('/profile/password/edit', async function(req,res){
 
     res.json(user)
 })
-
 
 router.post('/profile/address/edit', async function(req,res){
 
