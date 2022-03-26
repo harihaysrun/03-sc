@@ -75,11 +75,11 @@ router.post('/login', async function(req,res){
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     if (req.user) {
         const user = await User.where({
-            'id': req.session.user.id
+            'id': req.user.id
         }).fetch({
             require: true
         });
-        
+
         res.json({
             'user': user.toJSON()
         })
