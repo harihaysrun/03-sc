@@ -73,22 +73,22 @@ router.post('/login', async function(req,res){
 })
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
-    if (req.user) {
-        const user = await User.where({
-            'id': req.user.id
-        }).fetch({
-            require: true
-        });
+    // if (req.user) {
+    //     const user = await User.where({
+    //         'id': req.user.id
+    //     }).fetch({
+    //         require: true
+    //     });
 
-        res.json({
-            'user': user.toJSON()
-        })
+    //     res.json({
+    //         'user': user.toJSON()
+    //     })
 
-    }
+    // }
 
-    // res.json({
-    //     'user': req.user
-    // })
+    res.json({
+        'user': req.user
+    })
 })
 
 // router.get('/profile', async function(req, res) {
