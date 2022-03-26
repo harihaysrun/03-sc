@@ -74,7 +74,7 @@ router.post('/login', async function(req,res){
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
     res.json({
-        'user': req.user
+        'user': req.session.user
     })
 })
 
