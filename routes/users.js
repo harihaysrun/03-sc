@@ -53,8 +53,7 @@ router.post('/:user_id/delete', checkIfAuthenticated, async function(req,res){
     
     await user.destroy();
 
-
-    req.flash("success_messages", `You have removed ${user.username}`);
+    req.flash("success_messages", `User has been successfully removed`);
     res.redirect('/users');
     
 });
@@ -94,7 +93,6 @@ router.post('/register', function(req,res) {
         }
     })
 })
-
 
 router.get('/employees', checkIfAuthenticatedAdmin, async function(req,res){
 
@@ -139,7 +137,7 @@ router.post('/login', async function(req, res) {
                     }
 
                     req.flash("success_messages", `Welcome, ${employee.get('username')}!`);
-                    res.redirect('/users/profile');
+                    res.redirect('/dashboard');
                 } else {
                     req.flash("error_messages", "Sorry, your account or password is incorrect")
                     res.redirect('/users/login')

@@ -6,11 +6,18 @@ const userDataLayer = require('../dal/users');
 const orderDataLayer = require('../dal/orders');
 
 router.get('/', async function(req,res) {
+    if(req.session.user){
+        res.redirect('/dashboard');
+    }
+    res.redirect('/users/login');
+})
+
+router.get('/dashboard', async function(req,res) {
 
     const allBrands = await productDataLayer.getAllBrands();
     const allUsers = await userDataLayer.getAllUsers();
     const allOrders = await orderDataLayer.getAllOrders();
-    // console.log(allBrands.length)
+    
     res.render('landing/index',{
         'brands': allBrands.toJSON(),
         'users': allUsers.toJSON(),
@@ -18,10 +25,5 @@ router.get('/', async function(req,res) {
     })
 
 })
-
-// router.get('/products', function(req,res) {
-//     res.render('products/index')
-// })
-
 
 module.exports = router;
