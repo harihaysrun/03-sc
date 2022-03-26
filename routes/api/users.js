@@ -119,6 +119,7 @@ router.post('/profile/address/edit', async function(req,res){
 
     user.set('address_line_1', req.body.address_line_1);
     user.set('address_line_2', req.body.address_line_2);
+    user.set('country', req.body.country);
     user.set('postal_code', req.body.postal_code);
     user.set('phone_number', req.body.phone_number);
     await user.save();
