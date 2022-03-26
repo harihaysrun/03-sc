@@ -78,13 +78,12 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
             'id': req.session.user.id
         }).fetch({
             require: true
-        })
+        });
+        
         res.json({
             'user': user.toJSON()
         })
-    // } else {
-    //     req.flash('error_messages', 'Please log in to view this page');
-    //     res.redirect('/users/login');
+
     }
 
     // res.json({
