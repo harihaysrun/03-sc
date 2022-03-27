@@ -138,6 +138,7 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             newProduct.set('expiry', form.data.expiry);
             newProduct.set('status_id', form.data.status_id);
             newProduct.set('stock_no', form.data.stock_no);
+            newProduct.set('image_url', form.data.image_url);
             await newProduct.save();
 
             // console.log(form.data.skin_types)
