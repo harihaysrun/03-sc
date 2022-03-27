@@ -8,46 +8,46 @@
     <title>Sunny Central</title>
 
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   </head>
   <body>
 
-    {{!-- {{#block 'navbar'}}{{/block}} --}}
-  {{#if user}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
 
-        <a class="navbar-brand" href="/dashboard">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link" href="/products">Products</a>
-            <a class="nav-link" href="/users">Users</a>
-            {{!-- <a class="nav-link" href="/employees">Employees</a> --}}
-            <a class="nav-link" href="/orders">Orders</a>
-            <a class="nav-link" href="/enquiries">Enquiries</a>
+    {{#if user}}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+
+          <a class="navbar-brand" href="/dashboard">Home</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          {{!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/products">Products</a>
+              <a class="nav-link" href="/users">Users</a>
+              <a class="nav-link" href="/orders">Orders</a>
+              <a class="nav-link" href="/enquiries">Enquiries</a>
+            </div>
+          </div> --}}
+          
+          <div class="ml-auto">
+            <a href="/users/profile" class="mr-3">{{user.username}}</a>
+            <a href="/users/logout" class="btn btn-primary">Log out</a>
           </div>
+
         </div>
-        
-        <div class="ml-auto">
-          <a href="/users/profile" class="mr-3">{{user.username}}</a>
-          <a href="/users/logout" class="btn btn-primary">Log out</a>
-        </div>
+      </nav>
 
-  {{!-- {{else}}
+      <nav class="d-none d-lg-flex h-100 bg-dark position-fixed top-0 start-0 flex-column text-center" style="width:80px; color:white">
+        <a href="/" class="p-2 bg-light my-2">Home</a>
+        <a href="/products" class="p-2 bg-light my-2">Products</a>
+        <a href="/users" class="p-2 bg-light my-2">Users</a>
+        <a href="/orders" class="p-2 bg-light my-2">Orders</a>
+        <a href="/enquiries" class="p-2 bg-light my-2">Enquiries</a>
+      </nav>
 
-        <a class="navbar-brand" href="/">Home</a>
-        
-        <div class="ml-auto">
-          <a href="/users/login" class="btn btn-primary">Login</a>
-        </div> --}}
-
-      </div>
-    </nav>
-
-  {{/if}}
+    {{/if}}
 
     {{#block 'login'}}{{/block}}
     
