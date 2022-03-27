@@ -19,7 +19,6 @@ app.set("view engine", "hbs");
 // static folder
 app.use(express.static("public"));
 
-app.use(cors());
 
 app.use(session({
   store: new FileStore(),
@@ -31,6 +30,8 @@ app.use(session({
 // setup wax-on
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
+
+app.use(cors());
 
 
 // enable forms

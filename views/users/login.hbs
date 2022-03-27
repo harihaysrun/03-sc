@@ -1,15 +1,31 @@
 {{#extends 'base'}}
 
-{{#block 'content'}}
+{{#block 'login'}}
 
-    <h1>Login</h1>
+    <div class="container-fluid">
 
-    <form method="POST">
+        <div class="row">
 
-        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-        {{{form}}}
-        <input type="submit" value="Log in" class="btn btn-primary"/ >
-    </form>
+            <div class="d-none d-lg-block col-lg-6 bg-dark" style="height:100vh">
+
+            </div>
+
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center" style="height:100vh">
+                <div class="w-75">
+                    <h1>Login</h1>
+
+                    <form method="POST">
+
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                        {{{form}}}
+                        <input type="submit" value="Log in" class="btn btn-primary mt-3"/ >
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
 
 
 {{/block}}

@@ -8,7 +8,7 @@ const brandDataLayer = require('../dal/brands');
 const productDataLayer = require('../dal/products');
 const { checkIfAuthenticated } = require('../middlewares');
 
-router.get('/', async function(req,res){
+router.get('/', checkIfAuthenticated, async function(req,res){
     // let products = await Product.collection().fetch({
     //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     // });
