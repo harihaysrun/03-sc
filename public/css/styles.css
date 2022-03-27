@@ -1,10 +1,13 @@
 .border-radius{
     border-radius:15px;
-    background-color:rgb(255, 244, 242);
-    border:1px solid mistyrose;
-    color:mistyrose;
 }
 
 a{
     text-decoration: none;
+}
+
+.dashboard-button{
+    background-color:rgb(255, 244, 242);
+    border:1px solid mistyrose;
+    color:rgb(255, 198, 191);
 }
