@@ -4,21 +4,36 @@
 
     <h1>Dashboard</h1>
 
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             <a href="/products" class="col-12 mb-3 col-md-4 m-md-0 p-0">
-                <div class="p-4 me-md-2 border-radius dashboard-button" style="border-radius:15px">
-                    <h2 class="m-0">{{products.length}}</h2> Products
+                <div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
+                    {{!-- <div class="btn-icon">
+                        <img src="/images/sunscreen.svg" alt="">
+                    </div> --}}
+                    <div>
+                        <h2 class="m-0">{{products.length}}</h2> Products
+                    </div>
                 </div>
             </a>
             <a href="/users" class="col-12 mb-3 col-md-4 m-md-0 p-0">
-                <div class="p-4 mx-md-1 border-radius dashboard-button" style="border-radius:15px">
-                    <h2 class="m-0">{{users.length}}</h2> Customers
+                <div class="p-4 mx-md-1 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
+                    {{!-- <div class="btn-icon">
+                        <img src="/images/customer.svg" alt="">
+                    </div> --}}
+                    <div>
+                        <h2 class="m-0">{{users.length}}</h2> Customers
+                    </div>
                 </div>
             </a>
             <a href="/orders" class="col-12 mb-3 col-md-4 m-md-0 p-0">
-                <div class="p-4 ms-md-2 border-radius dashboard-button" style="border-radius:15px">
-                    <h2 class="m-0">{{orders.length}}</h2> Orders
+                <div class="p-4 ms-md-2 border-radius d-flex flex-row align-items-center dashboard-button employee-button" style="border-radius:15px">
+                    {{!-- <div class="btn-icon">
+                        <img src="/images/orders.svg" alt="">
+                    </div> --}}
+                    <div>
+                        <h2 class="m-0">{{orders.length}}</h2> Orders
+                    </div>
                 </div>
             </a>
         </div>

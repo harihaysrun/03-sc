@@ -37,19 +37,38 @@
           </div> --}}
           
           <div class="ml-auto">
-            {{!-- <a href="/users/profile" class="mr-3">{{user.username}}</a> --}}
+            {{!-- <a href="/users/profile" class="navbar-profile">
+              <span class="role-badge">{{user.role_name}}</span>{{user.username}}
+            </a> --}}
             <a href="/users/logout" class="btn btn-primary">Log out</a>
           </div>
 
         </div>
       </nav>
 
-      <nav class="d-none d-lg-flex h-100 position-fixed top-0 start-0 flex-column text-center dashboard-sidebar">
-        <a href="/dashboard" class="p-2 my-2">Home</a>
-        <a href="/products" class="p-2 my-2">Products</a>
-        <a href="/users" class="p-2 my-2">Users</a>
-        <a href="/orders" class="p-2 my-2">Orders</a>
-        <a href="/enquiries" class="p-2 my-2">Enquiries</a>
+      <nav class="d-none d-lg-flex h-100 position-fixed top-0 start-0 dashboard-sidebar">
+        <div class="d-flex flex-column text-center">
+          <a href="/dashboard" class="p-2 my-2">
+            <img src="/images/dashboard-white.svg" alt="">
+            Dashboard
+          </a>
+          <a href="/products" class="p-2 my-2">
+            <img src="/images/sunscreen-white.svg" alt="">
+            Products
+          </a>
+          <a href="/users" class="p-2 my-2">
+            <img src="/images/customer-white.svg" alt="">
+            Users
+          </a>
+          <a href="/orders" class="p-2 my-2">
+            <img src="/images/orders-white.svg" alt="">
+            Orders
+          </a>
+          <a href="/enquiries" class="p-2 my-2">
+            <img src="/images/enquiries-white.svg" alt="">
+            Enquiries
+          </a>
+        </div>
       </nav>
 
     {{/if}}

@@ -14,9 +14,27 @@ a{
 }
 
 .dashboard-button{
-    background-color:rgb(255, 244, 242);
-    border:1px solid mistyrose;
-    color:rgb(255, 198, 191);
+    background-color:#fff6c7;
+    /* border:1px solid #f1ce04; */
+    color:#d6b600;
+    /* background-color:rgb(255, 244, 242); */
+    /* border:1px solid mistyrose; */
+    /* color:rgb(255, 198, 191); */
+}
+
+.employee-button{
+    background-color:#e7edff;
+    /* border:1px solid #7d9efc; */
+    color:#7d9efc;
+}
+
+.btn-icon{
+    width:50px;
+    margin-right:15px;
+}
+
+.dashboard-button:hover, .employee-button:hover{
+    box-shadow: 0px 0px 10px rgb(16, 80, 255, 0.3);
 }
 
 h1{
@@ -70,19 +88,23 @@ tbody>tr>td{
 }
 
 .dashboard-sidebar{
+    width:80px;
     background-color:#000000;
+    padding-top:100px;
 }
 
 .dashboard-sidebar a{
-    width:80px;
     color: white;
-    font-size:14px;
+    font-size:12px;
+}
+
+.dashboard-sidebar a img{
+    width:35px;
+    margin-bottom:5px;
 }
 
 .dashboard-sidebar a:hover{
-    width:80px;
     color: #f1ff29;
-    font-size:14px;
 }
 
 .navbar-brand{
