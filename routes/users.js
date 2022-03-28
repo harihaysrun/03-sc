@@ -73,7 +73,8 @@ router.post('/login', async function(req, res) {
             let employee = await Employee.where({
                 'username': form.data.username
             }).fetch({
-               require:false
+               require:false,
+               withRelated: ['role']
             });
 
             if (!employee) {
@@ -86,7 +87,8 @@ router.post('/login', async function(req, res) {
                         id: employee.get('id'),
                         username: employee.get('username'),
                         email: employee.get('email'),
-                        role: employee.get('role_id')
+                        role: employee.get('role_id'),
+                        role_name: employee.related('role').get('name')
                     }
 
                     req.flash("success_messages", `Welcome, ${employee.get('username')}!`);

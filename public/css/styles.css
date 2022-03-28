@@ -1,3 +1,10 @@
+body{
+    font-family: 'DM Sans', sans-serif;
+    /* font-family: 'Mulish', sans-serif; */
+    /* font-family: 'Quicksand', sans-serif; */
+    font-size:16px;
+}
+
 .border-radius{
     border-radius:15px;
 }
@@ -10,4 +17,95 @@ a{
     background-color:rgb(255, 244, 242);
     border:1px solid mistyrose;
     color:rgb(255, 198, 191);
+}
+
+h1{
+    color:#1050ff;
+}
+
+h1,h2,h3,h4,h5{
+    font-weight:700;
+}
+
+.btn, .form-control{
+    min-width:100%;
+    padding:15px 40px;
+    border-radius: 100px;
+}
+
+.btn-primary{
+    background-color:#1050ff;
+}
+
+.btn-primary:hover{
+    background-color:#0035c7;
+}
+
+.form-control{
+    border:1px solid #1050ff;
+}
+
+label{
+    margin-top:15px;
+    font-size:12px;
+    text-transform: uppercase;
+    color:#1050ff;
+}
+
+table{
+    overflow: hidden;
+}
+
+thead{
+    background-color:#f5f7ff;
+    color:#1050ff;
+}
+
+/* tbody{
+    background-color:lightgray;
+} */
+
+tbody>tr>td{
+    border-bottom:1px solid #e7e7e7;
+}
+
+.dashboard-sidebar{
+    background-color:#000000;
+}
+
+.dashboard-sidebar a{
+    width:80px;
+    color: white;
+    font-size:14px;
+}
+
+.dashboard-sidebar a:hover{
+    width:80px;
+    color: #f1ff29;
+    font-size:14px;
+}
+
+.navbar-brand{
+    font-size:16px;
+}
+
+.navbar-brand:hover {
+    text-decoration: underline;
+}
+
+.role-badge{
+    background-color:#ffdf29;
+    color:#9b8403;
+    font-weight:700;
+    padding:10px 15px;
+    margin-right:15px;
+    border-radius:10px;
+    font-size:14px;
+    line-height:16px;
+}
+
+@media only screen and (min-width:768px) {
+    .btn{
+        min-width:150px;
+    }
 }
