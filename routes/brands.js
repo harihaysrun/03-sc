@@ -37,7 +37,7 @@ router.post('/add', checkIfAuthenticated, async function(req,res){
             newBrand.set('name', form.data.brand_name);
             await newBrand.save();
 
-            req.flash("success_messages", `${newBrand.get('name')} has been added to the Brands list`);
+            req.flash("success_messages", `${newBrand.get('name')} has been added to the list`);
 
             res.redirect('/brands');
         },
@@ -74,7 +74,7 @@ router.post('/:brand_id/update', checkIfAuthenticated, async function(req,res){
             brand.set('name', form.data.brand_name);
             brand.save();
 
-            req.flash("success_messages", `${brand.get('name')} has been removed`);
+            req.flash("success_messages", `${brand.get('name')} has been updated`);
 
             res.redirect('/brands');
         },
@@ -101,6 +101,7 @@ router.post('/:brand_id/delete', checkIfAuthenticated, async function(req,res){
     const brand = await brandDataLayer.getBrandByID(brandId);
     
     await brand.destroy();
+    req.flash("success_messages", `Brand successfully removed`);
     res.redirect('/brands');
 })
 

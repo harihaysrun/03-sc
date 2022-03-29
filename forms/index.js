@@ -273,6 +273,15 @@ const createBrandForm = function(){
     })
 }
 
+const createCountryForm = function(){
+    return forms.create({
+        "country":fields.string({
+            'required':true,
+            'errorAfterField':true
+        })
+    })
+}
+
 const createShippingForm = function(shipping){
     return forms.create({
         "shipping_id":fields.string({
@@ -285,4 +294,4 @@ const createShippingForm = function(shipping){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createShippingForm };
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createShippingForm };

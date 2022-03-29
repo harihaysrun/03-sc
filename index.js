@@ -96,6 +96,7 @@ const employeeRoutes = require('./routes/employees');
 const cloudinaryRoutes = require('./routes/cloudinary');
 const cartRoutes = require('./routes/cart');
 const brandRoutes = require('./routes/brands');
+const countryRoutes = require('./routes/countries');
 const checkoutRoutes = require('./routes/checkout');
 const orderRoutes = require('./routes/orders');
 
@@ -115,6 +116,7 @@ async function main() {
   app.use('/cloudinary', cloudinaryRoutes);	
   app.use('/cart', cartRoutes);	
   app.use('/brands', brandRoutes);	
+  app.use('/countries', countryRoutes);	
   app.use('/checkout', checkoutRoutes);	
   app.use('/orders', orderRoutes);	
   app.use('/api/products', express.json(), api.products)

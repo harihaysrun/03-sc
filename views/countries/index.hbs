@@ -1,0 +1,44 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Countries</h1>
+
+    <a href="/countries/add" class="btn btn-primary mt-3">Add New Countries</a>
+    
+    <p class="mt-4">
+        Countries where products are imported from.
+        <br>This table can be expanded for cases where requests for products from other countries are received.
+    </p>
+
+    <table class="table mt-5 border-radius countries-table">
+        <thead>
+            <tr>
+                <th class="p-3">Country</th>
+                <th class="p-3"></th>
+                <th class="p-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each country}}
+            <tr>
+                <td class="p-3">{{this.name}}</td>
+                <td class="p-3">
+                    <a href="/countries/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
+                        <img src="/images/edit2.svg" alt="">
+                        Edit
+                    </a>
+                </td>
+                <td class="p-3">
+                    <a href="/countries/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                        <i class="fa-solid fa-circle-xmark"></i>Remove
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+{{/block}}
+
+{{/extends}}

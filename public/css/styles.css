@@ -289,7 +289,7 @@ select[name="skin_types"]{
         border-radius:15px;
     }
 
-    .brands-table{
+    .brands-table, .countries-table{
         width:500px !important;
     }
     

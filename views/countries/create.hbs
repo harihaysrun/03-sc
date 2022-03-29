@@ -1,0 +1,17 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1>Add new Country</h1>
+
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        {{{countryForm}}}
+
+        <input type="submit" value="Add New Country" class="btn btn-primary mt-3"/ >
+    </form>
+
+
+{{/block}}
+
+{{/extends}}
