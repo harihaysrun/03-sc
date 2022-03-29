@@ -66,11 +66,11 @@ const createProductForm = function(brands, countries, types, skin_types, status)
             'widget': widgets.multipleSelect(),
             'choices':skin_types
         }),
-        "ingredients":fields.string({
+        "sunscreen_filters":fields.string({
             'required':true,
             'errorAfterField':true
         }),
-        "expiry":fields.string({
+        "year_of_expiry":fields.string({
             'required':true,
             'errorAfterField':true,
             'validators': [validators.integer(), validators.min(2022)]

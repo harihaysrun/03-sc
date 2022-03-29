@@ -134,8 +134,8 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             newProduct.set('type_id', form.data.type_id);
             newProduct.set('cost', form.data.cost);
             newProduct.set('description', form.data.description);
-            newProduct.set('ingredients', form.data.ingredients);
-            newProduct.set('expiry', form.data.expiry);
+            newProduct.set('ingredients', form.data.sunscreen_filters);
+            newProduct.set('expiry', form.data.year_of_expiry);
             newProduct.set('status_id', form.data.status_id);
             newProduct.set('stock_no', form.data.stock_no);
             newProduct.set('image_url', form.data.image_url);
@@ -185,8 +185,8 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
     productForm.fields.type_id.value = product.get('type_id');
     productForm.fields.cost.value = product.get('cost');
     productForm.fields.description.value = product.get('description');
-    productForm.fields.ingredients.value = product.get('ingredients');
-    productForm.fields.expiry.value = product.get('expiry');
+    productForm.fields.sunscreen_filters.value = product.get('ingredients');
+    productForm.fields.year_of_expiry.value = product.get('expiry');
     productForm.fields.status_id.value = product.get('status_id');
     productForm.fields.stock_no.value = product.get('stock_no');
     productForm.fields.image_url.value = product.get('image_url');
@@ -232,8 +232,8 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
             product.set('type_id', form.data.type_id);
             product.set('cost', form.data.cost);
             product.set('description', form.data.description);
-            product.set('ingredients', form.data.ingredients);
-            product.set('expiry', form.data.expiry);
+            product.set('ingredients', form.data.sunscreen_filters);
+            product.set('expiry', form.data.year_of_expiry);
             product.set('status_id', form.data.status_id);
             product.set('stock_no', form.data.stock_no);
             product.set('image_url', form.data.image_url);

@@ -4,17 +4,21 @@
 
     <h1>Add new sunscreen</h1>
 
-    <form method="POST">
+    <form method="POST" class="sunscreen-form mb-5">
+        
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-        {{{form}}}
-
+        
         {{!-- for uploading images --}}
-        <div class="mt-3">
+        <div class="mt-3 float-left text-center">
             <img src="" style="display:none" id="uploaded-image">
-            <a href="#" class="btn btn-primary" id="upload-widget">Upload</a>
+            <a class="btn btn-primary mt-3" id="upload-widget">Add product image</a>
+        </div>
+        
+        <div class="float-right">
+            {{{form}}}
+            <input type="submit" value="Add Product" class="btn btn-primary mt-3"/ >
         </div>
 
-        <input type="submit" value="Add Product" class="btn btn-primary"/ >
     </form>
 
 
@@ -53,7 +57,7 @@
                 
                 document.getElementById("id_image_url").value = url;
                 document.getElementById("uploaded-image").src = url;
-                document.getElementById("uploaded-image").style = "display:block";
+                document.getElementById("uploaded-image").style = "display:block;";
             }
         });
 

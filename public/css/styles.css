@@ -82,6 +82,8 @@ table{
 thead{
     background-color:#f5f7ff;
     color:#1050ff;
+    /* background-color:#fff6c7; */
+    /* color:#b39800; */
 }
 
 /* tbody{
@@ -135,6 +137,10 @@ td{
     vertical-align: middle;
 }
 
+.search-form input[type="submit"]{
+    margin-top:15px;
+}
+
 .icon-btns img{
     width:20px;
     display:inline-block;
@@ -147,6 +153,21 @@ td{
 
 .delete-btn{
     color:#dc3545;
+}
+
+select{
+    background-image: url('/images/dropdown-arrow.svg');
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+}
+
+select[name="skin_types"]{
+    background: none;
+}
+
+#uploaded-image{
+    width:100%;
 }
 
 @media only screen and (min-width:768px) {
@@ -169,12 +190,6 @@ td{
         height:100%;
     }
 
-    .search-form select{
-        background-image: url('/images/dropdown-arrow.svg');
-        background-size: 15px;
-        background-repeat: no-repeat;
-        background-position: 90%;
-    }
 
 }
 
@@ -201,6 +216,24 @@ td{
     .delete-btn:hover{
         color:#dc3545;
         background-color:rgb(220, 53, 69, 0.1);
+    }
+
+    .sunscreen-form{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .sunscreen-form .float-left{
+        width:25%;
+    }
+
+    .sunscreen-form .float-right{
+        width:70%;
+    }
+
+    .sunscreen-form select[name="skin_types"]{
+        border-radius:15px;
     }
     
 

@@ -4,39 +4,49 @@
 
     <h1>All sunscreens</h1>
 
-    <a href="/products/create" class="btn btn-success">Add New Sunscreen</a>
+    {{!-- <a href="/products/create" class="btn btn-success mt-3">Add New Sunscreen</a> --}}
 
     {{!-- <a href="/brands"><div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">{{brands.length}} brands</div></a> --}}
 
     <div class="container mt-3">
         <div class="row">
 
-            <a href="/brands" class="col-12 mb-3 col-md-4 m-md-0 p-0">
-                <div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
-                    <div>
-                        <h2 class="m-0">{{brands.length}}</h2> Brands
-                    </div>
+            <a href="/products/create" class="col-12 mb-3 col-md-4 col-xl-3 m-md-0 p-0">
+                <div class="p-4 me-md-2 border-radius btn-success h-100">
+                    <h4 class="m-0">
+                        + Add new
+                        <br class="d-none d-lg-block">sunscreen
+                    </h4>
                 </div>
             </a>
             
-            <a href="/brands" class="col-12 mb-3 col-md-4 m-md-0 p-0">
-                <div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
-                    <div>
-                        <h2 class="m-0">{{brands.length}}</h2> Countries
-                    </div>
+
+            <a href="/brands" class="col-12 mb-3 col-md-4 col-xl-3 m-md-0 p-0">
+                <div class="p-4 me-md-2 border-radius employee-button h-100">
+                    <h2 class="m-0">{{brands.length}}</h2>
+                    
+                    Brands
+                </div>
+            </a>
+            
+            <a href="/brands" class="col-12 mb-3 col-md-4 col-xl-3 m-md-0 p-0">
+                <div class="p-4 me-md-2 border-radius employee-button h-100">
+                    <h2 class="m-0">{{brands.length}}</h2>
+                    
+                    Countries
                 </div>
             </a>
 
         </div>
     </div>
 
-
+    <h3 class="mt-3 mt-lg-5">Search</h3>
     <form method="GET" class="search-form mt-3">
         {{{searchForm}}}
         <input type="submit" class="btn btn-primary" value="Search">
     </form>
 
-    <div class="d-block d-lg-none mt-3">
+    <div class="d-block d-lg-none mt-5">
         <table class="table border-radius" style="border-radius:15px">
             <thead>
                 <tr>
@@ -88,61 +98,61 @@
 
     </div>
     
-<div class="d-none d-lg-block mt-5">
-    <table class="table border-radius">
-        <thead>
-            <tr>
-                <th class="p-4">Image</th>
-                <th class="p-4">Name</th>
-                <th class="p-4">Price</th>
-                <th class="p-4">Type</th>
-                <th class="p-4">Filters</th>
-                <th class="p-4">Expiry</th>
-                <th class="p-4">Stock</th>
-                <th class="p-4"></th>
-                <th class="p-4"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each products}}
-            <tr>
-                <td class="p-4"><img style="width:100px" src="{{this.image_url}}" alt=""></td>
-                <td class="p-4">{{this.brand.name}} {{this.name}}</td>
-                <td class="p-4">${{this.cost}}</td>
-                <td class="p-4">{{this.type.name}}</td>
-                {{!-- <td>
-                    {{#each this.skinTypes}}
-                        <span class="badge bg-primary">{{this.name}}</span>
-                    {{/each}}</td>
-                </td> --}}
-                <td class="p-4">{{this.ingredients}}</td>
-                <td class="p-4">{{this.expiry}}</td>
-                <td class="p-4">
-                    <b>{{this.stock_no}}</b>
-                    <br>{{this.status.name}}
-                </td>
-                <td class="p-4">
-                    {{!-- {{#if this.stock_no}}
-                    <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
-                    {{else}}
-                    {{/if}} --}}
-                    <a href="/products/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
-                        <img src="/images/edit2.svg" alt="">
-                        Edit
-                    </a>
-                </td>
-                <td class="p-4">
-                    <a href="/products/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
-                        <img src="/images/delete2.svg" alt="">
-                        Delete
-                    </a>
-                </td>
+    <div class="d-none d-lg-block mt-5">
+        <table class="table border-radius">
+            <thead>
+                <tr>
+                    <th class="p-4">Image</th>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Price</th>
+                    <th class="p-4">Type</th>
+                    <th class="p-4">Filters</th>
+                    <th class="p-4">Expiry</th>
+                    <th class="p-4">Stock</th>
+                    <th class="p-4"></th>
+                    <th class="p-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td class="p-4"><img style="width:100px" src="{{this.image_url}}" alt=""></td>
+                    <td class="p-4">{{this.brand.name}} {{this.name}}</td>
+                    <td class="p-4">${{this.cost}}</td>
+                    <td class="p-4">{{this.type.name}}</td>
+                    {{!-- <td>
+                        {{#each this.skinTypes}}
+                            <span class="badge bg-primary">{{this.name}}</span>
+                        {{/each}}</td>
+                    </td> --}}
+                    <td class="p-4">{{this.ingredients}}</td>
+                    <td class="p-4">{{this.expiry}}</td>
+                    <td class="p-4">
+                        <b>{{this.stock_no}}</b>
+                        <br>{{this.status.name}}
+                    </td>
+                    <td class="p-4">
+                        {{!-- {{#if this.stock_no}}
+                        <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
+                        {{else}}
+                        {{/if}} --}}
+                        <a href="/products/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
+                            <img src="/images/edit2.svg" alt="">
+                            Edit
+                        </a>
+                    </td>
+                    <td class="p-4">
+                        <a href="/products/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                            <img src="/images/delete2.svg" alt="">
+                            Delete
+                        </a>
+                    </td>
 
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</div>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 
 {{/block}}
 

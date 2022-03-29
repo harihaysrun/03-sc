@@ -4,13 +4,11 @@
 
     <h1>Update {{product.name}}</h1>
 
-    <form method="POST">
+    <form method="POST" class="sunscreen-form mb-5">
         
         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
 
-        {{{form}}}
-
-        <div class="mt-3">
+        <div class="mt-3 float-left text-center">
         
             {{!-- display product image if it exists --}}
             {{#if product.image_url}}
@@ -20,11 +18,15 @@
             {{/if}}
 
 
-            <a href="#" class="btn btn-primary" id="upload-widget">Upload</a>
+            <a class="btn btn-primary mt-3" id="upload-widget">Upload new image</a>
 
         </div>
 
-        <input type="submit" class="btn btn-primary mt-3">
+        <div class="float-right">
+            {{{form}}}
+            <input type="submit" value="Update Product Info" class="btn btn-primary mt-3">
+        </div>
+
     </form>
     
 {{/block}}
