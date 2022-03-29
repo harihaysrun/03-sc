@@ -4,17 +4,35 @@
 
     <h1>Brands</h1>
 
-    <a href="/brands/add" class="btn btn-primary">Add New Brand</a>
+    <a href="/brands/add" class="btn btn-primary mt-3">Add New Brand</a>
 
-    <ol>
-        {{#each brands}}
-            <li>{{this.name}}</li>
-            <div style="display:inline-block">
-                <a href="/brands/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
-                <a href="/brands/{{this.id}}/delete" class="btn-sm btn-danger">Delete</a>
-            </div>
-        {{/each}}
-    </ol>
+    <table class="table mt-5 border-radius brands-table">
+        <thead>
+            <tr>
+                <th class="p-3">Brand Name</th>
+                <th class="p-3"></th>
+                <th class="p-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each brands}}
+            <tr>
+                <td class="p-3">{{this.name}}</td>
+                <td class="p-3">
+                    <a href="/brands/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
+                        <img src="/images/edit2.svg" alt="">
+                        Edit
+                    </a>
+                </td>
+                <td class="p-3">
+                    <a href="/brands/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                        <i class="fa-solid fa-circle-xmark"></i>Remove
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
 {{/block}}
 

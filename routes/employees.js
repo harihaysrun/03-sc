@@ -40,7 +40,7 @@ router.post('/register', function(req,res) {
             });
             await employee.save();
             req.flash("success_messages", "New employee has been added successfully!");
-            res.redirect('/')
+            res.redirect('/employees')
         },
         'error': function(form) {
             res.render('users/register', {
@@ -60,5 +60,39 @@ router.get('/', checkIfAuthenticatedAdmin, async function(req,res){
     })
 
 })
+
+
+
+router.get('/:employee_id/delete', checkIfAuthenticatedAdmin, async function(req,res){
+
+    const userId = req.params.employee_id;
+    const user = await Employee.where({
+        'id':userId
+    }).fetch({
+        require:true,
+    });
+
+    res.render('users/delete', {
+        'user': user.toJSON()
+    })
+    
+});
+
+router.post('/:employee_id/delete', checkIfAuthenticatedAdmin, async function(req,res){
+
+    const userId = req.params.employee_id;
+    const user = await Employee.where({
+        'id':userId
+    }).fetch({
+        require:true,
+    })
+    
+    await user.destroy();
+
+    req.flash("success_messages", `Employee has been successfully removed`);
+    res.redirect('/employees');
+    
+});
+
 
 module.exports = router;

@@ -25,7 +25,8 @@ a{
 .employee-button{
     background-color:#e7edff;
     /* border:1px solid #7d9efc; */
-    color:#7d9efc;
+    /* color:#7d9efc; */
+    color:#1050ff;
 }
 
 .green{
@@ -238,7 +239,6 @@ select[name="skin_types"]{
         height:100%;
     }
 
-
 }
 
 @media only screen and (min-width:992px) {
@@ -250,7 +250,7 @@ select[name="skin_types"]{
     }    
 
     .icon-btns img{
-        width:40px;
+        width:30px;
         display:inline-block;
         margin-bottom:5px;
         margin-right: 0;
@@ -287,6 +287,10 @@ select[name="skin_types"]{
 
     .sunscreen-form select[name="skin_types"]{
         border-radius:15px;
+    }
+
+    .brands-table{
+        width:500px !important;
     }
     
 
