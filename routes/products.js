@@ -6,6 +6,7 @@ const {bootstrapField, createProductForm, createSearchForm } = require('../forms
 
 const brandDataLayer = require('../dal/brands');
 const productDataLayer = require('../dal/products');
+const countryDataLayer = require('../dal/countries');
 const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', checkIfAuthenticated, async function(req,res){
@@ -13,8 +14,9 @@ router.get('/', checkIfAuthenticated, async function(req,res){
     //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     // });
 
-    // get length of brands
+    // get length of brands & countries
     const brands = await brandDataLayer.getAllBrands();
+    const countries = await countryDataLayer.getAllCountries();
 
     console.log(brands.length)
 
@@ -39,7 +41,8 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
                 'products': products.toJSON(),
-                'brands': brands.toJSON()
+                'brands': brands.toJSON(),
+                'countries': countries.toJSON()
             })
         },
         'success': async function(form){
@@ -79,7 +82,8 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
                 'products': products.toJSON(),
-                'brands': brands.toJSON()
+                'brands': brands.toJSON(),
+                'countries': countries.toJSON()
             });
         },
         'error':async function(form){
@@ -89,7 +93,8 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             res.render('products/index',{
                 'searchForm': searchForm.toHTML(bootstrapField),
                 'products': products.toJSON(),
-                'brands': brands.toJSON()
+                'brands': brands.toJSON(),
+                'countries': countries.toJSON()
             })
         }
     })
