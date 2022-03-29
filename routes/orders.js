@@ -6,8 +6,8 @@ Handlebars.registerHelper('toJSON', function(obj) {
     return JSON.stringify(obj, null, 3);
 });
 
-const { User } = require('../models');
-const {bootstrapField, createShippingForm, createBrandForm } = require('../forms');
+const { User, OrderItem } = require('../models');
+const {bootstrapField, createShippingForm, createBrandForm, createOrderSearchForm } = require('../forms');
 
 const orderDataLayer = require('../dal/orders');
 const { checkIfAuthenticated } = require('../middlewares');
@@ -15,60 +15,53 @@ const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', checkIfAuthenticated, async function(req,res){
 
-    const allOrders = await orderDataLayer.getAllOrders();
+    // const allOrders = await orderDataLayer.getAllOrders();
+
     const allShipping = await orderDataLayer.getShippingStatus();
+    allShipping.unshift([0, "Select one"]);
 
-    // console.log(allOrders.get('items'))
-    
-    // const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
+    const searchForm = createOrderSearchForm(allShipping);
 
-    // // let orders = JSON.parse(userOrders.get('items'));
-    // console.log(allOrders.length)
+    let query = OrderItem.collection();
+    searchForm.fields.shipping_id.value = query.get('shipping_id');
 
-    // let orderQuantity;
-    // let productName;
-    let items;
-    let quantity;
-    let productName;
+    searchForm.handle(req,{
+        'empty':async function(form){
+            let orders = await query.fetch({
+                withRelated: ['user', 'shipping']
+            })
+            res.render('orders/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'order': orders.toJSON().reverse()
+            })
+        },
+        'success': async function(form){
+            if (form.data.order_id){
+                query.where('id', '=', req.query.order_id)
+            }
+            if (form.data.shipping_id && form.data.shipping_id != "0"){
+                query.where('shipping_id', '=', req.query.shipping_id)
+            }
 
-    let itemList = [];
-    
-    for (let o of allOrders){
-        // console.log(o.attributes.items)
-        items = JSON.parse(o.attributes.items);
-        // console.log(items.length)
-        // quantity = items[o].quantity;
-        // productName = items[o].product_name;
-        // productId = o.product_id;
-        // console.log(o.attributes)
+            // search the query
+            let orders = await query.fetch({
+                withRelated: ['user', 'shipping']
+            })
 
-        for (i=0; i < items.length; i++){
-            quantity = items[i].quantity;
-            productName = items[i].product_name;
+            res.render('orders/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'order': orders.toJSON().reverse()
+            });
+        },
+        'error':async function(form){
+            let orders = await query.fetch({
+                withRelated: ['user', 'shipping']
+            })
+            res.render('orders/index',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'order': orders.toJSON().reverse()
+            })
         }
-
-        item = `${quantity} x ${productName}`;
-        itemList.push(item)
-
-        // console.log(quantity, productName)
-
-    }
-
-    console.log(itemList)
-    // console.log(allOrders)
-
-    // // for (i=0; i < allOrders.length; i++){
-    // //     items = allOrders[i].attributes.items;
-    // //     console.log(items)
-    // // }
-
-    res.render('orders/index',{
-        'order': allOrders.toJSON(),
-        'itemList': itemList
-        // 'quantity': quantity,
-        // 'productName': productName,
-        // 'items': 
-        // 'shippingForm': brandForm.toHTML(bootstrapField)
     })
 
 })

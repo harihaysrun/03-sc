@@ -87,6 +87,8 @@ label{
 
 table{
     overflow: hidden;
+    /* box-shadow: 5px 5px 0px rgb(16, 80, 255, 1); */
+    /* box-shadow: 5px 5px 0px #ffdf29; */
 }
 
 thead{
@@ -96,8 +98,36 @@ thead{
     color:#b39800;
 }
 
+/* tbody tr:hover{
+    background-color:#fffdf4;
+} */
+
+.extended-info-address{
+    background-color:#1050ff !important;
+    color:white;
+}
+
+.extended-info{
+    background-color:#f0f4ff !important;
+    color:#1050ff;
+    /* font-weight:700; */
+    /* background-color:#ffdf29 !important; */
+    /* color:#9b8403; */
+}
+
+/* .extended-info{
+    background-color:#fff6c7 !important;
+    color:#9b8403;
+} */
+
+.collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}
+
 /* tbody{
-    background-color:lightgray;
+    background-color:#fffceb;
 } */
 
 tbody>tr>td{
@@ -155,6 +185,14 @@ td{
     width:20px;
     display:inline-block;
     margin-right:5px;
+}
+
+.yellow{
+    color:#e0c00b !important;
+}
+
+.yellow:hover{
+    background-color:rgb(255, 223, 41, 0.3) !important;
 }
 
 .edit-btn{

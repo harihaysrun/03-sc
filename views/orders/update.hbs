@@ -2,7 +2,7 @@
 
 {{#block 'content'}}
 
-    <h1>Update {{order.name}}</h1>
+    <h1>Update status for Order #{{order.id}}</h1>
 
     <form method="POST">
         
@@ -10,7 +10,7 @@
 
         {{{form}}}
 
-        <input type="submit" class="btn btn-primary mt-3">
+        <input type="submit" value="Update" class="btn btn-primary mt-3">
     </form>
     
 {{/block}}

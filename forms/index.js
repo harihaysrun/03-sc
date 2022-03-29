@@ -250,6 +250,20 @@ const createCustomerSearchForm = function(){
     })
 }
 
+const createOrderSearchForm = function(shipping){
+    return forms.create({
+        "order_id":fields.string({
+            'required':false
+        }),
+        "shipping_id":fields.string({
+            'label': 'Shipping',
+            'required':false,
+            'widget': widgets.select(),
+            'choices': shipping
+        }),
+    })
+}
+
 const createBrandForm = function(){
     return forms.create({
         "brand_name":fields.string({
@@ -271,4 +285,4 @@ const createShippingForm = function(shipping){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createBrandForm, createShippingForm };
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createShippingForm };
