@@ -28,6 +28,11 @@ a{
     color:#7d9efc;
 }
 
+.green{
+    background-color:#198754;
+    color:#6dd387;
+}
+
 .btn-icon{
     width:50px;
     margin-right:15px;
@@ -126,8 +131,77 @@ tbody>tr>td{
     line-height:16px;
 }
 
+td{
+    vertical-align: middle;
+}
+
+.icon-btns img{
+    width:20px;
+    display:inline-block;
+    margin-right:5px;
+}
+
+.edit-btn{
+    color:#1050ff;
+}
+
+.delete-btn{
+    color:#dc3545;
+}
+
 @media only screen and (min-width:768px) {
     .btn{
         min-width:150px;
     }
+
+    .search-form{
+        display:flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .search-form .form-group{
+        flex:1;
+        margin: 0 10px;
+    }
+
+    .search-form input[type="submit"]{
+        height:100%;
+    }
+
+    .search-form select{
+        background-image: url('/images/dropdown-arrow.svg');
+        background-size: 15px;
+        background-repeat: no-repeat;
+        background-position: 90%;
+    }
+
+}
+
+@media only screen and (min-width:992px) {
+
+    .icon-btns{
+        padding:10px;
+        border-radius:15px;
+        font-size:12px;
+    }    
+
+    .icon-btns img{
+        width:40px;
+        display:inline-block;
+        margin-bottom:5px;
+        margin-right: 0;
+    }
+
+    .edit-btn:hover{
+        color:#1050ff;
+        background-color:rgb(16, 80, 255, 0.1);
+    }
+
+    .delete-btn:hover{
+        color:#dc3545;
+        background-color:rgb(220, 53, 69, 0.1);
+    }
+    
+
 }

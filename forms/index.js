@@ -218,18 +218,18 @@ const createSearchForm = function(brands, countries, types, status){
             widget: widgets.select(),
             choices: brands
         }),
-        'country_id': fields.string({
-            label: 'Country',
-            required:false,
-            widget: widgets.select(),
-            choices: countries
-        }),
-        'type_id': fields.string({
-            label: 'Type',
-            required:false,
-            widget: widgets.select(),
-            choices: types
-        }),
+        // 'country_id': fields.string({
+        //     label: 'Country',
+        //     required:false,
+        //     widget: widgets.select(),
+        //     choices: countries
+        // }),
+        // 'type_id': fields.string({
+        //     label: 'Type',
+        //     required:false,
+        //     widget: widgets.select(),
+        //     choices: types
+        // }),
         'status_id': fields.string({
             label: 'Status',
             required:false,

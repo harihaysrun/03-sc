@@ -2,68 +2,147 @@
 
 {{#block 'content'}}
 
-    <h1>All sunscreens here!</h1>
+    <h1>All sunscreens</h1>
 
     <a href="/products/create" class="btn btn-success">Add New Sunscreen</a>
 
+    {{!-- <a href="/brands"><div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">{{brands.length}} brands</div></a> --}}
 
-    <a href="/brands" class="btn btn-primary">{{brands.length}} brands</a>
+    <div class="container mt-3">
+        <div class="row">
+
+            <a href="/brands" class="col-12 mb-3 col-md-4 m-md-0 p-0">
+                <div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
+                    <div>
+                        <h2 class="m-0">{{brands.length}}</h2> Brands
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/brands" class="col-12 mb-3 col-md-4 m-md-0 p-0">
+                <div class="p-4 me-md-2 border-radius d-flex flex-row align-items-center dashboard-button" style="border-radius:15px">
+                    <div>
+                        <h2 class="m-0">{{brands.length}}</h2> Countries
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
 
 
-<form method="GET">
-    {{{searchForm}}}
-    <input type="submit" class="btn btn-primary" value="Search">
-</form>
+    <form method="GET" class="search-form mt-3">
+        {{{searchForm}}}
+        <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+
+    <div class="d-block d-lg-none mt-3">
+        <table class="table border-radius" style="border-radius:15px">
+            <thead>
+                <tr>
+                    <th class="p-3">
+                        Product Info
+                    </th>
+                    <th class="p-3">
+                        Stock
+                    </th>
+                    <th class="p-3">
+                        Update
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each products}}
+                <tr>
+                    <td class="p-3">
+                        <img style="width:50px" src="{{this.image_url}}" alt="">
+                        <br>
+                        <br>{{this.brand.name}} {{this.name}}
+                        <br>${{this.cost}}
+                    </td>
+                    <td class="p-3">
+                        {{#if this.stock_no}}
+                            <b>{{this.stock_no}}</b>
+                            <br>{{this.status.name}}
+                        {{else}}
+                            {{this.status.name}}
+                        {{/if}}
+                    </td>
+                    <td class="p-3">
+                        <a href="/products/{{this.id}}/update" class="icon-btns edit-btn">
+                            <img src="/images/edit.svg" alt="">
+                            Edit
+                        </a>
+                        <br>
+                        <br>
+                        <a href="/products/{{this.id}}/delete" class="icon-btns delete-btn">
+                            <img src="/images/delete.svg" alt="">
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+
+    </div>
     
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Brand</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Skin Types</th>
-            <th>Ingredients</th>
-            <th>Expiry</th>
-            <th>Status</th>
-            <th>Stock</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each products}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td><img style="width:100px" src="{{this.image_url}}" alt=""></td>
-            <td>{{this.brand.name}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.type.name}}</td>
-            <td>{{this.cost}}</td>
-            <td>{{this.description}}</td>
-            <td>
-                {{#each this.skinTypes}}
-                    <span class="badge bg-primary">{{this.name}}</span>
-                {{/each}}</td>
-            </td>
-            <td>{{this.ingredients}}</td>
-            <td>{{this.expiry}}</td>
-            <td>{{this.status.name}}</td>
-            <td>{{this.stock_no}}</td>
-            <td>
-                {{#if this.stock_no}}
-                <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
-                {{else}}
-                {{/if}}
-                <a href="/products/{{this.id}}/update" class="btn-sm btn-primary">Edit</a>
-                <a href="/products/{{this.id}}/delete" class="btn-sm btn-danger">Delete</a>
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+<div class="d-none d-lg-block mt-5">
+    <table class="table border-radius">
+        <thead>
+            <tr>
+                <th class="p-4">Image</th>
+                <th class="p-4">Name</th>
+                <th class="p-4">Price</th>
+                <th class="p-4">Type</th>
+                <th class="p-4">Filters</th>
+                <th class="p-4">Expiry</th>
+                <th class="p-4">Stock</th>
+                <th class="p-4"></th>
+                <th class="p-4"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td class="p-4"><img style="width:100px" src="{{this.image_url}}" alt=""></td>
+                <td class="p-4">{{this.brand.name}} {{this.name}}</td>
+                <td class="p-4">${{this.cost}}</td>
+                <td class="p-4">{{this.type.name}}</td>
+                {{!-- <td>
+                    {{#each this.skinTypes}}
+                        <span class="badge bg-primary">{{this.name}}</span>
+                    {{/each}}</td>
+                </td> --}}
+                <td class="p-4">{{this.ingredients}}</td>
+                <td class="p-4">{{this.expiry}}</td>
+                <td class="p-4">
+                    <b>{{this.stock_no}}</b>
+                    <br>{{this.status.name}}
+                </td>
+                <td class="p-4">
+                    {{!-- {{#if this.stock_no}}
+                    <a href="/cart/{{this.id}}/add" class="btn-sm btn-success">Add to cart</a>
+                    {{else}}
+                    {{/if}} --}}
+                    <a href="/products/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
+                        <img src="/images/edit2.svg" alt="">
+                        Edit
+                    </a>
+                </td>
+                <td class="p-4">
+                    <a href="/products/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                        <img src="/images/delete2.svg" alt="">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
 
 {{/block}}
 
