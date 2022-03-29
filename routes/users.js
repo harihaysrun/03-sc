@@ -3,7 +3,7 @@ const router = express.Router();
 const crypto = require('crypto');
 
 const { User, Employee } = require('../models');
-const {bootstrapField, createRegistrationForm, createLoginForm } = require('../forms');
+const {bootstrapField, createRegistrationForm, createLoginForm, createCustomerSearchForm } = require('../forms');
 
 const userDataLayer = require('../dal/users');
 const { checkIfAuthenticated, checkIfAuthenticatedAdmin } = require('../middlewares');
@@ -18,12 +18,48 @@ function getHashedPassword(password){
 
 router.get('/', checkIfAuthenticated, async function(req,res){
 
-    const allUsers = await userDataLayer.getAllUsers();
+    // const allUsers = await userDataLayer.getAllUsers();
 
-    console.log(allUsers)
-    res.render('users/users',{
-        'user': allUsers.toJSON()
+    const searchForm = createCustomerSearchForm();
+
+    let query = User.collection();
+    searchForm.handle(req,{
+        'empty':async function(form){
+            let customers = await query.fetch()
+            res.render('users/users',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'user': customers.toJSON()
+            })
+        },
+        'success': async function(form){
+            if (form.data.username){
+                query.where('username', 'like', '%' + req.query.username + '%')
+            }
+            if (form.data.email){
+                query.where('email', 'like', '%' + req.query.email + '%')
+            }
+
+            // search the query
+            let customers = await query.fetch();
+
+            res.render('users/users',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'user': customers.toJSON()
+            });
+        },
+        'error':async function(form){
+            let customers = await query.fetch();
+            res.render('users/users',{
+                'searchForm': searchForm.toHTML(bootstrapField),
+                'user': customers.toJSON()
+            })
+        }
     })
+
+    // console.log(allUsers)
+    // res.render('users/users',{
+    //     'user': allUsers.toJSON()
+    // })
 
 })
 

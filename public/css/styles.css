@@ -90,10 +90,10 @@ table{
 }
 
 thead{
-    background-color:#f5f7ff;
-    color:#1050ff;
-    /* background-color:#fff6c7; */
-    /* color:#b39800; */
+    /* background-color:#f5f7ff; */
+    /* color:#1050ff; */
+    background-color:#fff6c7;
+    color:#b39800;
 }
 
 /* tbody{
@@ -216,6 +216,11 @@ select[name="skin_types"]{
         display:inline-block;
         margin-bottom:5px;
         margin-right: 0;
+    }
+
+    .icon-btns i{
+        font-size:30px;
+        margin-bottom:5px;
     }
 
     .edit-btn:hover{

@@ -2,15 +2,18 @@
 
 {{#block 'content'}}
 
-    <h1>Deleting {{user.username}}</h1>
+    <h1 class="text-danger">Deleting {{user.username}}</h1>
 
-    <form method="POST">
-        <div class="alert alert-danger">
-            <p>Are you sure you want to delete {{user.username}}?</p>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-            <input type="submit" value="Yes" class="btn btn-primary"/ >
-            <a href="/products">No</a>
-        </div>
+    <form method="POST" class="mt-3">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        <p>
+            Are you sure you want to remove this user?
+            <br>This action is irreversible.
+        </p>
+        <p class="mt-4">
+            <input type="submit" value="Yes" class="btn btn-danger mb-3 mb-md-0"/ >
+            <a href="/users" class="btn btn-cancel mx-md-3">No</a>
+        </p>
     </form>
 
 

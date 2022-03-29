@@ -4,26 +4,74 @@
 
     <h1>Customers</h1>
     
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each user}}
-            <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.username}}</td>
-                <td>
-                    <a href="/users/{{this.id}}/delete" class="btn-sm btn-danger">Remove User</a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+    <form method="GET" class="search-form mt-3">
+        {{{searchForm}}}
+        <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+
+    <div class="d-block d-lg-none mt-5">
+        <table class="table mt-5 border-radius">
+            <thead>
+                <tr>
+                    <th class="p-4">Username</th>
+                    <th class="p-4">Particulars</th>
+                    <th class="p-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each user}}
+                <tr>
+                    <td class="p-4">{{this.username}}</td>
+                    <td class="p-4">
+                        <b>{{this.first_name}} {{this.last_name}}</b>
+                        <br>
+                        {{this.address_line_1}}, {{this.address_line_2}}<br>{{this.country}} {{this.postal_code}}
+                        <br>
+                        Contact no.: {{this.phone_number}}
+                    </td>
+                    <td class="p-4">
+                        <a href="/users/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                            <i class="fa-solid fa-circle-xmark"></i>Remove
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="d-none d-lg-block mt-5">
+        <table class="table border-radius">
+            <thead>
+                <tr>
+                    <th class="p-4">ID</th>
+                    <th class="p-4">Username</th>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Contact Number</th>
+                    <th class="p-4">Address</th>
+                    <th class="p-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each user}}
+                <tr>
+                    <td class="p-4">{{this.id}}</td>
+                    <td class="p-4">{{this.username}}</td>
+                    <td class="p-4">{{this.first_name}} {{this.last_name}}</td>
+                    <td class="p-4">{{this.email}}</td>
+                    <td class="p-4">{{this.phone_number}}</td>
+                    <td class="p-4">{{this.address_line_1}}<br>{{this.address_line_2}}<br>{{this.country}} {{this.postal_code}}</td>
+                    <td class="p-4">
+                        <a href="/users/{{this.id}}/delete" class="icon-btns delete-btn d-flex flex-column align-items-center">
+                            <i class="fa-solid fa-circle-xmark"></i>Remove
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 
 {{/block}}
 
