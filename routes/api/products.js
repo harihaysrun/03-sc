@@ -25,7 +25,7 @@ router.post('/search', async function(req,res){
 
     let query = Product.collection();
     if (req.body.name){
-        query.where('name', 'like', '%' + req.query.name + '%')
+        query.where('name', 'like', '%' + req.body.name + '%')
     }
     if(req.body.brand_id && req.body.brand_id != "0"){
         query.where('brand_id', '=', req.body.brand_id)
