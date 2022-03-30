@@ -23,11 +23,6 @@ router.get('/', async function(req,res){
 
 router.post('/search', async function(req,res){
 
-    // let name = req.body.name;
-    // let brand_id = req.body.brand;
-    // let country_id = req.body.country;
-    // let type_id = req.body.type
-
     let query = Product.collection();
     if (req.body.name){
         query.where('name', 'like', '%' + req.query.name + '%')
