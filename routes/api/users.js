@@ -74,21 +74,23 @@ router.post('/login', async function(req,res){
 })
 
 router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
-
-    // if(req.user){
-        let userId = req.user.id;
-        const cartServices = new CartServices(userId);
-        const allCartItems = await cartServices.getAllCartItems();
-        // res.json({
-        //     'cart': allCartItems
-        // })
-    // }
-
+    
     res.json({
-        'user': req.user,
-        'cart': allCartItems
+        'user': req.user
     })
 })
+
+
+// router.post('/profile', function(req,res){
+    
+
+//     let userId = req.user.id;
+//     const cartServices = new CartServices(userId);
+//     const allCartItems = await cartServices.getAllCartItems();
+//     // res.json({
+//     //     'cart': allCartItems
+//     // })
+// })
 
 // router.get('/profile', async function(req, res) {
 //     if (req.session.user) {
