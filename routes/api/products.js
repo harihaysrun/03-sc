@@ -5,21 +5,53 @@ const productDataLayer = require('../../dal/products');
 const { Product } = require('../../models');
 
 router.get('/', async function(req,res){
-    res.send(await productDataLayer.getAllProducts())
-})
 
-router.get('/search', async function(req,res){
-
+    const allProducts = await productDataLayer.getAllProducts();
     const allBrands = await productDataLayer.getAllBrands();
     const allCountries = await productDataLayer.getAllCountries();
     const allTypes = await productDataLayer.getAllTypes();
 
     res.json({
+        'products': allProducts,
         'brands': allBrands,
         'countries': allCountries,
-        'allTypes': allTypes
+        'types': allTypes
     })
-    
+
+    // res.send(await productDataLayer.getAllProducts())
+})
+
+router.post('/search', async function(req,res){
+
+    // let name = req.body.name;
+    // let brand_id = req.body.brand;
+    // let country_id = req.body.country;
+    // let type_id = req.body.type
+
+    let query = Product.collection();
+    if (req.body.name){
+        query.where('name', 'like', '%' + req.query.name + '%')
+    }
+    if(req.body.brand_id && req.body.brand_id != "0"){
+        query.where('brand_id', '=', req.body.brand_id)
+    }
+
+    if(req.body.country_id && req.body.country_id != "0"){
+        query.where('country_id', '=', req.body.country_id)
+    }
+
+    if(req.body.type_id && req.body.type_id != "0"){
+        query.where('type_id', '=', req.body.type_id)
+    }
+
+    let products = await query.fetch({
+        withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    })
+
+    res.json({
+        'products': products
+    })
+
 })
 
 router.get('/:product_id', async function(req,res){
