@@ -21,7 +21,7 @@ router.post('/:product_id/add', async function(req,res){
     // let userId = req.session.user.id;
     let userId = req.body.user_id;
     let productId = req.params.product_id;
-    let quantity = 1;
+    let quantity = req.body.quantity_to_add;
         
     const product = await Product.where({
         'id': productId
