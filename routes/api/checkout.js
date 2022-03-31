@@ -13,7 +13,7 @@ router.post('/', async function (req,res){
     const cartServices = new CartServices(userId);
     const items = await cartServices.getAllCartItems();
 
-    res.json({"does this go through?"})
+    res.json("does this go through?")
 
     // const lineItems = [];
     // const meta = [];
