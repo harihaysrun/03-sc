@@ -12,9 +12,8 @@ router.post('/', async function(req,res){
     const cartServices = new CartServices(userId);
     const allCartItems = await cartServices.getAllCartItems();
 
-    console.log(allCartItems);
+    // console.log(allCartItems);
 
-    
     // for(let i=0; i<allCartItems.length; i++){
     //     let productId = allCartItems[i].product.id;
 
