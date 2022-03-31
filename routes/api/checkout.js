@@ -57,7 +57,7 @@ router.post('/', async function (req,res){
                 'shipping_rate_data':{
                     'type': 'fixed_amount',
                     'fixed_amount':{
-                        'amount': 3,
+                        'amount': 300,
                         'currency': 'SGD'
                     },
                     'display_name': 'Ninja Van',
