@@ -51,7 +51,29 @@ router.post('/', async function (req,res){
         'cancel_url': process.env.API_STRIPE_CANCEL_URL,
         'metadata':{
             'orders': metaData
-        }
+        },
+        'shipping_options':[
+            {
+                'shipping_rate_data':{
+                    'type': 'fixed_amount',
+                    'fixed_amount':{
+                        'amount': 3,
+                        'currency': 'SGD'
+                    },
+                    'display_name': 'Ninja Van',
+                    'delivery_estimate':{
+                        'minimum':{
+                            'unit': 'business_day',
+                            'value': 3,
+                        },
+                        'maximum':{
+                            'unit': 'business_day',
+                            'value': 5
+                        }
+                    }
+                }
+            }
+        ]
     }
 
 
