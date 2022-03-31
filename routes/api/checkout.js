@@ -13,47 +13,52 @@ router.post('/', async function (req,res){
     const cartServices = new CartServices(userId);
     const items = await cartServices.getAllCartItems();
 
-    res.json("does this go through?")
 
-    // const lineItems = [];
-    // const meta = [];
-    // for (let i of items){
+    const lineItems = [];
+    const meta = [];
+    for (let i of items){
         
-    //     const lineItem = {
-    //         'name': i.related('product').get('name'),
-    //         'amount': i.related('product').get('cost') * 100,
-    //         'quantity': i.get('quantity'),
-    //         'currency': 'SGD'
-    //     }
+        const lineItem = {
+            'name': i.related('product').get('name'),
+            'amount': i.related('product').get('cost') * 100,
+            'quantity': i.get('quantity'),
+            'currency': 'SGD'
+        }
 
-    //     if (i.related('product').get('image_url')){
-    //         lineItem['images'] = [ i.related('product').get('image_url') ]
-    //     }
+        if (i.related('product').get('image_url')){
+            lineItem['images'] = [ i.related('product').get('image_url') ]
+        }
         
-    //     lineItems.push(lineItem)
-    //     console.log(lineItem.amount)
+        lineItems.push(lineItem)
+        console.log(lineItem.amount)
 
-    //     meta.push({
-    //         'user_id': userId,
-    //         'product_id': i.get('product_id'),
-    //         'product_brand': i.related('product').related('brand').get('name'),
-    //         'product_name': i.related('product').get('name'),
-    //         'quantity': i.get('quantity'),
-    //         'total_cost': i.get('quantity') * i.related('product').get('cost'),
-    //         'image_url': i.related('product').get('image_url')
-    //     })
-    // }
+        meta.push({
+            'user_id': userId,
+            'product_id': i.get('product_id'),
+            'product_brand': i.related('product').related('brand').get('name'),
+            'product_name': i.related('product').get('name'),
+            'quantity': i.get('quantity'),
+            'total_cost': i.get('quantity') * i.related('product').get('cost'),
+            'image_url': i.related('product').get('image_url')
+        })
+    }
 
-    // let metaData = JSON.stringify(meta);
-    // const payment = {
-    //     'payment_method_types': ['card'],
-    //     'line_items': lineItems,
-    //     'success_url': process.env.API_STRIPE_SUCCESS_URL,
-    //     'cancel_url': process.env.API_STRIPE_CANCEL_URL,
-    //     'metadata':{
-    //         'orders': metaData
-    //     }
-    // }
+    let metaData = JSON.stringify(meta);
+    const payment = {
+        'payment_method_types': ['card'],
+        'line_items': lineItems,
+        'success_url': process.env.API_STRIPE_SUCCESS_URL,
+        'cancel_url': process.env.API_STRIPE_CANCEL_URL,
+        'metadata':{
+            'orders': metaData
+        }
+    }
+
+
+    res.json({
+        'message':"does this go through?",
+        'payment': payment
+    })
 
     // const stripeSession = await Stripe.checkout.sessions.create(payment);
 
