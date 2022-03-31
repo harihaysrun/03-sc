@@ -42,8 +42,9 @@ router.post('/', async function (req,res){
         meta.push({
             'user_id': userId,
             'product_id': i.get('product_id'),
-            'product_brand': i.related('product').related('brand').get('name'),
-            'product_name': i.related('product').get('name'),
+            // 'product_brand': i.related('product').related('brand').get('name'),
+            // 'product_name': i.related('product').get('name'),
+            'product_name': `${brand} ${name}`,
             'quantity': i.get('quantity'),
             'total_cost': i.get('quantity') * i.related('product').get('cost'),
             // 'image_url': i.related('product').get('image_url')
