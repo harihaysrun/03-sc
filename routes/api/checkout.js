@@ -39,7 +39,7 @@ router.post('/', async function (req,res){
             'product_name': i.related('product').get('name'),
             'quantity': i.get('quantity'),
             'total_cost': i.get('quantity') * i.related('product').get('cost'),
-            'image_url': i.related('product').get('image_url')
+            // 'image_url': i.related('product').get('image_url')
         })
     }
 
@@ -155,7 +155,9 @@ router.post('/process_payment', express.raw({
         
         for (let o of orders){
             userId = o.user_id;
-            // let product = await productDataLayer.getProductByID(o.product_id);
+
+            let product = await productDataLayer.getProductByID(o.product_id);
+            let imageUrl = product.get('image_url');
             // let productName = product.get('name');
             // let productBrand = product.get('brand');
             // let productCost = parseInt(product.get('cost'));
@@ -178,13 +180,13 @@ router.post('/process_payment', express.raw({
                 'product_name': o.product_name,
                 'quantity': o.quantity,
                 'total_cost': o.total_cost,
-                'image_url': o.image_url
+                'image_url': imageUrl
             };
 
             items.push(orders);
 
             // update stock no & remove items from cart
-            let product = await productDataLayer.getProductByID(o.product_id);
+            // let product = await productDataLayer.getProductByID(o.product_id);
             let productQuantity= parseInt(product.get('stock_no'));
             let cart = new CartServices(userId);
             let updatedStock = productQuantity - o.quantity;
