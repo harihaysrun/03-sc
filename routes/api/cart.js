@@ -15,23 +15,23 @@ router.post('/', async function(req,res){
     console.log(allCartItems);
 
     
-    for(let i=0; i<allCartItems.length; i++){
-        let productId = allCartItems[i].product.id;
+    // for(let i=0; i<allCartItems.length; i++){
+    //     let productId = allCartItems[i].product.id;
 
-        const product = await Product.where({
-            'id': productId
-        }).fetch({
-            require:true,
-            withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
-        })
+    //     const product = await Product.where({
+    //         'id': productId
+    //     }).fetch({
+    //         require:true,
+    //         withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
+    //     })
 
-        let brand = {
-            'brand_name' : product.brand.name
-        }
+    //     let brand = {
+    //         'brand_name' : product.brand.name
+    //     }
 
-        allCartItems[i].product.push(brand);
+    //     allCartItems[i].product.push(brand);
 
-    }
+    // }
 
     res.json({
         'cartItems': allCartItems.toJSON()
