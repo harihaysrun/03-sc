@@ -91,6 +91,23 @@ h1,h2,h3,h4,h5{
     color:#ffdf29;
 }
 
+.nav-link{
+    color:white !important;
+    font-size:25px;
+    margin:5px 0;
+    padding:0;
+}
+
+/* .navbar-collapse{
+    height:calc(100vh - 80px);
+} */
+
+.navbar-toggler{
+    color:white !important;
+    border:0;
+    /* padding:0; */
+}
+
 .btn-primary{
     background-color:#1050ff;
 }
@@ -315,4 +332,24 @@ select[name="skin_types"]{
     }
     
 
+}
+
+
+@media only screen and (min-width:1200px) {
+    .container{
+        width:1000px;
+    }
+}
+
+@media only screen and (min-width:1400px) {
+    .container{
+        width:1200px;
+    }
+}
+
+
+@media only screen and (min-width:1500px) {
+    .container{
+        width:1400px;
+    }
 }
