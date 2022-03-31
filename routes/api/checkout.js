@@ -55,12 +55,13 @@ router.post('/', async function (req,res){
     }
 
 
+    const stripeSession = await Stripe.checkout.sessions.create(payment);
+
     res.json({
         'message':"does this go through?",
-        'payment': payment
+        'payment': payment,
+        'stripeSession': stripeSession
     })
-
-    // const stripeSession = await Stripe.checkout.sessions.create(payment);
 
     // res.json(stripeSession)
 
