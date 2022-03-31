@@ -30,10 +30,19 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             let orders = await query.fetch({
                 withRelated: ['user', 'shipping']
             })
-            res.render('orders/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'order': orders.toJSON().reverse()
-            })
+
+            if(req.session.user.role === 1){
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse(),
+                    'admin': true
+                })
+            } else{
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse()
+                })
+            }
         },
         'success': async function(form){
             if (form.data.order_id){
@@ -48,19 +57,39 @@ router.get('/', checkIfAuthenticated, async function(req,res){
                 withRelated: ['user', 'shipping']
             })
 
-            res.render('orders/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'order': orders.toJSON().reverse()
-            });
+            if(req.session.user.role === 1){
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse(),
+                    'admin': true
+                });
+            } else{
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse()
+                });
+            }
+
+            
         },
         'error':async function(form){
             let orders = await query.fetch({
                 withRelated: ['user', 'shipping']
             })
-            res.render('orders/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'order': orders.toJSON().reverse()
-            })
+
+            if(req.session.user.role === 1){
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse(),
+                    'admin': true
+                })
+            } else{
+                res.render('orders/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'order': orders.toJSON().reverse()
+                })
+            }
+            
         }
     })
 
@@ -78,10 +107,18 @@ router.get('/:order_id/update', checkIfAuthenticated, async function(req,res){
 
     shippingForm.fields.shipping_id.value = order.get('shipping_id');
 
-    res.render('orders/update', {
-        'form': shippingForm.toHTML(bootstrapField),
-        'order': order.toJSON()
-    })
+    if(req.session.user.role === 1){
+        res.render('orders/update', {
+            'form': shippingForm.toHTML(bootstrapField),
+            'order': order.toJSON(),
+            'admin': true
+        })
+    }else{
+        res.render('orders/update', {
+            'form': shippingForm.toHTML(bootstrapField),
+            'order': order.toJSON()
+        })
+    }
     
 });
 

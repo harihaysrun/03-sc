@@ -11,9 +11,17 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
     const allBrands = await brandDataLayer.getAllBrands();
     console.log(allBrands)
-    res.render('brands/index',{
-        'brands': allBrands.toJSON()
-    })
+
+    if(req.session.user.role === 1){
+        res.render('brands/index',{
+            'brands': allBrands.toJSON(),
+            'admin':true
+        })
+    } else{
+        res.render('brands/index',{
+            'brands': allBrands.toJSON()
+        })
+    }
 
 });
 
@@ -22,9 +30,17 @@ router.get('/add', checkIfAuthenticated, async function(req,res){
 
     const brandForm = createBrandForm();
 
-    res.render('brands/create',{
-        'brandForm': brandForm.toHTML(bootstrapField)
-    })
+    if(req.session.user.role === 1){
+        res.render('brands/create',{
+            'brandForm': brandForm.toHTML(bootstrapField),
+            'admin': true
+        })
+    } else{
+        res.render('brands/create',{
+            'brandForm': brandForm.toHTML(bootstrapField)
+        })
+    }
+
 })
 
 router.post('/add', checkIfAuthenticated, async function(req,res){
@@ -57,10 +73,20 @@ router.get('/:brand_id/update', checkIfAuthenticated, async function(req,res){
 
     brandForm.fields.brand_name.value = brand.get('name');
 
-    res.render('brands/update', {
-        'form': brandForm.toHTML(bootstrapField),
-        'brand': brand.toJSON()
-    })
+    if(req.session.user.role === 1){
+        res.render('brands/update', {
+            'form': brandForm.toHTML(bootstrapField),
+            'brand': brand.toJSON(),
+            'admin': true
+        })
+    } else{
+        res.render('brands/update', {
+            'form': brandForm.toHTML(bootstrapField),
+            'brand': brand.toJSON()
+        })
+    }
+
+    
     
 })
 
@@ -90,10 +116,18 @@ router.post('/:brand_id/update', checkIfAuthenticated, async function(req,res){
 router.get('/:brand_id/delete', checkIfAuthenticated, async function(req,res){
     const brandId = req.params.brand_id;
     const brand = await brandDataLayer.getBrandByID(brandId);
+
+    if(req.session.user.role === 1){
+        res.render('brands/delete', {
+            'brand': brand.toJSON(),
+            'admin': true
+        })
+    } else{
+        res.render('brands/delete', {
+            'brand': brand.toJSON()
+        })
+    }
     
-    res.render('brands/delete', {
-        'brand': brand.toJSON()
-    })
 })
 
 router.post('/:brand_id/delete', checkIfAuthenticated, async function(req,res){

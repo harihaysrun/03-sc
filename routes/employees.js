@@ -21,7 +21,8 @@ router.get('/register', checkIfAuthenticatedAdmin, async function(req,res){
 
     const registerForm = createRegistrationForm(allRoles);
     res.render('users/register', {
-        'form': registerForm.toHTML(bootstrapField)
+        'form': registerForm.toHTML(bootstrapField),
+        'admin': true
     })
 
 })
@@ -56,11 +57,11 @@ router.get('/', checkIfAuthenticatedAdmin, async function(req,res){
 
     // console.log(allEmployees)
     res.render('users/employees',{
-        'employees': allEmployees.toJSON()
+        'employees': allEmployees.toJSON(),
+        'admin': true
     })
 
 })
-
 
 
 router.get('/:employee_id/delete', checkIfAuthenticatedAdmin, async function(req,res){
@@ -73,7 +74,8 @@ router.get('/:employee_id/delete', checkIfAuthenticatedAdmin, async function(req
     });
 
     res.render('users/delete-employee', {
-        'employee': user.toJSON()
+        'employee': user.toJSON(),
+        'admin': true
     })
     
 });

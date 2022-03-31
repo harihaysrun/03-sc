@@ -10,10 +10,18 @@ const { checkIfAuthenticated } = require('../middlewares');
 router.get('/', checkIfAuthenticated, async function(req,res){
 
     const allCountries = await countryDataLayer.getAllCountries();
+
+    if(req.session.user.role === 1){
+        res.render('countries/index',{
+            'country': allCountries.toJSON(),
+            'admin': true
+        })
+    } else{
+        res.render('countries/index',{
+            'country': allCountries.toJSON()
+        })
+    }
     
-    res.render('countries/index',{
-        'country': allCountries.toJSON()
-    })
 
 });
 
@@ -21,9 +29,17 @@ router.get('/add', checkIfAuthenticated, async function(req,res){
 
     const countryForm = createCountryForm();
 
-    res.render('countries/create',{
-        'countryForm': countryForm.toHTML(bootstrapField)
-    })
+    if(req.session.user.role === 1){
+        res.render('countries/create',{
+            'countryForm': countryForm.toHTML(bootstrapField),
+            'admin': true
+        })
+    } else{
+        res.render('countries/create',{
+            'countryForm': countryForm.toHTML(bootstrapField)
+        })
+    }
+
 })
 
 router.post('/add', checkIfAuthenticated, async function(req,res){
@@ -56,10 +72,19 @@ router.get('/:country_id/update', checkIfAuthenticated, async function(req,res){
 
     countryForm.fields.country.value = country.get('name');
 
-    res.render('countries/update', {
-        'form': countryForm.toHTML(bootstrapField),
-        'country': country.toJSON()
-    })
+    if(req.session.user.role === 1){
+        res.render('countries/update', {
+            'form': countryForm.toHTML(bootstrapField),
+            'country': country.toJSON(),
+            'admin': true
+        })
+    } else{
+        res.render('countries/update', {
+            'form': countryForm.toHTML(bootstrapField),
+            'country': country.toJSON()
+        })
+    }
+
     
 })
 
@@ -89,10 +114,18 @@ router.post('/:country_id/update', checkIfAuthenticated, async function(req,res)
 router.get('/:country_id/delete', checkIfAuthenticated, async function(req,res){
     const countryId = req.params.country_id;
     const country = await countryDataLayer.getCountryByID(countryId);
+
+    if(req.session.user.role === 1){
+        res.render('countries/delete', {
+            'country': country.toJSON(),
+            'admin': true
+        })
+    } else{
+        res.render('countries/delete', {
+            'country': country.toJSON()
+        })
+    }
     
-    res.render('countries/delete', {
-        'country': country.toJSON()
-    })
 })
 
 router.post('/:country_id/delete', checkIfAuthenticated, async function(req,res){

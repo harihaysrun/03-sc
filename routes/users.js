@@ -18,10 +18,19 @@ router.get('/', checkIfAuthenticated, async function(req,res){
     searchForm.handle(req,{
         'empty':async function(form){
             let customers = await query.fetch()
-            res.render('users/users',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'customers': customers.toJSON()
-            })
+            
+            if(req.session.user.role === 1){
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON(),
+                    'admin': true
+                })
+            } else{
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON()
+                })
+            }
         },
         'success': async function(form){
             if (form.data.username){
@@ -34,17 +43,33 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             // search the query
             let customers = await query.fetch();
 
-            res.render('users/users',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'customers': customers.toJSON()
-            });
+            if(req.session.user.role === 1){
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON(),
+                    'admin':true
+                });
+            } else{
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON()
+                });
+            }
         },
         'error':async function(form){
             let customers = await query.fetch();
-            res.render('users/users',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'customers': customers.toJSON()
-            })
+            if(req.session.user.role === 1){
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON(),
+                    'admin': true
+                })
+            } else{
+                res.render('users/users',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'customers': customers.toJSON()
+                })
+            }
         }
     })
 
@@ -64,9 +89,16 @@ router.get('/:user_id/delete', checkIfAuthenticated, async function(req,res){
         require:true,
     });
 
-    res.render('users/delete', {
-        'customer': user.toJSON()
-    })
+    if(req.session.user.role === 1){
+        res.render('users/delete', {
+            'customer': user.toJSON(),
+            'admin':true
+        })
+    } else{
+        res.render('users/delete', {
+            'customer': user.toJSON()
+        })
+    }
     
 });
 

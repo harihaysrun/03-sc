@@ -2,12 +2,11 @@
 
 {{#block 'content'}}
 
-    <h1>Hi, {{user.username}}!</h1>
+    <h1>Hi, {{profile.username}}!</h1>
 
     <ul>
-        <li>Name: {{user.first_name}} {{user.last_name}}</li>
-        <li>Address: {{user.address_line_1}}, {{user.address_line_2}}, Singapore {{user.postal_code}}</li>
-        <li>Phone number: {{user.phone_number}}</li>
+        <li>Name: {{profile.first_name}} {{profile.last_name}}</li>
+        <li>Email: {{profile.email}}</li>
     </ul>
 
     <a href="/users/logout" class="btn btn-primary">Log out</a>

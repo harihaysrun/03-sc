@@ -38,12 +38,22 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             let products = await query.fetch({
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
-            res.render('products/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON(),
-                'brands': brands.toJSON(),
-                'countries': countries.toJSON()
-            })
+            if(req.session.user.role === 1){
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON(),
+                    'admin':true
+                })
+            } else{
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON()
+                })
+            }
         },
         'success': async function(form){
             if (form.data.name){
@@ -79,23 +89,45 @@ router.get('/', checkIfAuthenticated, async function(req,res){
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
 
-            res.render('products/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON(),
-                'brands': brands.toJSON(),
-                'countries': countries.toJSON()
-            });
+
+            if(req.session.user.role === 1){
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON(),
+                    'admin':true
+                });
+            } else{
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON()
+                });
+            }
+
         },
         'error':async function(form){
             let products = await query.fetch({
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
-            res.render('products/index',{
-                'searchForm': searchForm.toHTML(bootstrapField),
-                'products': products.toJSON(),
-                'brands': brands.toJSON(),
-                'countries': countries.toJSON()
-            })
+            if(req.session.user.role === 1){
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON(),
+                    'admin': true
+                })
+            } else{
+                res.render('products/index',{
+                    'searchForm': searchForm.toHTML(bootstrapField),
+                    'products': products.toJSON(),
+                    'brands': brands.toJSON(),
+                    'countries': countries.toJSON()
+                })
+            }
         }
     })
 
@@ -110,13 +142,23 @@ router.get('/create', checkIfAuthenticated, async function(req,res){
     const allStatus = await productDataLayer.getAllStatus();
 
     const productForm = createProductForm(allBrands, allCountries, allTypes, allSkinTypes, allStatus);
-
-    res.render('products/create',{
-        'form': productForm.toHTML(bootstrapField),
-        'cloudinaryName': process.env.CLOUDINARY_NAME,
-        'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
-        'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET,
-    })
+    
+    if(req.session.user.role === 1){
+        res.render('products/create',{
+            'form': productForm.toHTML(bootstrapField),
+            'cloudinaryName': process.env.CLOUDINARY_NAME,
+            'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+            'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET,
+            'admin':true
+        })
+    } else{
+        res.render('products/create',{
+            'form': productForm.toHTML(bootstrapField),
+            'cloudinaryName': process.env.CLOUDINARY_NAME,
+            'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+            'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET
+        })
+    }
     
 });
 
@@ -199,13 +241,24 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
     const selectedSkinTypes = await product.related('skinTypes').pluck('id');
     productForm.fields.skin_types.value = selectedSkinTypes;
 
-    res.render('products/update', {
-        'form': productForm.toHTML(bootstrapField),
-        'product': product.toJSON(),
-        'cloudinaryName': process.env.CLOUDINARY_NAME,
-        'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
-        'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET
-    })
+    if(req.session.user.role === 1){
+        res.render('products/update', {
+            'form': productForm.toHTML(bootstrapField),
+            'product': product.toJSON(),
+            'cloudinaryName': process.env.CLOUDINARY_NAME,
+            'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+            'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET,
+            'admin':true
+        })
+    } else{
+        res.render('products/update', {
+            'form': productForm.toHTML(bootstrapField),
+            'product': product.toJSON(),
+            'cloudinaryName': process.env.CLOUDINARY_NAME,
+            'cloudinaryApiKey': process.env.CLOUDINARY_API_KEY,
+            'cloudinaryUploadPreset': process.env.CLOUDINARY_UPLOAD_PRESET
+        })
+    }
     
 });
 
@@ -282,9 +335,16 @@ router.get('/:product_id/delete', checkIfAuthenticated, async function(req,res){
     const productId = req.params.product_id;
     const product = await productDataLayer.getProductByID(productId);
 
-    res.render('products/delete', {
-        'product': product.toJSON()
-    })
+    if(req.session.user.role === 1){
+        res.render('products/delete', {
+            'product': product.toJSON(),
+            'admin':true
+        })
+    } else{
+        res.render('products/delete', {
+            'product': product.toJSON()
+        })
+    }
     
 });
 
