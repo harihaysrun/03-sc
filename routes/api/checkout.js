@@ -17,9 +17,12 @@ router.post('/', async function (req,res){
     const lineItems = [];
     const meta = [];
     for (let i of items){
+
+        let brand = i.related('product').related('brand').get('name');
+        let name = i.related('product').get('name');
         
         const lineItem = {
-            'name': i.related('product').get('name'),
+            'name': `${brand} ${name}`,
             'amount': i.related('product').get('cost') * 100,
             'quantity': i.get('quantity'),
             'currency': 'SGD'
@@ -192,7 +195,7 @@ router.post('/process_payment', express.raw({
 
             orders = {
                 'product_id': o.product_id,
-                'product_brand': productBrand,
+                // 'product_brand': productBrand,
                 'product_name': o.product_name,
                 'quantity': o.quantity,
                 'total_cost': o.total_cost,
