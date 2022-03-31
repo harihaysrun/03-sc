@@ -104,7 +104,7 @@ router.get('/profile', checkIfAuthenticatedWithJWT, function(req,res){
 //         })
 //     } else {
 //         req.flash('error_messages', 'Please log in to view this page');
-//         res.redirect('/users/login');
+//         res.redirect('/login');
 //     }
 
 // })

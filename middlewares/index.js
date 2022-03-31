@@ -4,7 +4,7 @@ const checkIfAuthenticated = function(req,res,next){
     } else{
         // no user has logged in
         req.flash('error_messages', 'Log in is required to view page');
-        res.redirect('/users/login')
+        res.redirect('/login')
     }
 }
 

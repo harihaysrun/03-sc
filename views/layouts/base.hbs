@@ -20,10 +20,13 @@
 
 
     {{#if user}}
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
 
-          <a class="navbar-brand" href="/dashboard"><span class="role-badge">{{user.role_name}}</span>{{user.username}}</a>
+          <a class="navbar-brand" href="/profile">
+            <span class="role-badge">{{user.role_name}}</span>{{user.username}}
+          </a>
+
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -40,7 +43,9 @@
             {{!-- <a href="/users/profile" class="navbar-profile">
               <span class="role-badge">{{user.role_name}}</span>{{user.username}}
             </a> --}}
-            <a href="/users/logout" class="btn btn-primary">Log out</a>
+            <a href="/logout" class=" navbar-btn">
+              <i class="fa-solid fa-arrow-right-from-bracket me-2 me-md-3"></i>Log out
+            </a>
           </div>
 
         </div>
@@ -56,9 +61,15 @@
             <img src="/images/sunscreen-white.svg" alt="">
             Products
           </a>
+          {{#if admin}}
+          <a href="/employees" class="p-2 my-2">
+            <img src="/images/customer-white.svg" alt="">
+            Employees
+          </a>
+          {{/if}}
           <a href="/users" class="p-2 my-2">
             <img src="/images/customer-white.svg" alt="">
-            Users
+            Customers
           </a>
           <a href="/orders" class="p-2 my-2">
             <img src="/images/orders-white.svg" alt="">

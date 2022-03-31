@@ -13,7 +13,7 @@ a{
     text-decoration: none;
 }
 
-.dashboard-button{
+.employee-button{
     background-color:#fff6c7;
     /* border:1px solid #f1ce04; */
     color:#d6b600;
@@ -22,7 +22,7 @@ a{
     /* color:rgb(255, 198, 191); */
 }
 
-.employee-button{
+.dashboard-button{
     background-color:#e7edff;
     /* border:1px solid #7d9efc; */
     /* color:#7d9efc; */
@@ -67,6 +67,30 @@ h1,h2,h3,h4,h5{
     color:#ffffff;
 }
 
+.navbar{
+    background-color:#1050ff;
+    padding: 20px 0;
+}
+
+.navbar-brand{
+    font-size:16px;
+    color:white !important;
+}
+
+.navbar-brand:hover {
+    text-decoration: underline;
+}
+
+.navbar-btn{
+    /* background-color:pink; */
+    color:white;
+}
+
+.navbar-btn:hover{
+    transition:none;
+    color:#ffdf29;
+}
+
 .btn-primary{
     background-color:#1050ff;
 }
@@ -89,7 +113,11 @@ label{
 table{
     overflow: hidden;
     /* box-shadow: 5px 5px 0px rgb(16, 80, 255, 1); */
-    /* box-shadow: 5px 5px 0px #ffdf29; */
+    /* box-shadow: 0px 0px 0px 1px #1050ff; */
+}
+
+.table{
+    border:1px solid lightgray !important;
 }
 
 thead{
@@ -99,9 +127,10 @@ thead{
     color:#b39800;
 }
 
-/* tbody tr:hover{
+tbody tr:hover{
     background-color:#fffdf4;
-} */
+    /* background-color:#f9fbff; */
+}
 
 .extended-info-address{
     background-color:#1050ff !important;
@@ -152,15 +181,7 @@ tbody>tr>td{
 }
 
 .dashboard-sidebar a:hover{
-    color: #f1ff29;
-}
-
-.navbar-brand{
-    font-size:16px;
-}
-
-.navbar-brand:hover {
-    text-decoration: underline;
+    background-color: #1050ff;
 }
 
 .role-badge{

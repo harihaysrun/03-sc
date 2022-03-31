@@ -56,7 +56,7 @@ router.get('/', checkIfAuthenticatedAdmin, async function(req,res){
 
     // console.log(allEmployees)
     res.render('users/employees',{
-        'user': allEmployees.toJSON()
+        'employees': allEmployees.toJSON()
     })
 
 })
@@ -72,8 +72,8 @@ router.get('/:employee_id/delete', checkIfAuthenticatedAdmin, async function(req
         require:true,
     });
 
-    res.render('users/delete', {
-        'user': user.toJSON()
+    res.render('users/delete-employee', {
+        'employee': user.toJSON()
     })
     
 });
