@@ -80,12 +80,12 @@ const Role = bookshelf.model('Role',{
 
 const CartItem = bookshelf.model("CartItem",{
     'tableName': 'cart_items',
+    // product(){
+    //     return this.belongsTo('Product')
+    // },
     product(){
-        return this.belongsTo('Product')
+        return this.belongsToMany('Product', 'Brand')
     },
-    brand(){
-        return this.belongsTo('brand');
-    }
 })
 
 const OrderItem = bookshelf.model('OrderItem',{
