@@ -18,7 +18,11 @@ router.post('/', async function (req,res){
     const meta = [];
     for (let i of items){
 
-        let brand = i.related('product').related('brand').get('name');
+
+        let product = await productDataLayer.getProductByID(i.get('product_id'));
+        let brand = product.related('brand').get('name');
+
+        // let brand = i.related('product').related('brand').get('name');
         let name = i.related('product').get('name');
         
         const lineItem = {
