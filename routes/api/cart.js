@@ -11,6 +11,9 @@ router.post('/', async function(req,res){
     let userId = req.body.user_id;
     const cartServices = new CartServices(userId);
     const allCartItems = await cartServices.getAllCartItems();
+
+    console.log(allCartItems);
+
     res.json({
         'cartItems': allCartItems.toJSON()
     })

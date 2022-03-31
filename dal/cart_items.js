@@ -6,7 +6,7 @@ const getCart = async function(userId){
             'user_id':userId
         }).fetch({
             'require':false,
-            'withRelated': ['product', 'brand']
+            'withRelated': ['product']
         })
 
     return allCartItems;
