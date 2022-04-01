@@ -294,4 +294,21 @@ const createShippingForm = function(shipping){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createShippingForm };
+const createEnquirySearchForm = function(reason, status){
+    return forms.create({
+        "reason_id":fields.string({
+            'label': 'reason',
+            'required':false,
+            'widget': widgets.select(),
+            'choices': reason
+        }),
+        "status_id":fields.string({
+            'label': 'Status',
+            'required':false,
+            'widget': widgets.select(),
+            'choices': status
+        }),
+    })
+}
+
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createShippingForm, createEnquirySearchForm };

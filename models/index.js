@@ -106,4 +106,28 @@ const BlackListedToken = bookshelf.model('BlacklistedToken',{
     'tableName': 'blacklisted_tokens',
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Employee, Role, CartItem, OrderItem, Shipping, BlackListedToken }
+const Enquiry = bookshelf.model('Enquiry',{
+    tableName:'enquiries',
+    reason(){
+        return this.belongsTo('Reason')
+    },
+    status(){
+        return this.belongsTo('EnqStatus')
+    }
+})
+
+const Reason = bookshelf.model('Reason',{
+    tableName:'reasons',
+    enquiries(){
+        return this.hasMany('Enquiry')
+    }
+})
+
+const EnqStatus = bookshelf.model('EnqStatus',{
+    tableName:'enqstatus',
+    enquiries(){
+        return this.hasMany('Enquiry')
+    }
+})
+
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Employee, Role, CartItem, OrderItem, Shipping, BlackListedToken, Enquiry, Reason, EnqStatus }

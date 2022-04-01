@@ -100,13 +100,15 @@ const brandRoutes = require('./routes/brands');
 const countryRoutes = require('./routes/countries');
 const checkoutRoutes = require('./routes/checkout');
 const orderRoutes = require('./routes/orders');
+const enquiryRoutes = require('./routes/enquiries');
 
 const api = {
   'products': require('./routes/api/products'),
   'users': require('./routes/api/users'),
   'cart': require('./routes/api/cart'),
   'checkout': require('./routes/api/checkout'),
-  'orders': require('./routes/api/orders')
+  'orders': require('./routes/api/orders'),
+  'contact': require('./routes/api/contact')
 }
 
 async function main() {
@@ -125,6 +127,8 @@ async function main() {
   app.use('/api/cart', express.json(), api.cart);
   app.use('/api/checkout', express.json(), api.checkout);
   app.use('/api/orders', express.json(), api.orders);
+  app.use('/enquiries', enquiryRoutes);
+  app.use('/api/contact', express.json(), api.contact);
 }
 
 main();

@@ -51,9 +51,21 @@ h1,h2,h3,h4,h5{
     font-weight:700;
 }
 
-.btn, .form-control{
+/* .btn, .form-control{
     min-width:100%;
     padding:15px 40px;
+    border-radius: 100px;
+} */
+
+.btn{
+    min-width:100%;
+    padding:15px 40px;
+    border-radius: 100px;
+}
+
+.form-control{
+    min-width:100%;
+    padding:15px 30px;
     border-radius: 100px;
 }
 
@@ -253,6 +265,10 @@ select[name="skin_types"]{
     background: none;
 }
 
+.sunscreen-form select[name="skin_types"]{
+    border-radius:25px;
+}
+
 #uploaded-image{
     width:100%;
 }
@@ -321,10 +337,6 @@ select[name="skin_types"]{
 
     .sunscreen-form .float-right{
         width:70%;
-    }
-
-    .sunscreen-form select[name="skin_types"]{
-        border-radius:15px;
     }
 
     .brands-table, .countries-table{
