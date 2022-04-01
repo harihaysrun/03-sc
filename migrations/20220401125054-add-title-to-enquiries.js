@@ -15,23 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('enqstatus', {
-    "id":{
-      "type":"int",
-      "primaryKey": true,
-      "autoIncrement": true,
-      "unsigned": true
-    },
-    "name":{
-      "type":"string",
-      "length":100,
-      "notNull":false
-    }
-  });
+  return db.addColumn('enquiries', 'title',{
+    'type': 'string',
+    'length':200
+  })
 };
 
 exports.down = function(db) {
-  return db.dropTable("enqstatus");
+  return null;
 };
 
 exports._meta = {

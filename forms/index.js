@@ -288,7 +288,7 @@ const createShippingForm = function(shipping){
             'label': 'Shipping',
             'required':true,
             'errorAfterField':true,
-            'widget': widgets.select(), // dropdown select
+            'widget': widgets.select(),
             'choices': shipping
         }),
     })
@@ -301,13 +301,7 @@ const createEnquirySearchForm = function(reason, status){
             'required':false,
             'widget': widgets.select(),
             'choices': reason
-        }),
-        "status_id":fields.string({
-            'label': 'Status',
-            'required':false,
-            'widget': widgets.select(),
-            'choices': status
-        }),
+        })
     })
 }
 

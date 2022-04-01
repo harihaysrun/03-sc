@@ -15,21 +15,10 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.addColumn('enquiries', 'status_id', {
-    'type':'int',
-    'unsigned': true,
-    'notNull': true,
-    'defaultValue': 1,
-    'foreignKey':{
-      'name':'enquiry_status_fk',
-      'table':'enqstatus',
-      'mapping':'id',
-      'rules':{
-        'onDelete':'cascade',
-        'onUpdate':'restrict'
-      }
-    }
-  });
+  return db.addColumn('replied_enquiries', 'title',{
+    'type': 'string',
+    'length':200
+  })
 };
 
 

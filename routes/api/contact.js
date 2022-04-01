@@ -20,6 +20,7 @@ router.post('/', async function(req,res){
         'name':req.body.name,
         'email': req.body.email,
         'reason_id': req.body.reason_id,
+        'title': req.body.title,
         'message':req.body.message
     })
 

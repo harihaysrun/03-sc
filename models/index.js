@@ -103,16 +103,13 @@ const Shipping = bookshelf.model('Shipping',{
 })
 
 const BlackListedToken = bookshelf.model('BlacklistedToken',{
-    'tableName': 'blacklisted_tokens',
+    'tableName': 'blacklisted_tokens'
 })
 
 const Enquiry = bookshelf.model('Enquiry',{
     tableName:'enquiries',
     reason(){
         return this.belongsTo('Reason')
-    },
-    status(){
-        return this.belongsTo('EnqStatus')
     }
 })
 
@@ -123,11 +120,10 @@ const Reason = bookshelf.model('Reason',{
     }
 })
 
-const EnqStatus = bookshelf.model('EnqStatus',{
-    tableName:'enqstatus',
-    enquiries(){
-        return this.hasMany('Enquiry')
-    }
+
+const RepliedEnquiry = bookshelf.model('RepliedEnquiry',{
+    tableName:'replied_enquiries'
 })
 
-module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Employee, Role, CartItem, OrderItem, Shipping, BlackListedToken, Enquiry, Reason, EnqStatus }
+
+module.exports = { Product, Brand, Country, Type, SkinType, Status, User, Employee, Role, CartItem, OrderItem, Shipping, BlackListedToken, Enquiry, Reason, RepliedEnquiry }

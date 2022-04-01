@@ -6,7 +6,7 @@ Handlebars.registerHelper('toJSON', function(obj) {
     return JSON.stringify(obj, null, 3);
 });
 
-const { User, OrderItem, Enquiry } = require('../models');
+const { User, OrderItem, Enquiry, RepliedEnquiry } = require('../models');
 const {bootstrapField, createShippingForm, createEnquirySearchForm } = require('../forms');
 
 const orderDataLayer = require('../dal/orders');
@@ -18,57 +18,60 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
     const allReasons = await enquiryDataLayer.getAllReasons();
     allReasons.unshift([0, "Select one"]);
-    const allStatus = await enquiryDataLayer.getEnquiryStatus();
-    allStatus.unshift([0, "Select one"]);
 
-    const searchForm = createEnquirySearchForm(allReasons, allStatus);
+    allRepliedEnquiries =  await enquiryDataLayer.getAllRepliedEnquiries();
+
+    const searchForm = createEnquirySearchForm(allReasons);
 
     let query = Enquiry.collection();
     searchForm.fields.reason_id.value = query.get('reason_id');
-    searchForm.fields.status_id.value = query.get('status_id');
 
     searchForm.handle(req,{
         'empty':async function(form){
             let enquiries = await query.fetch({
-                withRelated: ['reason', 'status']
+                withRelated: ['reason']
             })
 
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
                     'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON(),
                     'admin': true
                 })
             } else{
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'enquiry': enquiries.toJSON().reverse()
+                    'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON()
                 })
             }
         },
         'success': async function(form){
             if (form.data.reason_id && form.data.reason_id != "0"){
-                query.where('shipping_id', '=', req.query.reason_id)
+                query.where('reason_id', '=', req.query.reason_id)
             }
             if (form.data.status_id && form.data.status_id != "0"){
-                query.where('shipping_id', '=', req.query.status_id)
+                query.where('status_id', '=', req.query.status_id)
             }
 
             // search the query
             let enquiries = await query.fetch({
-                withRelated: ['reason', 'status']
+                withRelated: ['reason']
             })
-
+            
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
                     'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON(),
                     'admin': true
                 });
             } else{
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'enquiry': enquiries.toJSON().reverse()
+                    'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON()
                 });
             }
 
@@ -76,81 +79,89 @@ router.get('/', checkIfAuthenticated, async function(req,res){
         },
         'error':async function(form){
             let enquiries = await query.fetch({
-                withRelated: ['reason', 'status']
+                withRelated: ['reason']
             })
 
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
                     'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON(),
                     'admin': true
                 })
             } else{
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'enquiry': enquiries.toJSON().reverse()
+                    'enquiry': enquiries.toJSON().reverse(),
+                    'replied': allRepliedEnquiries.toJSON()
                 })
             }
             
         }
     })
 
-    // res.render('enquiries/index')
+
+
+    // const allEnquiries = await enquiryDataLayer.getAllEnquiries();
+
+    // res.json(allEnquiries)
 
 })
 
 
-router.get('/:order_id/update', checkIfAuthenticated, async function(req,res){
+router.get('/:enquiry_id/delete', checkIfAuthenticated, async function(req,res){
 
-    const orderId = req.params.order_id;
-    const order = await orderDataLayer.getOrderByID(orderId);
-
-    const allShipping = await orderDataLayer.getShippingStatus();
-
-    const shippingForm = createShippingForm(allShipping);
-
-    shippingForm.fields.shipping_id.value = order.get('shipping_id');
+    const id = req.params.enquiry_id;
+    const enquiry = await enquiryDataLayer.getEnquiryById(id);
 
     if(req.session.user.role === 1){
-        res.render('orders/update', {
-            'form': shippingForm.toHTML(bootstrapField),
-            'order': order.toJSON(),
-            'admin': true
+        res.render('enquiries/delete', {
+            'enquiry': enquiry.toJSON(),
+            'admin':true
         })
-    }else{
-        res.render('orders/update', {
-            'form': shippingForm.toHTML(bootstrapField),
-            'order': order.toJSON()
+    } else{
+        res.render('enquiries/delete', {
+            'enquiry': enquiry.toJSON()
         })
     }
     
 });
 
-router.post('/:order_id/update', checkIfAuthenticated, async function(req,res){
 
-    const orderId = req.params.order_id;
-    const order = await orderDataLayer.getOrderByID(orderId);
+router.post('/:enquiry_id/delete', checkIfAuthenticated, async function(req,res){
 
-    const allShipping = await orderDataLayer.getShippingStatus();
+    // const productId = req.params.product_id;
+    // const product = await Product.where({
+    //     'id':productId
+    // }).fetch({
+    //     require:true
+    // })
 
-    const shippingForm = createShippingForm(allShipping);
+    const id = req.params.enquiry_id;
+    const enquiry = await enquiryDataLayer.getEnquiryById(id);
 
-    shippingForm.handle(req,{
-        'success':async function(form){
-            order.set('shipping_id', form.data.shipping_id);
-            order.save();
+    // res.json(enquiry.related('reason').get('name'),)
 
-            req.flash("success_messages", `Shipping status has been changed for Order #${order.get('id')}`);
-
-            res.redirect('/orders');
-        },
-        'error':function(form){
-            res.render('orders/update',{
-                'form':form.toHTML(bootstrapField),
-                'order': order.toJSON()
-            })
-        }
+    const repliedEnquiry = new RepliedEnquiry({
+        'enquiry_id': enquiry.get('id'),
+        'name':enquiry.get('name'),
+        'email': enquiry.get('email'),
+        'reason': enquiry.related('reason').get('name'),
+        'title': enquiry.get('title'),
+        'message':enquiry.get('message'),
+        'replied_by': req.session.user.username,
+        'role': req.session.user.role_name
     })
+
+    await repliedEnquiry.save();
+
+
+    // // res.sendStatus(200)
+    // // res.json(repliedEnquiry)
+
+    await enquiry.destroy();
+    res.redirect('/enquiries');
+
 });
 
 module.exports = router;

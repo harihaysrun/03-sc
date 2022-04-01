@@ -1,11 +1,22 @@
-const { Enquiry, Reason, EnqStatus} = require('../models');
+const { Enquiry, Reason, RepliedEnquiry } = require('../models');
 
 async function getAllEnquiries(){
     
     const allEnquiries = await Enquiry.collection().fetch({
-                        'withRelated': ['reason', 'status']
+                        withRelated : ['reason']
                     });
     return allEnquiries;
+}
+
+async function getEnquiryById(id){
+    
+    const enquiry = await Enquiry.where({
+                        'id':id
+                    }).fetch({
+                        require:true,
+                        withRelated : ['reason']
+                    });
+    return enquiry;
 }
 
 async function getAllReasons(){
@@ -17,14 +28,11 @@ async function getAllReasons(){
     return allReasons
 }
 
-async function getEnquiryStatus(){
+async function getAllRepliedEnquiries(){
     
-    const status = await EnqStatus.fetchAll().map(function(category){
-        return [ category.get('id'), category.get('name') ]
-    })
-
-    return status;
-
+    const allRepliedEnquiries = await RepliedEnquiry.collection().fetch();
+    return allRepliedEnquiries;
 }
 
-module.exports = { getAllEnquiries, getAllReasons, getEnquiryStatus };
+
+module.exports = { getAllEnquiries, getEnquiryById, getAllReasons, getAllRepliedEnquiries };

@@ -120,6 +120,14 @@ h1,h2,h3,h4,h5{
     /* padding:0; */
 }
 
+.text-primary{
+    color:#1050ff !important;
+}
+
+.text-muted{
+    color:#b7b7b7 !important;
+}
+
 .btn-primary{
     background-color:#1050ff;
 }
@@ -242,16 +250,16 @@ td{
     color:#e0c00b !important;
 }
 
-.yellow:hover{
-    background-color:rgb(255, 223, 41, 0.3) !important;
-}
-
 .edit-btn{
     color:#1050ff;
 }
 
 .delete-btn{
     color:#dc3545;
+}
+
+.replied-btn{
+    color:#198754;
 }
 
 select{
@@ -271,6 +279,26 @@ select[name="skin_types"]{
 
 #uploaded-image{
     width:100%;
+}
+
+.nav-pills{
+    border-bottom:1px solid #e3e3e3;
+}
+
+.enquiries-tab{
+    padding:10px 15px;
+}
+
+.enquiries-tab h5{
+    color:#a8a8a8;
+}
+
+.enquiries-tab.active {
+    border-bottom: 3px solid #1050ff;
+}
+
+.enquiries-tab.active h5 {
+    color:#1050ff;
 }
 
 @media only screen and (min-width:768px) {
@@ -323,6 +351,15 @@ select[name="skin_types"]{
     .delete-btn:hover{
         color:#dc3545;
         background-color:rgb(220, 53, 69, 0.1);
+    }
+
+    .yellow:hover{
+        background-color:rgb(255, 223, 41, 0.3) !important;
+    }
+
+    .replied-btn:hover{
+        color:#198754;
+        background-color:rgb(25, 135, 84, 0.1);
     }
 
     .sunscreen-form{

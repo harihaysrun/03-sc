@@ -15,7 +15,10 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.insert("enqstatus", ['name'], ['Unread']);
+  return db.addColumn('replied_enquiries', 'replied_by',{
+    'type': 'string',
+    'length':100
+  })
 };
 
 exports.down = function(db) {

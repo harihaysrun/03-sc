@@ -1,0 +1,21 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+
+    <h1 class="text-danger">Mark enquiry #{{enquiry.id}} as replied?</h1>
+
+    <form method="POST" class="mt-3">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        <p>
+            You may retrieve this message afterwards in the Replied tab.
+        </p>
+        <p class="mt-4">
+            <input type="submit" value="Yes" class="btn btn-danger mb-3 mb-md-0"/ >
+            <a href="/enquiries" class="btn btn-cancel mx-md-3">No</a>
+        </p>
+    </form>
+
+
+{{/block}}
+
+{{/extends}}

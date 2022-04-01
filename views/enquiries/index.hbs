@@ -2,113 +2,229 @@
 
 {{#block 'content'}}
 
-    <h1>{{order.length}} Enquiries</h1>
+    <h1>Enquiries</h1>
+
+    <div class="mt-3 d-flex flew-row">
+        <i class="fa-solid fa-circle-exclamation text-primary mt-1 me-3"></i>
+        <div>
+            When responding to enquiries, always use <span class="text-primary">[Enquiry No.] [Reason]: [Title]</span> as the email subject line.
+            <br>Copy and paste the message received in a <u>blockquote</u> underneath your reply.
+            <br>Remember to always be courteous when conversing with customers :)
+        </div>
+
+        </div>
+
+    <ul class="nav nav-pills mt-4 mt-lg-5 mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="enquiries-tab active" id="pills-unread-tab" data-bs-toggle="pill" data-bs-target="#pills-unread" type="button" role="tab" aria-controls="pills-unread" aria-selected="true">
+            <h5>{{enquiry.length}}  Active enquiries</h5>
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="enquiries-tab" id="pills-read-tab" data-bs-toggle="pill" data-bs-target="#pills-read" type="button" role="tab" aria-controls="pills-read" aria-selected="false">
+            <h5>Replied</h5>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+
+        {{!-- active --}}
+        <div class="tab-pane show active" id="pills-unread" role="tabpanel" aria-labelledby="pills-unread-tab">
+
+            <form method="GET" class="search-form mb-4">
+                {{{searchForm}}}
+                <input type="submit" class="btn btn-primary" value="Search">
+            </form>
+
+            {{!-- mobile --}}
+            <div class="d-block d-lg-none mt-0">
+                <table class="table border-radius">
+                    <thead>
+                        <tr>
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Reason</th>
+                            <th class="p-3">Details</th>
+                            <th class="p-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each enquiry}}
+                        <tr>
+                            <td class="p-3 text-capitalize">
+                                <b>#{{this.id}}</b>
+                            </td>
+                            <td class="p-3 text-capitalize">
+                                {{this.reason.name}}
+                            </td>
+                            <td class="p-3 text-center">
+                                <a class="icon-btns yellow edit-btn d-flex flex-column align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}" role="button">
+                                    <i class="fa-solid fa-circle-plus" style="font-size:35px"></i>
+                                </a>
+                            </td>
+                            <td class="p-3">
+                                <a href="/enquiries/{{this.id}}/delete" class="icon-btns replied-btn d-flex flex-column align-items-center">
+                                    <i class="fa-solid fa-circle-check" style="font-size:35px"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="collapse multi-collapse" id="tab{{this.id}}">
+                            <td colspan="5" class="extended-info p-3 text-capitalize">
+                                <b>Name: </b>{{this.name}}
+                                <br>
+                                <b>Message: </b>{{this.message}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+            
+            {{!-- desktop --}}
+            <div class="d-none d-lg-block mt-0">
+                <table class="table border-radius">
+                    <thead>
+                        <tr>
+                            <th class="p-4">Enquiry No.</th>
+                            <th class="p-4">Name</th>
+                            <th class="p-4">Email</th>
+                            <th class="p-4">Reason</th>
+                            <th class="p-4">Message</th>
+                            <th class="p-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each enquiry}}
+                        <tr>
+                            <td class="p-4">#{{this.id}}</td>
+                            <td class="p-4">{{this.name}}</td>
+                            <td class="p-4">{{this.email}}</td>
+                            <td class="p-4"> {{this.reason.name}}</td>
+                            <td class="p-4">
+                                <a class="icon-btns yellow edit-btn d-flex flex-row align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}" role="button">
+                                    <i class="fa-solid fa-circle-plus"></i> <big class="ms-3 text-dark text-bold"><b>{{this.title}}</b></big>
+                                </a>
+                            </td>
+                            <td class="p-4 text-center">
+                                <a href="/enquiries/{{this.id}}/delete" class="icon-btns replied-btn d-flex flex-column align-items-center">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Replied
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="collapse multi-collapse" id="tab{{this.id}}">
+                            <td colspan="2" class="extended-info-address p-3 text-center">
+                                Message
+                            </td>
+                            <td colspan="7" class="extended-info p-3">
+                                {{this.message}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        
+        {{!-- replied --}}
+        <div class="tab-pane" id="pills-read" role="tabpanel" aria-labelledby="pills-read-tab">
 
 
-    <form method="GET" class="search-form mt-3">
-        {{{searchForm}}}
-        <input type="submit" class="btn btn-primary" value="Search">
-    </form>
+            {{!-- mobile --}}
+            <div class="d-block d-lg-none mt-0">
+                <table class="table border-radius">
+                    <thead>
+                        <tr>
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Reason</th>
+                            <th class="p-3">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each replied}}
+                        <tr>
+                            <td class="p-3 text-capitalize">
+                                <b>#{{this.enquiry_id}}</b>
+                            </td>
+                            <td class="p-3 text-capitalize">
+                                {{this.reason}}
+                            </td>
+                            <td class="p-3 text-center">
+                                <a class="icon-btns yellow edit-btn d-flex flex-column align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}Replied" role="button">
+                                    <i class="fa-solid fa-circle-plus" style="font-size:35px"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="collapse multi-collapse" id="tab{{this.id}}Replied">
+                            <td colspan="5" class="extended-info p-3 text-capitalize">
+                                <b>Name: </b>{{this.name}}
+                                <br>
+                                <b>Email: </b>{{this.email}}
+                                <br><br>
+                                <b>Title: </b>{{this.title}}
+                                <br>
+                                <b>Message: </b>{{this.message}}
+                                <br><br>
+                                <b>Replied by: </b>{{this.replied_by}} ({{this.role}})
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
 
-    
-    <div class="d-block d-lg-none mt-5">
-        <table class="table border-radius" style="border-radius:15px">
-            <thead>
-                <tr>
-                    <th class="p-3">Enquiry No</th>
-                    <th class="p-3">Name</th>
-                    <th class="p-3">Email</th>
-                    <th class="p-3">Reason</th>
-                    <th class="p-3">Message</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {{#each order}}
-                <tr>
-                    <td class="p-3 text-capitalize">
-                        <b>#{{this.id}}</b>
-                    </td>
-                    <td class="p-3">{{this.shipping.name}}</td>
-                    <td class="p-3 text-center">
-                        <a class="icon-btns yellow edit-btn d-flex flex-column align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}" role="button">
-                            <i class="fa-solid fa-circle-plus" style="font-size:35px"></i>
-                        </a>
-                    </td>
-                    <td class="p-3">
-                        <a href="/orders/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
-                            <img src="/images/edit2.svg" style="width:35px;">
-                        </a>
-                    </td>
-                </tr>
-                <tr class="collapse multi-collapse" id="tab{{this.id}}">
-                    <td colspan="4" class="extended-info p-3 text-capitalize">
-                        <b>Items: </b>{{this.items_text}}
-                        <br>
-                        <b>Total: </b>${{this.amount}}
-                        <br>
-                        <b>Payment Status: </b>{{this.payment_status}}
-                        <br>
-                        <br>
-                        <b>Name:</b> {{this.user.first_name}} {{this.user.last_name}}
-                        <br>
-                        <b>Address:</b> {{this.user.address_line_1}}, {{this.user.address_line_2}}, {{this.user.country}} {{this.user.postal_code}}
-                        <br>
-                        <b>Contact No.:</b> {{this.user.phone_number}}
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
+            </div>
+            
+            {{!-- desktop --}}
+            <div class="d-none d-lg-block mt-0">
+                <table class="table border-radius">
+                    <thead>
+                        <tr>
+                            <th class="p-4">Enquiry</th>
+                            <th class="p-4">Name</th>
+                            <th class="p-4">Email</th>
+                            <th class="p-4">Reason</th>
+                            <th class="p-4">Subject & Message</th>
+                            <th class="p-4">Replied By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each replied}}
+                        <tr>
+                            <td class="p-4">#{{this.enquiry_id}}</td>
+                            <td class="p-4">{{this.name}}</td>
+                            <td class="p-4">{{this.email}}</td>
+                            <td class="p-4">{{this.reason}}</td>
+                            <td class="p-4">
+                                <a class="icon-btns yellow edit-btn d-flex flex-row align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}Replied" role="button">
+                                    <i class="fa-solid fa-circle-plus"></i> <big class="ms-3 text-dark text-bold"><b>{{this.title}}</b></big>
+                                </a>
+                            </td>
+                            <td class="p-4 align-top text-center">
+                                {{this.replied_by}}
+                                <br><small class="text-muted mb-0">{{this.role}}</small>
+                            </td>
+                        </tr>
+                        <tr class="collapse multi-collapse" id="tab{{this.id}}Replied">
+                            <td colspan="2" class="extended-info-address p-3 text-center">
+                                Message
+                            </td>
+                            <td colspan="7" class="extended-info p-3">
+                                {{this.message}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
 
     </div>
+
     
-    <div class="d-none d-lg-block mt-5">
-        <table class="table border-radius">
-            <thead>
-                <tr>
-                    <th class="p-4">Enquiry No.</th>
-                    <th class="p-4">Name</th>
-                    <th class="p-4">Email</th>
-                    <th class="p-4">Reason</th>
-                    <th class="p-4">Message</th>
-                    <th class="p-4">Status</th>
-                    <th class="p-4"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each order}}
-                <tr>
-                    <td class="p-4">#{{this.id}}</td>
-                    <td class="p-4">{{this.name}}</td>
-                    <td class="p-4">{{this.email}}</td>
-                    <td class="p-4"> {{this.reason.name}}</td>
-                    <td class="p-4 text-center">
-                        <a class="icon-btns yellow edit-btn d-flex flex-column align-items-center" data-bs-toggle="collapse" href="#tab{{this.id}}" role="button">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            View Message
-                        </a>
-                    </td>
-                    <td class="p-4 text-capitalize">{{this.estatus.name}}</td>
-                    <td class="p-4 text-center">
-                        <a href="/orders/{{this.id}}/update" class="icon-btns edit-btn d-flex flex-column align-items-center">
-                            <img src="/images/edit2.svg" alt="">
-                            Update
-                        </a>
-                    </td>
-                </tr>
-                <tr class="collapse multi-collapse" id="tab{{this.id}}">
-                    <td colspan="2" class="extended-info-address p-3 text-center">
-                        Message
-                    </td>
-                    <td colspan="7" class="extended-info p-3">
-                        {{this.message}}
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
+
 
 {{/block}}
 
