@@ -130,43 +130,55 @@ router.post('/process_payment', express.raw({
         let orders = JSON.parse(stripeSession.metadata.orders);
         let amountTotal = stripeSession.amount_total / 100;
         let paymentStatus = stripeSession.payment_status;
-        // console.log(orders, amountTotal, paymentStatus)
-        // console.log(orders,orders.length)
+        
         let items = [];
         let itemsTextArray = [];
         let userId;
         
         for (let o of orders){
             userId = o.user_id;
+
             let product = await productDataLayer.getProductByID(o.product_id);
-            let productName = product.get('name');
+            let imageUrl = product.get('image_url');
+            // let productName = product.get('name');
+            let productBrand = product.related('brand').get('name');
+            // let productCost = parseInt(product.get('cost'));
+            // let productQuantity= parseInt(product.get('stock_no'));
             
-            itemsText = `${o.quantity} x ${productName}`;
+            itemsText = `${o.quantity} x ${o.product_name}`;
             itemsTextArray.push(itemsText);
 
+            // 'user_id': userId,
+            // 'product_id': i.get('product_id'),
+            // 'product_brand': i.related('product').related('brand').get('name'),
+            // 'product_name': i.related('product').get('name'),
+            // 'quantity': i.get('quantity'),
+            // 'total_cost': i.get('quantity') * i.related('product').get('cost'),
+            // 'image_url': i.rela
+
             orders = {
-                'quantity': o.quantity,
                 'product_id': o.product_id,
-                'product_name': productName,
-                'image_url': o.image_url
+                // 'product_brand': productBrand,
+                'product_name': o.product_name,
+                'quantity': o.quantity,
+                'cost': o.total_cost,
+                'total_cost': o.total_cost * o.quantity,
+                'image_url': imageUrl
             };
 
             items.push(orders);
+
+            // update stock no & remove items from cart
+            // let product = await productDataLayer.getProductByID(o.product_id);
+            let productQuantity= parseInt(product.get('stock_no'));
+            let cart = new CartServices(userId);
+            let updatedStock = productQuantity - o.quantity;
+            await cart.updateStockNo(o.product_id, updatedStock)
+            await cart.removeCartItem(o.product_id);
         }
 
-        console.log(JSON.stringify(items))
-        // console.log('userId:' + userId)
-        // console.log(items.toString())
-
-        // console.log(orders)
-        // 1. create a model to represent each invoice item
-        // - create migration file
-        // - create the models
-        // for each line item, store the quantity order
-
-        // await orderDataLayer.createOrderItem(userId, items.join(', '), amountTotal, paymentStatus);
         await orderDataLayer.createOrderItem(userId, JSON.stringify(items), itemsTextArray.join(', '), amountTotal, paymentStatus);
-        // console.log(orderItem)
+        
     }
     res.send({
         'received': true
