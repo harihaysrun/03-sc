@@ -142,10 +142,10 @@ router.post('/success/:sessionId', async function(req,res){
 router.post('/process_payment', express.raw({
     'type': 'application/json'
 }), async function(req,res){
-    let event = req.body;
+    let payLoad = req.body;
     let endpoint = process.env.API_STRIPE_ENDPOINT_SECRET;
     let signHeader = req.headers['stripe-signature'];
-    // let event;
+    let event;
     
     // if (endpoint){
     //     event = Stripe.webhooks.constructEvent(req.body, signHeader, endpoint)
@@ -156,15 +156,15 @@ router.post('/process_payment', express.raw({
     // }
 
     // res.send(event.type)
-    // try {
-    //     event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
+    try {
+        event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
 
-    // } catch(e){
-    //     res.send({
-    //         'error': e.message
-    //     })
-    //     console.log(e)
-    // }
+    } catch(e){
+        res.send({
+            'error': e.message
+        })
+        console.log(e)
+    }
     if (event.type == 'checkout.session.completed'){
         
         let stripeSession = event.data.object;
