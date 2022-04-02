@@ -7,7 +7,7 @@ Handlebars.registerHelper('toJSON', function(obj) {
 });
 
 const { User, OrderItem } = require('../models');
-const {bootstrapField, createShippingForm, createBrandForm, createOrderSearchForm } = require('../forms');
+const {bootstrapField, createUpdateForm, createBrandForm, createOrderSearchForm } = require('../forms');
 
 const orderDataLayer = require('../dal/orders');
 const { checkIfAuthenticated } = require('../middlewares');
@@ -107,7 +107,7 @@ router.get('/:order_id/update', checkIfAuthenticated, async function(req,res){
 
     const allShipping = await orderDataLayer.getShippingStatus();
 
-    const shippingForm = createShippingForm(allShipping);
+    const shippingForm = createUpdateForm(allShipping);
 
     shippingForm.fields.shipping_id.value = order.get('shipping_id');
 
@@ -133,11 +133,12 @@ router.post('/:order_id/update', checkIfAuthenticated, async function(req,res){
 
     const allShipping = await orderDataLayer.getShippingStatus();
 
-    const shippingForm = createShippingForm(allShipping);
+    const shippingForm = createUpdateForm(allShipping);
 
     shippingForm.handle(req,{
         'success':async function(form){
             order.set('shipping_id', form.data.shipping_id);
+            order.set('tracking', form.data.tracking_url);
             order.save();
 
             req.flash("success_messages", `Shipping status has been changed for Order #${order.get('id')}`);

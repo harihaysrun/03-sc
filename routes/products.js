@@ -170,6 +170,7 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             const newProduct = new Product();
             newProduct.set('brand_id', form.data.brand_id);
             newProduct.set('name', form.data.name);
+            newProduct.set('spf', form.data.spf);
             newProduct.set('country_id', form.data.country_id);
             newProduct.set('type_id', form.data.type_id);
             newProduct.set('cost', form.data.cost);
@@ -221,6 +222,7 @@ router.get('/:product_id/update', checkIfAuthenticated, async function(req,res){
 
     productForm.fields.brand_id.value = product.get('brand_id');
     productForm.fields.name.value = product.get('name');
+    productForm.fields.spf.value = product.get('spf');
     productForm.fields.country_id.value = product.get('country_id');
     productForm.fields.type_id.value = product.get('type_id');
     productForm.fields.cost.value = product.get('cost');
@@ -279,6 +281,7 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
         'success':async function(form){
             product.set('brand_id', form.data.brand_id);
             product.set('name', form.data.name);
+            product.set('spf', form.data.spf);
             product.set('country_id', form.data.country_id);
             product.set('type_id', form.data.type_id);
             product.set('cost', form.data.cost);

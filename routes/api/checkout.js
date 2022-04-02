@@ -6,8 +6,9 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const productDataLayer = require('../../dal/products');
 const orderDataLayer = require('../../dal/orders');
+const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
 
-router.post('/', async function (req,res){
+router.post('/', checkIfAuthenticatedWithJWT, async function (req,res){
 
     let userId = req.body.user_id;
     const cartServices = new CartServices(userId);

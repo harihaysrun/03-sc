@@ -65,6 +65,7 @@
                         <img style="width:50px" src="{{this.image_url}}" alt="">
                         <br>
                         <br>{{this.brand.name}} {{this.name}}
+                        <br><small class="text-muted">{{this.spf}}</small>
                         <br>${{this.cost}}
                     </td>
                     <td class="p-3">
@@ -115,7 +116,10 @@
                 {{#each products}}
                 <tr>
                     <td class="p-4"><img style="width:100px" src="{{this.image_url}}" alt=""></td>
-                    <td class="p-4">{{this.brand.name}} {{this.name}}</td>
+                    <td class="p-4">
+                        {{this.brand.name}} {{this.name}}
+                        <br><small class="text-muted">{{this.spf}}</small>
+                    </td>
                     <td class="p-4">${{this.cost}}</td>
                     <td class="p-4">{{this.type.name}}</td>
                     {{!-- <td>

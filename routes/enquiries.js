@@ -7,7 +7,7 @@ Handlebars.registerHelper('toJSON', function(obj) {
 });
 
 const { User, OrderItem, Enquiry, RepliedEnquiry } = require('../models');
-const {bootstrapField, createShippingForm, createEnquirySearchForm } = require('../forms');
+const {bootstrapField, createUpdateForm, createEnquirySearchForm } = require('../forms');
 
 const orderDataLayer = require('../dal/orders');
 const enquiryDataLayer = require('../dal/enquiries');

@@ -37,6 +37,10 @@ const createProductForm = function(brands, countries, types, skin_types, status)
             'required':true,
             'errorAfterField':true
         }),
+        "spf":fields.string({
+            'required':true,
+            'errorAfterField':true
+        }),
         "country_id":fields.string({
             'label': 'Country',
             'required':true,
@@ -282,7 +286,7 @@ const createCountryForm = function(){
     })
 }
 
-const createShippingForm = function(shipping){
+const createUpdateForm = function(shipping){
     return forms.create({
         "shipping_id":fields.string({
             'label': 'Shipping',
@@ -291,6 +295,10 @@ const createShippingForm = function(shipping){
             'widget': widgets.select(),
             'choices': shipping
         }),
+        "tracking_url":fields.string({
+            'required':false,
+            'errorAfterField':true
+        })
     })
 }
 
@@ -305,4 +313,4 @@ const createEnquirySearchForm = function(reason, status){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createShippingForm, createEnquirySearchForm };
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createUpdateForm, createEnquirySearchForm };

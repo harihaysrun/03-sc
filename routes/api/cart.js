@@ -6,7 +6,7 @@ const productDataLayer = require('../../dal/products');
 const { checkIfAuthenticatedWithJWT } = require('../../middlewares');
 const { Product } = require('../../models');
 
-router.post('/', async function(req,res){
+router.post('/', checkIfAuthenticatedWithJWT, async function(req,res){
     // let userId = req.session.user.id;
     let userId = req.body.user_id;
     const cartServices = new CartServices(userId);
