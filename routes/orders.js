@@ -110,6 +110,7 @@ router.get('/:order_id/update', checkIfAuthenticated, async function(req,res){
     const shippingForm = createUpdateForm(allShipping);
 
     shippingForm.fields.shipping_id.value = order.get('shipping_id');
+    shippingForm.fields.tracking_url.value = order.get('tracking');
 
     if(req.session.user.role === 1){
         res.render('orders/update', {
