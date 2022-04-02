@@ -10,15 +10,10 @@ const countryDataLayer = require('../dal/countries');
 const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', checkIfAuthenticated, async function(req,res){
-    // let products = await Product.collection().fetch({
-    //     withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
-    // });
 
     // get length of brands & countries
     const brands = await brandDataLayer.getAllBrands();
     const countries = await countryDataLayer.getAllCountries();
-
-    console.log(brands.length)
 
     // for search
     const allBrands = await productDataLayer.getAllBrands();
@@ -35,7 +30,9 @@ router.get('/', checkIfAuthenticated, async function(req,res){
     let query = Product.collection();
     searchForm.handle(req,{
         'empty':async function(form){
-            let products = await query.fetch({
+            let products = await query.query(function(qb){
+                qb.orderBy('id', 'DESC')
+            }).fetch({
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
             if(req.session.user.role === 1){
@@ -60,14 +57,6 @@ router.get('/', checkIfAuthenticated, async function(req,res){
                 query.where('name', 'like', '%' + req.query.name + '%')
             }
 
-            // if(form.data.min_cost){
-            //     query.where('cost', '>=', form.data.min_cost);
-            // }
-
-            // if(form.data.max_cost){
-            //     query.where('cost', '<=', form.data.max_cost);
-            // }
-
             if(form.data.brand_id && form.data.brand_id != "0"){
                 query.where('brand_id', '=', form.data.brand_id)
             }
@@ -85,7 +74,9 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
 
             // search the query
-            let products = await query.fetch({
+            let products = await query.query(function(qb){
+                qb.orderBy('id', 'DESC')
+            }).fetch({
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
 
@@ -109,7 +100,9 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
         },
         'error':async function(form){
-            let products = await query.fetch({
+            let products = await query.query(function(qb){
+                qb.orderBy('id', 'DESC')
+            }).fetch({
                 withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
             })
             if(req.session.user.role === 1){

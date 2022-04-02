@@ -28,9 +28,11 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
     searchForm.handle(req,{
         'empty':async function(form){
-            let enquiries = await query.fetch({
-                withRelated: ['reason']
-            })
+            let enquiries = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch({
+                                withRelated: ['reason']
+                            })
 
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
@@ -56,10 +58,12 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
 
             // search the query
-            let enquiries = await query.fetch({
-                withRelated: ['reason']
-            })
-            
+            let enquiries = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch({
+                                withRelated: ['reason']
+                            })
+                            
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
@@ -78,9 +82,11 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             
         },
         'error':async function(form){
-            let enquiries = await query.fetch({
-                withRelated: ['reason']
-            })
+            let enquiries = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch({
+                                withRelated: ['reason']
+                            })
 
             if(req.session.user.role === 1){
                 res.render('enquiries/index',{
@@ -99,12 +105,6 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             
         }
     })
-
-
-
-    // const allEnquiries = await enquiryDataLayer.getAllEnquiries();
-
-    // res.json(allEnquiries)
 
 })
 

@@ -10,14 +10,14 @@ const { checkIfAuthenticated, checkIfAuthenticatedAdmin } = require('../middlewa
 
 router.get('/', checkIfAuthenticated, async function(req,res){
 
-    // const allUsers = await userDataLayer.getAllUsers();
-
     const searchForm = createCustomerSearchForm();
 
     let query = User.collection();
     searchForm.handle(req,{
         'empty':async function(form){
-            let customers = await query.fetch()
+            let customers = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch()
             
             if(req.session.user.role === 1){
                 res.render('users/users',{
@@ -41,7 +41,9 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
 
             // search the query
-            let customers = await query.fetch();
+            let customers = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch();
 
             if(req.session.user.role === 1){
                 res.render('users/users',{
@@ -57,7 +59,10 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
         },
         'error':async function(form){
-            let customers = await query.fetch();
+            let customers = await query.query(function(qb){
+                                qb.orderBy('id', 'DESC')
+                            }).fetch();
+
             if(req.session.user.role === 1){
                 res.render('users/users',{
                     'searchForm': searchForm.toHTML(bootstrapField),
@@ -72,11 +77,6 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
         }
     })
-
-    // console.log(allUsers)
-    // res.render('users/users',{
-    //     'user': allUsers.toJSON()
-    // })
 
 })
 

@@ -15,8 +15,6 @@ const { checkIfAuthenticated } = require('../middlewares');
 
 router.get('/', checkIfAuthenticated, async function(req,res){
 
-    // const allOrders = await orderDataLayer.getAllOrders();
-
     const allShipping = await orderDataLayer.getShippingStatus();
     allShipping.unshift([0, "Select one"]);
 
@@ -27,20 +25,22 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
     searchForm.handle(req,{
         'empty':async function(form){
-            let orders = await query.fetch({
-                withRelated: ['user', 'shipping']
-            })
+            let orders = await query.query(function(qb){
+                            qb.orderBy('id', 'DESC')
+                        }).fetch({
+                            withRelated: ['user', 'shipping']
+                        })
 
             if(req.session.user.role === 1){
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse(),
+                    'order': orders.toJSON(),
                     'admin': true
                 })
             } else{
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse()
+                    'order': orders.toJSON()
                 })
             }
         },
@@ -53,40 +53,44 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
 
             // search the query
-            let orders = await query.fetch({
-                withRelated: ['user', 'shipping']
-            })
+            let orders = await query.query(function(qb){
+                            qb.orderBy('id', 'DESC')
+                        }).fetch({
+                            withRelated: ['user', 'shipping']
+                        })
 
             if(req.session.user.role === 1){
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse(),
+                    'order': orders.toJSON(),
                     'admin': true
                 });
             } else{
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse()
+                    'order': orders.toJSON()
                 });
             }
 
             
         },
         'error':async function(form){
-            let orders = await query.fetch({
-                withRelated: ['user', 'shipping']
-            })
+            let orders = await query.query(function(qb){
+                            qb.orderBy('id', 'DESC')
+                        }).fetch({
+                            withRelated: ['user', 'shipping']
+                        })
 
             if(req.session.user.role === 1){
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse(),
+                    'order': orders.toJSON(),
                     'admin': true
                 })
             } else{
                 res.render('orders/index',{
                     'searchForm': searchForm.toHTML(bootstrapField),
-                    'order': orders.toJSON().reverse()
+                    'order': orders.toJSON()
                 })
             }
             

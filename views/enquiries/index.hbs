@@ -8,7 +8,7 @@
         <i class="fa-solid fa-circle-exclamation text-primary mt-1 me-3"></i>
         <div>
             When responding to enquiries, always use <span class="text-primary">[Enquiry No.] [Reason]: [Title]</span> as the email subject line.
-            <br>Copy and paste the message received in a <u>blockquote</u> underneath your reply.
+            <br>Copy the message received and include it as a <u>blockquote</u> underneath your reply.
             <br>Remember to always be courteous when conversing with customers :)
         </div>
 
@@ -71,6 +71,10 @@
                             <td colspan="5" class="extended-info p-3 text-capitalize">
                                 <b>Name: </b>{{this.name}}
                                 <br>
+                                <b>Email: </b>{{this.email}}
+                                <br><br>
+                                <b>Title: </b>{{this.title}}
+                                <br>
                                 <b>Message: </b>{{this.message}}
                             </td>
                         </tr>
@@ -89,7 +93,7 @@
                             <th class="p-4">Name</th>
                             <th class="p-4">Email</th>
                             <th class="p-4">Reason</th>
-                            <th class="p-4">Message</th>
+                            <th class="p-4">Subject & Message</th>
                             <th class="p-4">Status</th>
                         </tr>
                     </thead>

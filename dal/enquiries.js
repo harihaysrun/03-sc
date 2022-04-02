@@ -30,7 +30,9 @@ async function getAllReasons(){
 
 async function getAllRepliedEnquiries(){
     
-    const allRepliedEnquiries = await RepliedEnquiry.collection().fetch();
+    const allRepliedEnquiries = await RepliedEnquiry.collection().query(function(qb){
+                                    qb.orderBy('id', 'DESC')
+                                }).fetch();
     return allRepliedEnquiries;
 }
 

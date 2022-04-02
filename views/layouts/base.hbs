@@ -102,24 +102,29 @@
 
     {{/if}}
 
-    {{#block 'login'}}{{/block}}
-    
-    <div class="container pt-5"> 
-      {{#if success_messages }}        
-        {{#each success_messages}}
-          <div class="alert alert-success">
-            {{this}}
-          </div>
-        {{/each}}        
-      {{/if}}
+    {{#if success_messages }}
+      <div class="container pt-5"> 
+          {{#each success_messages}}
+            <div class="alert alert-success">
+              {{this}}
+            </div>
+          {{/each}}     
+      </div>   
+    {{/if}}
 
-      {{#if error_messages}}
+    {{#if error_messages}}
+      <div class="container pt-5"> 
         {{#each error_messages}}
           <div class="alert alert-danger">
             {{this}}
           </div>
         {{/each}}
-      {{/if}}
+      </div>
+    {{/if}}
+
+    {{#block 'login'}}{{/block}}
+    
+    <div class="container pt-4 pt-lg-5"> 
 
       {{#block 'content'}}{{/block}}
 

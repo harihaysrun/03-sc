@@ -16,7 +16,9 @@ const createOrderItem = async function( userId, items, itemsText, amount, paymen
 
 async function getAllOrders(){
     
-    const allOrders = await OrderItem.collection().fetch({
+    const allOrders = await OrderItem.collection().query(function(qb){
+        qb.orderBy('id', 'DESC').limit(10)
+    }).fetch({
         withRelated:['shipping', 'user']
     });
     return allOrders;

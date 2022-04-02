@@ -20,7 +20,9 @@ async function getAllRoles(){
 
 async function getAllEmployees(){
     
-    const allUsers = await Employee.collection().fetch({
+    const allUsers = await Employee.collection().query(function(qb){
+                        qb.orderBy('id', 'DESC')
+                    }).fetch({
                         'withRelated': ['role']
                     });
     return allUsers;

@@ -2,7 +2,9 @@ const { Country } = require('../models');
 
 async function getAllCountries(){
     
-    const allCountries = await Country.collection().fetch();
+    const allCountries = await Country.collection().query(function(qb){
+        qb.orderBy('id', 'DESC')
+    }).fetch();
     return allCountries;
 }
 

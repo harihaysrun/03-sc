@@ -89,7 +89,7 @@ router.get('/dashboard', async function(req,res) {
             'products': allProducts.toJSON(),
             'users': allUsers.toJSON(),
             'employees': allEmployees.toJSON(),
-            'orders': allOrders.toJSON().reverse(),
+            'orders': allOrders.toJSON(),
             'admin': true
         })
     } 
@@ -98,7 +98,7 @@ router.get('/dashboard', async function(req,res) {
         res.render('landing/manager',{
             'products': allProducts.toJSON(),
             'users': allUsers.toJSON(),
-            'orders': allOrders.toJSON().reverse()
+            'orders': allOrders.toJSON()
         })
     } 
 })
