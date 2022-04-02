@@ -18,7 +18,6 @@ router.get('/', async function(req,res){
         'types': allTypes
     })
 
-    // res.send(await productDataLayer.getAllProducts())
 })
 
 router.post('/search', async function(req,res){
@@ -39,7 +38,9 @@ router.post('/search', async function(req,res){
         query.where('type_id', '=', req.body.type_id)
     }
 
-    let products = await query.fetch({
+    let products = await query.query(function(qb){
+        qb.orderBy('id', 'DESC')
+    }).fetch({
         withRelated:['brand', 'country', 'type', 'skinTypes', 'status']
     })
 

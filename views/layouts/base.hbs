@@ -103,7 +103,7 @@
     {{/if}}
 
     {{#if success_messages }}
-      <div class="container pt-5"> 
+      <div class="container pt-5" style="position:relative;z-index:10"> 
           {{#each success_messages}}
             <div class="alert alert-success">
               {{this}}
@@ -113,7 +113,7 @@
     {{/if}}
 
     {{#if error_messages}}
-      <div class="container pt-5"> 
+      <div class="container pt-5" style="position:relative;z-index:10"> 
         {{#each error_messages}}
           <div class="alert alert-danger">
             {{this}}
@@ -122,7 +122,9 @@
       </div>
     {{/if}}
 
-    {{#block 'login'}}{{/block}}
+    <div class="position-fixed top-0 w-100">
+      {{#block 'login'}}{{/block}}
+    </div>
     
     <div class="container pt-4 pt-lg-5"> 
 
