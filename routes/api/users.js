@@ -184,7 +184,7 @@ router.post('/refresh', async function(req,res){
         if (err){
             res.sendStatus(403);
         } else{
-            let accessToken = generateToken(user, process.env.TOKEN_SECRET, "15min");
+            let accessToken = generateToken(user, process.env.TOKEN_SECRET, "2min");
             res.json({
                 'accessToken': accessToken
             })
