@@ -5,6 +5,57 @@ body{
     font-size:16px;
 }
 
+img{
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.log-in{
+    height:100vh;
+    /* background-color:#1050ff; */
+}
+
+/* .log-in h1{
+    color:white !important;
+}
+
+.log-in label{
+    color:white !important;
+}
+
+.btn-login{
+    background-color:#e0c00b;
+    color:#1050ff;
+} */
+
+.sun{
+    width:120px;
+    height:120px;
+    position:relative;
+}
+
+.sun img{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+
+.sunray{
+  animation-name:sunray;
+  animation-duration: 10s;
+  /* animation-delay:2s; */
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes sunray{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+
+
 .border-radius{
     border-radius:15px;
 }

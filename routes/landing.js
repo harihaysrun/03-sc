@@ -6,6 +6,7 @@ const brandDataLayer = require('../dal/brands');
 const productDataLayer = require('../dal/products');
 const userDataLayer = require('../dal/users');
 const orderDataLayer = require('../dal/orders');
+const enquiryDataLayer = require('../dal/enquiries');
 
 const { User, Employee } = require('../models');
 const {bootstrapField, createLoginForm } = require('../forms');
@@ -82,23 +83,26 @@ router.get('/dashboard', async function(req,res) {
     const allUsers = await userDataLayer.getAllUsers();
     const allEmployees = await userDataLayer.getAllEmployees();
     const allOrders = await orderDataLayer.getAllOrders();
+    const allEnquiries = await enquiryDataLayer.getAllEnquiries();
     
     
     if(req.session.user && req.session.user.role === 1){
-        res.render('landing/admin',{
+        res.render('landing/index',{
             'products': allProducts.toJSON(),
             'users': allUsers.toJSON(),
             'employees': allEmployees.toJSON(),
             'orders': allOrders.toJSON(),
+            'enquiries': allEnquiries.toJSON(),
             'admin': true
         })
     } 
 
     if(req.session.user && req.session.user.role === 2){
-        res.render('landing/manager',{
+        res.render('landing/index',{
             'products': allProducts.toJSON(),
             'users': allUsers.toJSON(),
-            'orders': allOrders.toJSON()
+            'orders': allOrders.toJSON(),
+            'enquiries': allEnquiries.toJSON()
         })
     } 
 })

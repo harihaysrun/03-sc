@@ -2,7 +2,7 @@
 
 {{#block 'login'}}
 
-    <div class="container-fluid">
+    {{!-- <div class="container-fluid">
 
         <div class="row">
 
@@ -25,6 +25,31 @@
             
         </div>
 
+    </div> --}}
+    
+    <div class="w-100 d-flex flex-column align-items-center justify-content-center log-in">
+
+        <div class="col-12 col-lg-4">
+            <div class="w-75 m-auto">
+
+                <div class="sun m-auto mb-4">
+                    <img src="/images/sunray.png" class="sunray">
+                    <img src="/images/sun.png">
+                </div>
+
+                <h1 class="text-center">Login</h1>
+
+                <form method="POST">
+
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                    {{{form}}}
+
+                    <div class="d-flex align-items-center justify-content-center">
+                        <input type="submit" value="Log in" class="btn btn-primary mt-4"/ >
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 

@@ -4,10 +4,20 @@
 
     <h1>Employees</h1>
 
-    <a href="/employees/register" class="btn btn-primary mt-3">Add new employee</a>
+    <div class="mt-3 d-flex flew-row">
+        <i class="fa-solid fa-user text-primary mt-1 me-3"></i>
+        <div>
+            <b><span class="text-primary">Admin:</span></b> Has access to all pages.
+            <br><b><span class="text-primary">Manager:</span></b> Able to access everything except viewing and adding employees.
+        </div>
+
+    </div>
+
+    <a href="/employees/register" class="btn btn-primary mt-4">Add new employee</a>
     
-    <div class="d-block d-lg-none mt-5">
-        <table class="table mt-5 border-radius">
+    {{!-- mobile table --}}
+    <div class="d-block d-lg-none mt-4">
+        <table class="table border-radius">
             <thead>
                 <tr>
                     <th class="p-4">Role</th>
@@ -37,8 +47,9 @@
         </table>
     </div>
 
+    {{!-- desktop table --}}
     <div class="d-none d-lg-block mt-5">
-        <table class="table mt-5 border-radius">
+        <table class="table border-radius">
             <thead>
                 <tr>
                     <th class="p-4">ID</th>

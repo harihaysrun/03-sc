@@ -29,7 +29,7 @@ router.get('/', checkIfAuthenticated, async function(req,res){
     searchForm.handle(req,{
         'empty':async function(form){
             let enquiries = await query.query(function(qb){
-                                qb.orderBy('id', 'DESC')
+                                qb.orderBy('id', 'ASC')
                             }).fetch({
                                 withRelated: ['reason']
                             })
@@ -59,7 +59,7 @@ router.get('/', checkIfAuthenticated, async function(req,res){
 
             // search the query
             let enquiries = await query.query(function(qb){
-                                qb.orderBy('id', 'DESC')
+                                qb.orderBy('id', 'ASC')
                             }).fetch({
                                 withRelated: ['reason']
                             })

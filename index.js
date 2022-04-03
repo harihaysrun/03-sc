@@ -117,7 +117,7 @@ async function main() {
   app.use('/users', userRoutes);
   app.use('/employees', employeeRoutes);
   app.use('/cloudinary', cloudinaryRoutes);	
-  app.use('/cart', cartRoutes);	
+  // app.use('/cart', cartRoutes);	
   app.use('/brands', brandRoutes);	
   app.use('/countries', countryRoutes);	
   app.use('/checkout', checkoutRoutes);	
