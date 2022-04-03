@@ -59,8 +59,8 @@ router.post('/login', async function(req,res){
     })
 
     if (user && user.get('password') == getHashedPassword(password)){
-        let accessToken = generateToken(user.toJSON(), process.env.TOKEN_SECRET, "2min");
-        let refreshToken = generateToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, "1h");
+        let accessToken = generateToken(user.toJSON(), process.env.TOKEN_SECRET, "15min");
+        let refreshToken = generateToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, "1d");
         res.json({
             'accessToken': accessToken,
             'refreshToken': refreshToken
@@ -184,7 +184,7 @@ router.post('/refresh', async function(req,res){
         if (err){
             res.sendStatus(403);
         } else{
-            let accessToken = generateToken(user, process.env.TOKEN_SECRET, "2min");
+            let accessToken = generateToken(user, process.env.TOKEN_SECRET, "15min");
             res.json({
                 'accessToken': accessToken
             })
