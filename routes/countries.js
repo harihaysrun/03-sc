@@ -57,9 +57,17 @@ router.post('/add', checkIfAuthenticated, async function(req,res){
             res.redirect('/countries');
         },
         'error':function(form){
-            res.render('countries/create',{
-                'countryForm':countryForm.toHTML(bootstrapField)
-            })
+            if(req.session.user.role === 1){
+                res.render('countries/create',{
+                    'countryForm':countryForm.toHTML(bootstrapField),
+                    'admin': true
+                })
+            } else {
+                res.render('countries/create',{
+                    'countryForm':countryForm.toHTML(bootstrapField)
+                })
+            }
+            
         }
     })
 })

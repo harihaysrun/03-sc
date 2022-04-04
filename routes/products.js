@@ -194,9 +194,18 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             res.redirect('/products');
         },
         'error':function(form){
-            res.render('products/create',{
-                'form':form.toHTML(bootstrapField)
-            })
+
+            if(req.session.user.role === 1){
+                res.render('products/create',{
+                    'form':form.toHTML(bootstrapField),
+                    'admin': true
+                })
+            } else {
+                res.render('products/create',{
+                    'form':form.toHTML(bootstrapField)
+                })
+            }
+            
         }
     })
 });

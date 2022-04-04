@@ -43,9 +43,12 @@ router.post('/register', function(req,res) {
             req.flash("success_messages", "New employee has been added successfully!");
             res.redirect('/employees')
         },
-        'error': function(form) {
+        'error': async function(form) {
+            const allRoles = await userDataLayer.getAllRoles();
+            const registerForm = createRegistrationForm(allRoles);
             res.render('users/register', {
-                'form': form.toHTML(bootstrapField)
+                'form': registerForm.toHTML(bootstrapField),
+                'admin': true
             })
         }
     })

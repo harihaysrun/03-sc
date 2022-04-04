@@ -94,11 +94,12 @@ router.post('/', async function (req,res){
 router.post('/success/:sessionId', async function(req,res){
 
     let userId = req.body.user_id;
-
-    // res.json("test")
-    // let cart = new CartServices(userId);
-
     const userOrders = await orderDataLayer.getUserOrder(userId);
+
+
+    // let orderId = req.body.order_id;
+    // const userOrders = await orderDataLayer.getUserOrder(orderId);
+
     // console.log(userOrders.get('items'), userOrders.get('amount'));
     // if (userOrders){
 

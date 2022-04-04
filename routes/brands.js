@@ -58,9 +58,17 @@ router.post('/add', checkIfAuthenticated, async function(req,res){
             res.redirect('/brands');
         },
         'error':function(form){
-            res.render('brands/create',{
-                'brandForm':brandForm.toHTML(bootstrapField)
+
+            if(req.session.user.role === 1){
+                res.render('brands/create',{
+                    'brandForm':brandForm.toHTML(bootstrapField),
+                    'admin': true
+                })
+            } else {
+                res.render('brands/create',{
+                    'brandForm':brandForm.toHTML(bootstrapField)
             })
+            }
         }
     })
 })

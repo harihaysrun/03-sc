@@ -57,7 +57,7 @@ const createProductForm = function(brands, countries, types, skin_types, status)
         }),
         "cost":fields.string({
             'required':true,
-            'errorsAfterField':true,
+            'errorAfterField':true,
             'validators': [validators.integer(), validators.min(0)]
         }),
         "description":fields.string({
@@ -110,73 +110,27 @@ const createRegistrationForm = function(roles) {
         }),
         'username': fields.string({
             required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
+            errorAfterField: true
         }),
         'email': fields.string({
             required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
+            errorAfterField: true
         }),
         'first_name': fields.string({
             required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
+            errorAfterField: true
         }),
         'last_name': fields.string({
             required: true,
             errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
         }),
-        // 'address_line_1': fields.string({
-        //     required: true,
-        //     errorAfterField: true,
-        //     cssClasses: {
-        //         label: ['form-label']
-        //     }
-        // }),
-        // 'address_line_2': fields.string({
-        //     required: true,
-        //     errorAfterField: true,
-        //     cssClasses: {
-        //         label: ['form-label']
-        //     }
-        // }),
-        // 'postal_code': fields.string({
-        //     required: true,
-        //     errorAfterField: true,
-        //     cssClasses: {
-        //         label: ['form-label']
-        //     }
-        // }),
-        // 'phone_number': fields.string({
-        //     required: true,
-        //     errorAfterField: true,
-        //     cssClasses: {
-        //         label: ['form-label']
-        //     }
-        // }),
         'password': fields.password({
             required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            }
+            errorAfterField: true
         }),
         'confirm_password': fields.password({
             required: true,
             errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
             validators: [validators.matchField('password')]
         })
     })

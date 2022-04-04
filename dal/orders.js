@@ -31,7 +31,7 @@ async function getOrderByID(orderId){
         'id':parseInt(orderId)
     }).fetch({
         require:true,
-        withRelated:['shipping']
+        withRelated:['shipping', 'user']
     })
 
     return product;

@@ -1,102 +1,74 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Sunny Central
 
-Welcome harihaysrun,
+As a frequent user of parcel forwarders pre-covid(when shipping costs were not as high and overseas shipping options were not as limited), I found the whole process of purchasing products via that method a hassle. If the shop accepts international cards, I would be able able to purchase it myself. However, some retailers (like Ulta) which are country-specific, do not, so I would have to engage a middle man. More often than not, I thought to myself how nice it would be to have a retailer selling various exclusive products in one place.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. The last update to this file was: **July 2, 2021**
+As with project 2, skincare is a big passion of mine. Sunscreens are one of the products (or if not, the only one) that I am willing to drop my coins on. Having followed lots of up and coming skincare brands on social media, I am always envious of the people who live in those countries because they'll be able to purchase those products as soon as they land in stores. In Singapore, I'll have to play the waiting game and see if Sephora (finally) decides to bring them in locally.
 
-## Gitpod Reminders
+And with that in mind, I have came up with Sunny Central, a third-party retailer who carries sunscreens that are exclusive and not accessible.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+**As the shop owner, I want to:**
+- make new sunscreen options accessible to everyone
+- build engagement with the customers by allowing them to send in requests of brands that are hard to get in SG
+- promote the importance of using sunscreens
 
-`python3 -m http.server`
+**As the end user, I want to:**
+- easily shop sunscreens that are as accessible to me
+- stop getting FOMO so I take IG-worthy product shots too
 
-A blue button should appear to click: _Make Public_,
+Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/login)
+To log in as the admin(aka shop owner), use:
+> **username:** teddy
+> **password** burgers
 
-Another blue button should appear to click: _Open Browser_.
+To log in as the manager, use:
+> **username:** jimmy
+> **password** pasta
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
 
-A blue button should appear to click: _Make Public_,
+# UI/UX
 
-Another blue button should appear to click: _Open Browser_.
+As the admin, you have access to all pages and are able to add or remove employees.
+As the manager, you are able to view everything except the employees section.
+The employees icon/tab will appear depending on the role you signed in as.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+The chosen colours are very self-explanatory – blue for the sky & sea and yellow for the sun.
 
-To log into the Heroku toolbelt CLI:
+[Here's](https://www.figma.com/file/QsHGWWdaYlQrsi3Zb0LeO0/sunny-central?node-id=0%3A1) the wireframes for the back & front end. I wanted the admin portal to have a dashboard feel to it so I've included a sidebar on the left. On the dashboard, there will be a quick display of how many products, customers, orders and enquiries there are so you'll be able to know everything at a glance.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Admins are allowed to add new brands and countries if the website catalog expands. Icons are used in most CTA buttons, to differentiate them froms other text (since tables can look a little cluttered). Information will be further collapsed once user is in mobile view.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+The font used is [DM Sans](https://fonts.google.com/specimen/DM+Sans). It is a visually fun typeface.
 
-------
+# Features
+## Major features & algorithsm
+1. CRUD on products – edit product information and update stock.
+2. Search products by name, brand, or status.
+3. Search customers by username or email. Able to remove customer.
+4. Update order information like status of order and tracking URL, which will be reflected on the Vue front end of the user's profile page.
+5. Search orders by Order ID or shipping status.
+6. Mark enquiries as read and search them by reason (easier for the person managing that e.g Product Request, Order cancellation, etc.)
+7. Admin: Add and remove employees
 
-## Release History
+# Technologies Used
+1. Figma – used to create wireframes
+2. Illustrator to create some icons
+3. Fontawesome for the other icons
+4. Express – set up the back end & make API routes for the front end cart to connect to
+    - bookshelf ORM
+    - caolan forms
+    - Stripe
+    - webtokens
+    - webhooks
+5. Heroku – used to host the back end
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+# Use & Test Cases:
+1. Add, edit and remove product
+2. Add employee
+3. Update an order
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+# This site has been tested on:
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+# Credits
+1. [Fontawesome](https://fontawesome.com/)
+2. [Bookshelf documentation](https://bookshelfjs.org/index.html)
+3. [Stack Overflow](https://stackoverflow.com/)
