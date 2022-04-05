@@ -53,8 +53,28 @@ router.get('/', checkIfAuthenticated, async function(req,res){
             }
         },
         'success': async function(form){
+
+            let uppercaseName;
+
             if (form.data.name){
-                query.where('name', 'like', '%' + req.query.name + '%')
+
+                if (form.data.name.includes(" ")){
+                    let words = form.data.name.split(" ");
+                    let newWords = [];
+    
+                    for (let i=0; i<words.length; i++){
+                        uppercaseName = words[i][0].toUpperCase() + words[i].substring(1);
+                        newWords.push(uppercaseName)
+                    }
+    
+                    uppercaseName = newWords.join(" ")
+                    console.log(uppercaseName)
+                    } else {
+                    uppercaseName = form.data.name[0].toUpperCase() + form.data.name.substring(1);
+                    console.log(uppercaseName)
+                }
+                    
+                query.where('name', 'like', '%' + uppercaseName + '%')
             }
 
             if(form.data.brand_id && form.data.brand_id != "0"){

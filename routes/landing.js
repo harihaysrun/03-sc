@@ -107,31 +107,31 @@ router.get('/dashboard', async function(req,res) {
     } 
 })
 
-router.get('/profile', async function(req, res) {
-    if (req.session.user) {
-        const user = await Employee.where({
-            'id': req.session.user.id
-        }).fetch({
-            require: true
-        })
+// router.get('/profile', async function(req, res) {
+//     if (req.session.user) {
+//         const user = await Employee.where({
+//             'id': req.session.user.id
+//         }).fetch({
+//             require: true
+//         })
 
-        if(req.session.user.role === 1){
-            res.render('users/profile',{
-                'profile': user.toJSON(),
-                'admin': true
-            })
-        } else {
-            res.render('users/profile',{
-                'profile': user.toJSON()
-            })
-        }
+//         if(req.session.user.role === 1){
+//             res.render('users/profile',{
+//                 'profile': user.toJSON(),
+//                 'admin': true
+//             })
+//         } else {
+//             res.render('users/profile',{
+//                 'profile': user.toJSON()
+//             })
+//         }
 
-    } else {
-        req.flash('error_messages', 'Please log in to view this page');
-        res.redirect('/login');
-    }
+//     } else {
+//         req.flash('error_messages', 'Please log in to view this page');
+//         res.redirect('/login');
+//     }
 
-})
+// })
 
 router.get('/logout', function(req, res) {
     req.session.user = null;

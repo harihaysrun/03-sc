@@ -33,8 +33,6 @@
 
         </div>
     </div>
-
-    {{!-- <h3 class="mt-3 mt-lg-5">Search</h3> --}}
     
     {{!-- search --}}
     <form method="GET" class="search-form mt-3">
@@ -64,7 +62,7 @@
                     <td class="p-3">
                         <img style="width:50px" src="{{this.image_url}}" alt="">
                         <br>
-                        <br>{{this.brand.name}} {{this.name}}
+                        <br><b class="text-primary">{{this.brand.name}}</b> {{this.name}}
                         <br><small class="text-muted">{{this.spf}}</small>
                         <br>${{this.cost}}
                     </td>
@@ -97,7 +95,7 @@
     </div>
     
     {{!-- desktop view table --}}
-    <div class="d-none d-lg-block mt-5">
+    <div class="d-none d-lg-block mt-5 table-responsive">
         <table class="table border-radius">
             <thead>
                 <tr>
@@ -105,7 +103,6 @@
                     <th class="p-4">Name</th>
                     <th class="p-4">Price</th>
                     <th class="p-4">Type</th>
-                    <th class="p-4">Filters</th>
                     <th class="p-4">Expiry</th>
                     <th class="p-4">Stock</th>
                     <th class="p-4"></th>
@@ -117,17 +114,11 @@
                 <tr>
                     <td class="p-4"><img style="width:100px" src="{{this.image_url}}" alt=""></td>
                     <td class="p-4">
-                        {{this.brand.name}} {{this.name}}
+                        <b class="text-primary">{{this.brand.name}}</b> {{this.name}}
                         <br><small class="text-muted">{{this.spf}}</small>
                     </td>
                     <td class="p-4">${{this.cost}}</td>
                     <td class="p-4">{{this.type.name}}</td>
-                    {{!-- <td>
-                        {{#each this.skinTypes}}
-                            <span class="badge bg-primary">{{this.name}}</span>
-                        {{/each}}</td>
-                    </td> --}}
-                    <td class="p-4">{{this.ingredients}}</td>
                     <td class="p-4">{{this.expiry}}</td>
                     <td class="p-4">
                         <b>{{this.stock_no}}</b>
