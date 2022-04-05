@@ -204,8 +204,8 @@ router.post('/process_payment', express.raw({
                 // 'product_brand': productBrand,
                 'product_name': o.product_name,
                 'quantity': o.quantity,
-                'cost': o.total_cost,
-                'total_cost': o.total_cost * o.quantity,
+                'cost': o.total_cost / o.quantity,
+                'total_cost': o.total_cost,
                 'image_url': imageUrl
             };
 
