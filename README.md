@@ -11,19 +11,10 @@ And with that in mind, I have came up with Sunny Central, a third-party retailer
 - build engagement with the customers by allowing them to send in requests of brands that are hard to get in SG
 - promote the importance of using sunscreens
 
-**As the end user, I want to:**
-- easily shop sunscreens that are as accessible to me
-- stop getting FOMO so I take IG-worthy product shots too
-
 Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/login)
 
 To log in as the admin(aka shop owner), use:
-> **username:** teddy
-> **password:** burgers
-
-To log in as the manager, use:
-> **username:** jimmy
-> **password:** pasta
+> **username:** teddy <br> **password:** abcdefghijk
 
 
 # UI/UX

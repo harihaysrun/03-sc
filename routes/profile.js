@@ -66,6 +66,7 @@ router.get('/update', checkIfAuthenticated, async function(req,res){
     updateProfileForm.fields.first_name.value = user.get('first_name');
     updateProfileForm.fields.last_name.value = user.get('last_name');
     updateProfileForm.fields.password.value = user.get('password');
+    updateProfileForm.fields.confirm_password.value = user.get('password');
 
 
     if(req.session.user.role === 1){
@@ -111,7 +112,8 @@ router.post('/update', checkIfAuthenticated, async function(req,res){
         },
         'error':function(form){
             res.render('users/profile-update',{
-                'form':form.toHTML(bootstrapField)
+                'form':form.toHTML(bootstrapField),
+                'admin':true
             })
         }
     })
