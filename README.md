@@ -1,10 +1,10 @@
 # Sunny Central
 
-As a frequent user of parcel forwarders pre-covid(when shipping costs were not as high and overseas shipping options were not as limited), I found the whole process of purchasing products via that method a hassle. If the shop accepts international cards, I would be able able to purchase it myself. However, some retailers (like Ulta) which are country-specific, do not, so I would have to engage a middle man. More often than not, I thought to myself how nice it would be to have a retailer selling various exclusive products in one place.
+As a frequent user of parcel forwarders pre-covid(when shipping costs were not as high and overseas shipping options were not as limited), I found the whole process of purchasing products via that method a hassle. If the shop accepts international cards, I would be able able to purchase it myself. However, some retailers (like Ulta, Mecca) which are country-specific, do not, so I would have to engage a middle man. More often than not, I thought to myself how nice it would be to have a retailer selling various exclusive products in one place.
 
 As with project 2, skincare is a big passion of mine. Having followed lots of up-and-coming skincare brands on social media, I'm always envious of the people who live in those countries because they'll be able to purchase those products as soon as they land in stores. In Singapore(and everywhere else), we'll to have to play the waiting game and see if any major retailers decide to bring them in locally.
 
-And with that in mind, I have came up with Sunny Central, a third-party retailer who brings in exclusive and not-as-accessible SPF products from all over the world to local customers.
+And with that in mind, I have came up with Sunny Central, a third-party retailer who brings in exclusive and not-so-accessible SPF products from all over the world to local customers.
 
 **As the shop owner, I want to:**
 - make new sunscreen options accessible to everyone
@@ -19,13 +19,11 @@ Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.heroku
 
 To log in as the admin(aka shop owner), use:
 > **username:** teddy
-
-> **password** burgers
+> **password:** burgers
 
 To log in as the manager, use:
 > **username:** jimmy
-
-> **password** pasta
+> **password:** pasta
 
 
 # UI/UX
@@ -43,14 +41,15 @@ Admins are allowed to add new brands and countries if the website catalog expand
 The font used is [DM Sans](https://fonts.google.com/specimen/DM+Sans). It is a visually fun typeface.
 
 # Features
-## Major features & algorithsm
+## Major features & algorithm
 1. CRUD on products – edit product information and update stock.
-2. Search products by name, brand, or status.
-3. Search customers by username or email. Able to remove customer.
-4. Update order information like status of order and tracking URL, which will be reflected on the Vue front end of the user's profile page.
-5. Search orders by Order ID or shipping status.
-6. Mark enquiries as read and search them by reason (easier for the person managing that e.g Product Request, Order cancellation, etc.)
-7. Admin: Add and remove employees
+2. Product stock will be automatically updated/deducted upon every successful checkout from the front end shop.
+3. Search products by name, brand, or status.
+4. Search customers by username or email. Able to remove customer.
+5. Update order information like status of order and tracking URL, which will be reflected on the Vue front end of the user's profile page.
+6. Search orders by Order ID or shipping status.
+7. Mark enquiries as read and search them by reason (easier for the person managing that e.g Product Request, Order cancellation, etc.)
+8. Admin: Add and remove employees
 
 # Technologies Used
 1. Figma – used to create wireframes
@@ -75,19 +74,19 @@ The font used is [DM Sans](https://fonts.google.com/specimen/DM+Sans). It is a v
 ## Log in
 | Description | Expected Results |
 | ----------- | ---------------- |
-| Fill in the username & password fields and click log in | If user is not found in database, an error message will appear <br><br> If user is found, the badge next to the username at the top right will reflect the Admin or Manager role |
+| Fill in the username & password fields and click log in | If user is not found in database, an error message will appear <br><br> If user is found, you will directed to the dashboard. The badge next to the username at the top right will reflect the Admin or Manager role |
 
 ## Adding a product
 | Description | Expected Results |
 | ----------- | ---------------- |
 | Go to the products page either by clicking the Products tab on the sidebar or Projects badge on the Dashboard | You will see all the sunscreens |
 | Click on "Add new sunscreen" | The upload form will be displayed |
-| Fill in all fields | If any error or fields is left empty, the appropriate validation messages will appear |
+| Fill in all fields | If there are any errors or fields are left empty, the appropriate validation messages will appear |
 | Once done, click on "Add product" | If there are no errors, product will be added to the database and the page will be redirected to the products page |
 
 ## Adding,Editing & Removing Brands and Countries
 
-To expand the website catalog (& to ease the search process) you'll have manually add the new brand & country it's imported from. 
+To expand the website catalog (& to ease the search process) you'll have to manually add the new brand & country it's imported from. 
 
 | Description | Expected Results |
 | ----------- | ---------------- |
@@ -148,4 +147,5 @@ To expand the website catalog (& to ease the search process) you'll have manuall
 # Credits
 1. [Fontawesome](https://fontawesome.com/)
 2. [Bookshelf documentation](https://bookshelfjs.org/index.html)
-3. [Stack Overflow](https://stackoverflow.com/)
+3. [Stripe API documentation](https://stripe.com/docs/api)
+4. [Stack Overflow](https://stackoverflow.com/)
