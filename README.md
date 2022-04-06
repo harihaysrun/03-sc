@@ -1,23 +1,34 @@
 # Sunny Central
 
-As a frequent user of parcel forwarders pre-covid(when shipping costs were not as high and overseas shipping options were not as limited), I found the whole process of purchasing products via that method a hassle. If the shop accepts international cards, I would be able able to purchase it myself. However, some retailers (like Ulta, Mecca) which are country-specific, do not, so I would have to engage a middle man. More often than not, I thought to myself how nice it would be to have a retailer selling various exclusive products in one place.
+![overview](readme/backend-main.jpg)
 
-As with project 2, skincare is a big passion of mine. Having followed lots of up-and-coming skincare brands on social media, I'm always envious of the people who live in those countries because they'll be able to purchase those products as soon as they land in stores. In Singapore(and everywhere else), we'll to have to play the waiting game and see if any major retailers decide to bring them in locally.
+As a frequent user of parcel forwarders pre-covid(when shipping costs were not as high and overseas shipping options were not as limited), I found the whole process of purchasing products via that method a hassle. If the shop accepts international cards, I would be able able to purchase it myself. However, some retailers (like Ulta, Mecca) which are country-specific, do not, so I would have to engage a middle man. More often than not, I would think to myself how nice it would be to have a retailer selling various exclusive products in one place.
 
-And with that in mind, I have came up with Sunny Central, a third-party retailer who brings in exclusive and not-so-accessible SPF products from all over the world to local customers.
+As with project 2, skincare is a big passion of mine. Having followed lots of up-and-coming skincare brands on social media, I'm always envious of the people who live in those countries because they'll be able to purchase those products as soon as they land in stores. In Singapore(and everywhere else), we'll just have to wait and see if any major retailers decide to bring them in locally.
+
+And with that in mind, I have come up with Sunny Central, a third-party retailer who brings in exclusive and not-so-accessible SPF products from all over the world to local customers.
 
 **As the shop owner, I want to:**
 - make new sunscreen options accessible to everyone
-- build engagement with the customers by allowing them to send in requests of brands that are hard to get in SG
 - promote the importance of using sunscreens
+- engage with customers by allowing them to send in requests of brands that are hard to get in SG
 
-Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/login)
+**As the end user, I want to:**
+- easily shop new sunscreens
+
+Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/)
+And visit the Sunny Central store [here](https://gleeful-tanuki-c97887.netlify.app/)!
 
 To log in as the admin(aka shop owner), use:
 > **username:** teddy <br> **password:** abcdefghijk
 
+To log in as the manager, use:
+> **username:** jammm <br> **password:** 12345678
+
 
 # UI/UX
+
+![sitemap](readme/backend.jpg)
 
 As the admin, you have access to all pages and are able to add or remove employees.
 As the manager, you are able to view everything except the employees section.
@@ -27,9 +38,11 @@ The chosen colours are very self-explanatory – blue for the sky & sea and yell
 
 [Here's](https://www.figma.com/file/QsHGWWdaYlQrsi3Zb0LeO0/sunny-central?node-id=0%3A1) the wireframes for the back & front end. I wanted the admin portal to have a dashboard feel to it so I've included a sidebar on the left. On the dashboard, there will be a quick display of how many products, customers, orders and enquiries there are so you'll be able to know everything at a glance.
 
-Admins are allowed to add new brands and countries if the website catalog expands. Icons are used in most CTA buttons, to differentiate them froms other text (since tables can look a little cluttered). Information will be further collapsed once user is in mobile view.
+Both admin and manager are allowed to add new brands and countries if the website catalog expands.
 
-The font used is [DM Sans](https://fonts.google.com/specimen/DM+Sans). It is a visually fun typeface.
+Icons are used in most CTA buttons, to differentiate them from other text (since tables can look a little cluttered). Information will be further collapsed once user is in mobile view.
+
+The font used, [DM Sans](https://fonts.google.com/specimen/DM+Sans), is a visually fun typeface.
 
 # Features
 ## Major features & algorithm
