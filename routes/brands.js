@@ -10,7 +10,7 @@ const { checkIfAuthenticated } = require('../middlewares');
 router.get('/', checkIfAuthenticated, async function(req,res){
 
     const allBrands = await brandDataLayer.getAllBrands();
-    console.log(allBrands)
+    // console.log(allBrands)
 
     if(req.session.user.role === 1){
         res.render('brands/index',{

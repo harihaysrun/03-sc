@@ -136,6 +136,36 @@ const createRegistrationForm = function(roles) {
     })
 }
 
+const updateRegistrationForm = function() {
+    return forms.create({
+        'username': fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'email': fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'first_name': fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'last_name': fields.string({
+            required: true,
+            errorAfterField: true,
+        }),
+        'password': fields.password({
+            required: true,
+            errorAfterField: true
+        }),
+        'confirm_password': fields.password({
+            required: true,
+            errorAfterField: true,
+            validators: [validators.matchField('password')]
+        })
+    })
+}
+
 const createLoginForm = function() {
     return forms.create({
         'username': fields.string({
@@ -267,4 +297,4 @@ const createEnquirySearchForm = function(reason, status){
     })
 }
 
-module.exports = {bootstrapField, createProductForm, createRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createUpdateForm, createEnquirySearchForm };
+module.exports = {bootstrapField, createProductForm, createRegistrationForm, updateRegistrationForm, createLoginForm, createSearchForm, createCustomerSearchForm, createOrderSearchForm, createBrandForm, createCountryForm, createUpdateForm, createEnquirySearchForm };

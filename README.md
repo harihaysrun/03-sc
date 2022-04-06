@@ -13,10 +13,8 @@ And with that in mind, I have come up with Sunny Central, a third-party retailer
 - promote the importance of using sunscreens
 - engage with customers by allowing them to send in requests of brands that are hard to get in SG
 
-**As the end user, I want to:**
-- easily shop new sunscreens
-
 Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/)
+
 And visit the Sunny Central store [here](https://gleeful-tanuki-c97887.netlify.app/)!
 
 To log in as the admin(aka shop owner), use:
@@ -31,10 +29,10 @@ To log in as the manager, use:
 ![sitemap](readme/backend.jpg)
 
 As the admin, you have access to all pages and are able to add or remove employees.
-As the manager, you are able to view everything except the employees section.
+As the manager, you are able to view everything except the employees page.
 The employees icon/tab will appear depending on the role you signed in as.
 
-The chosen colours are very self-explanatory – blue for the sky & sea and yellow for the sun.
+The chosen colours are very self-explanatory – blue for the sky & sea, yellow for the sun and black to neutralise the bright colours.
 
 [Here's](https://www.figma.com/file/QsHGWWdaYlQrsi3Zb0LeO0/sunny-central?node-id=0%3A1) the wireframes for the back & front end. I wanted the admin portal to have a dashboard feel to it so I've included a sidebar on the left. On the dashboard, there will be a quick display of how many products, customers, orders and enquiries there are so you'll be able to know everything at a glance.
 
@@ -52,7 +50,7 @@ The font used, [DM Sans](https://fonts.google.com/specimen/DM+Sans), is a visual
 4. Search customers by username or email. Able to remove customer.
 5. Update order information like status of order and tracking URL, which will be reflected on the Vue front end of the user's profile page.
 6. Search orders by Order ID or shipping status.
-7. Mark enquiries as read and search them by reason (easier for the person managing that e.g Product Request, Order cancellation, etc.)
+7. Mark enquiries as read and search them by reason (easier for the person managing a certain topic e.g Product Request, Order cancellation, etc.)
 8. Admin: Add and remove employees
 
 # Technologies Used
@@ -63,8 +61,8 @@ The font used, [DM Sans](https://fonts.google.com/specimen/DM+Sans), is a visual
     - bookshelf ORM
     - caolan forms
     - Stripe
-    - webtokens
-    - webhooks
+    - JWT webtokens
+    - CSRF token
 5. Heroku – used to host the back end
 
 # Use & Test Cases:
@@ -103,14 +101,14 @@ To expand the website catalog (& to ease the search process) you'll have to manu
 ## Editing a product info
 | Description | Expected Results |
 | ----------- | ---------------- |
-| Use the search form to find the product | The name search is case sensitive, so make sure to capitilise the first letter of every word |
+| Use the search form to find the product | The name search is not case sensitive. The relevant product(s) will appear upon clicking Search |
 | Click on the Edit button | Form with all the information stored will be displayed |
-| When editing the fields, make sure to update if there's enough stock or out of stock so user will/will not be able to add products to cart. Once done, click "Update Product Info" | If there are no errors, product will be added to the database and the page will be redirected to the products page |
+| When editing the fields, make sure to update if there's enough stock or out of stock so user will/will not be able to add products to cart. Once done, click "Update Product Info" | If there are no errors, changes will be reflected on the database and the page will be redirected to the products page |
 
 ## Deleting a product
 | Description | Expected Results |
 | ----------- | ---------------- |
-| Use the search form to find the product | The name search is case sensitive, so make sure to capitilise the first letter of every word |
+| Use the search form to find the product | The name search is not case sensitive. The relevant product(s) will appear upon clicking Search |
 | Click on "Delete" for the product in the table you want to remove | You will be directed to a page that asks you if you want to remove it |
 | Click Yes or No | If you click Yes, product will be removed from database. If No, you will be directed back to the main products page |
 
@@ -126,9 +124,9 @@ To expand the website catalog (& to ease the search process) you'll have to manu
 | Description | Expected Results |
 | ----------- | ---------------- |
 | Go to the Enquiries page either by clicking the Enquiries tab on the sidebar or Enquiries badge on the Dashboard | You will see all the enquiries from newest to oldest |
-| Filter through the list by using the search form. (Useful for carse where for e.g person A is in charge of order enquiries, person B is in charge of general enquiries) | Enquiries that fall under that reason will be shown.|
+| Filter through the list by using the search form. (Useful for cases where for e.g person A is in charge of order enquiries, person B is in charge of general enquiries) | Enquiries that fall under that reason will be shown.|
 | Click on the "+" icon to view full message | Message will appear underneath the table row |
-| Employee to reply the person via email. Mark "Replied" once done | You will be asked if you if you want to mark it as replied. If yes, enquiry will be moved to the replied enquiries database. |
+| Employee to reply the person via email. Mark "Replied" once done | You will be asked if you want to mark it as replied. If yes, enquiry will be moved to the replied enquiries table in the database. |
 | To view past enquiries that have been replied, click on the "Replied" tab | You will see a list of replied enquiries. |
 
 ## [ADMINS ONLY] Adding a newcomer
@@ -145,8 +143,20 @@ To expand the website catalog (& to ease the search process) you'll have to manu
 | Click on Remove | You will be directed to a page that asks if you want to remove the user |
 | Click Yes or No | If you click Yes, employee will removed from database. If No, you will be directed back to the main employees page |
 
+# Deployment
 
-# This site has been tested on:
+The Sunny Central admin portal(backend database) is being hosted on Heroku. Before deployment, MySQL was the database used in Gitpod. However, having to move to Heroku, it uses Postgres so in order to deploy, all environment variables like token secret and database information from the existing .env file had to be moved under Heroku's 'Config Vars' in the project's settings.
+
+In order for Heroku to build and push updates on the end site, I have to make sure that I'm logged in to my Heroku account in the terminal. After doing so, commit the changes to both the git repo and heroku by using **git push** followed by **git push heroku main**. It takes a while for the build to process.
+
+## This project has been tested on:
+| MacOS | Windows 10 | Other devices |
+| ----- | ---------- | ------------- |
+| Google Chrome | Google Chrome | iPhone 12 Mini (iOS 15) |
+| Safari | | Samsung Galaxy A22 ||
+| Microsoft Edge | | 11" iPad Pro 2018 |
+| Mozilla Firefox | | |
+
 
 # Credits
 1. [Fontawesome](https://fontawesome.com/)

@@ -7,10 +7,11 @@
     <ul>
         <li>Name: {{profile.first_name}} {{profile.last_name}}</li>
         <li>Email: {{profile.email}}</li>
+        <li>Role: {{profile.role.name}}</li>
     </ul>
 
     <a href="/profile/update" class="btn btn-primary">Edit Profile</a>
-    <a href="/logout" class="btn btn-danger">Log out</a>
+    <a href="/logout" class="btn btn-danger mt-3 mt-md-0">Log out</a>
 
 {{/block}}
 

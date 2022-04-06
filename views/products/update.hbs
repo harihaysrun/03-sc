@@ -59,7 +59,7 @@
         const myWidget = cloudinary.createUploadWidget(cloudinaryConfig, function(error,result){
             
             if (!error && result && result.event == 'success'){
-                console.log(result)
+                // console.log(result)
                 let url = result.info.secure_url;
                 
                 document.getElementById("id_image_url").value = url;

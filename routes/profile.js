@@ -9,7 +9,7 @@ const orderDataLayer = require('../dal/orders');
 const enquiryDataLayer = require('../dal/enquiries');
 
 const { User, Employee } = require('../models');
-const {bootstrapField, createRegistrationForm } = require('../forms');
+const {bootstrapField, createRegistrationForm, updateRegistrationForm } = require('../forms');
 const { checkIfAuthenticated } = require('../middlewares');
 
 
@@ -25,7 +25,8 @@ router.get('/', checkIfAuthenticated, async function(req, res) {
         const user = await Employee.where({
             'id': req.session.user.id
         }).fetch({
-            require: true
+            require: true,
+            withRelated: ['role']
         })
 
         if(req.session.user.role === 1){
@@ -56,25 +57,35 @@ router.get('/update', checkIfAuthenticated, async function(req,res){
         require:true,
     });
     
-    const allRoles = await userDataLayer.getAllRoles();
-
-    const updateProfileForm = createRegistrationForm(allRoles);
-
-    updateProfileForm.fields.role_id.value = user.get('role_id');
-    updateProfileForm.fields.username.value = user.get('username');
-    updateProfileForm.fields.email.value = user.get('email');
-    updateProfileForm.fields.first_name.value = user.get('first_name');
-    updateProfileForm.fields.last_name.value = user.get('last_name');
-    updateProfileForm.fields.password.value = user.get('password');
-    updateProfileForm.fields.confirm_password.value = user.get('password');
-
-
     if(req.session.user.role === 1){
+
+        const allRoles = await userDataLayer.getAllRoles();
+
+        const updateProfileForm = createRegistrationForm(allRoles);
+
+        updateProfileForm.fields.role_id.value = user.get('role_id');
+        updateProfileForm.fields.username.value = user.get('username');
+        updateProfileForm.fields.email.value = user.get('email');
+        updateProfileForm.fields.first_name.value = user.get('first_name');
+        updateProfileForm.fields.last_name.value = user.get('last_name');
+        updateProfileForm.fields.password.value = user.get('password');
+        updateProfileForm.fields.confirm_password.value = user.get('password');
+
         res.render('users/profile-update', {
             'form': updateProfileForm.toHTML(bootstrapField),
             'admin':true
         })
     } else{
+
+        const updateProfileForm = updateRegistrationForm();
+
+        updateProfileForm.fields.username.value = user.get('username');
+        updateProfileForm.fields.email.value = user.get('email');
+        updateProfileForm.fields.first_name.value = user.get('first_name');
+        updateProfileForm.fields.last_name.value = user.get('last_name');
+        updateProfileForm.fields.password.value = user.get('password');
+        updateProfileForm.fields.confirm_password.value = user.get('password');
+
         res.render('users/profile-update', {
             'form': updateProfileForm.toHTML(bootstrapField),
         })
@@ -92,31 +103,56 @@ router.post('/update', checkIfAuthenticated, async function(req,res){
         require:true,
     });
     
-    const allRoles = await userDataLayer.getAllRoles();
+    if(req.session.user.role === 1){
+        const allRoles = await userDataLayer.getAllRoles();
 
-    const registerForm = createRegistrationForm(allRoles);
+        const registerForm = createRegistrationForm(allRoles);
 
-    registerForm.handle(req,{
-        'success':async function(form){
-            user.set('role_id', form.data.role_id);
-            user.set('username', form.data.username);
-            user.set('email', form.data.email);
-            user.set('first_name', form.data.first_name);
-            user.set('last_name', form.data.last_name);
-            user.set('password',  getHashedPassword(form.data.password));
-            user.save();
+        registerForm.handle(req,{
+            'success':async function(form){
+                user.set('role_id', form.data.role_id);
+                user.set('username', form.data.username);
+                user.set('email', form.data.email);
+                user.set('first_name', form.data.first_name);
+                user.set('last_name', form.data.last_name);
+                user.set('password',  getHashedPassword(form.data.password));
+                user.save();
 
-            req.flash("success_messages", "Your profile has been successfully edited");
+                req.flash("success_messages", "Your profile has been successfully edited");
 
-            res.redirect('/profile');
-        },
-        'error':function(form){
-            res.render('users/profile-update',{
-                'form':form.toHTML(bootstrapField),
-                'admin':true
-            })
-        }
-    })
+                res.redirect('/profile');
+            },
+            'error':function(form){
+                res.render('users/profile-update',{
+                    'form':form.toHTML(bootstrapField),
+                    'admin':true
+                })
+            }
+        })
+    } else {
+        const updateProfileForm = updateRegistrationForm();
+
+        updateProfileForm.handle(req,{
+            'success':async function(form){
+                user.set('username', form.data.username);
+                user.set('email', form.data.email);
+                user.set('first_name', form.data.first_name);
+                user.set('last_name', form.data.last_name);
+                user.set('password',  getHashedPassword(form.data.password));
+                user.save();
+
+                req.flash("success_messages", "Your profile has been successfully edited");
+
+                res.redirect('/profile');
+            },
+            'error':function(form){
+                res.render('users/profile-update',{
+                    'form':form.toHTML(bootstrapField),
+                })
+            }
+        })
+
+    }
     
 });
 

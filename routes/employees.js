@@ -58,7 +58,7 @@ router.get('/', checkIfAuthenticatedAdmin, async function(req,res){
     
     const allEmployees = await userDataLayer.getAllEmployees();
 
-    // console.log(allEmployees)
+    // // console.log(allEmployees)
     res.render('users/employees',{
         'employees': allEmployees.toJSON(),
         'admin': true

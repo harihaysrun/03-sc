@@ -37,7 +37,7 @@ router.post('/', async function (req,res){
         }
         
         lineItems.push(lineItem)
-        console.log(lineItem.amount)
+        // console.log(lineItem.amount)
 
         meta.push({
             'user_id': userId,
@@ -100,7 +100,7 @@ router.post('/success/:sessionId', async function(req,res){
     // let orderId = req.body.order_id;
     // const userOrders = await orderDataLayer.getUserOrder(orderId);
 
-    // console.log(userOrders.get('items'), userOrders.get('amount'));
+    // // console.log(userOrders.get('items'), userOrders.get('amount'));
     // if (userOrders){
 
         // localStorage.setItem("order_viewed", "");
@@ -117,8 +117,8 @@ router.post('/success/:sessionId', async function(req,res){
             //     let productQuantity = product.get('stock_no');
             //     let updatedStock = productQuantity - orderQuantity;
 
-            //     console.log(productId, updatedStock)
-            //     // console.log(orderQuantity, productQuantity, updatedStock)
+            //     // console.log(productId, updatedStock)
+            //     // // console.log(orderQuantity, productQuantity, updatedStock)
             //     await cart.updateStockNo(productId, updatedStock)
 
             //     // empty user cart
@@ -164,12 +164,12 @@ router.post('/process_payment', express.raw({
     //     res.send({
     //         'error': e.message
     //     })
-    //     console.log(e)
+    //     // console.log(e)
     // }
     if (event.type == 'checkout.session.completed'){
         
         let stripeSession = event.data.object;
-        console.log(stripeSession)
+        // console.log(stripeSession)
         let orders = JSON.parse(stripeSession.metadata.orders);
         let amountTotal = stripeSession.amount_total / 100;
         let paymentStatus = stripeSession.payment_status;

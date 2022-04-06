@@ -32,7 +32,7 @@ router.get('/', async function (req,res){
         }
         
         lineItems.push(lineItem)
-        console.log(lineItem.amount)
+        // console.log(lineItem.amount)
 
         meta.push({
             'user_id': req.session.user.id,
@@ -67,10 +67,10 @@ router.get('/success/:sessionId', async function(req,res){
 
     let cart = new CartServices(req.session.user.id);
 
-    // console.log('req.session.user.id: ' + req.session.user.id)
+    // // console.log('req.session.user.id: ' + req.session.user.id)
 
     const userOrders = await orderDataLayer.getUserOrder(req.session.user.id);
-    // console.log(userOrders.get('items'), userOrders.get('amount'));
+    // // console.log(userOrders.get('items'), userOrders.get('amount'));
     let orders = JSON.parse(userOrders.get('items'));
     let productId;
     for (let o of orders){
@@ -82,8 +82,8 @@ router.get('/success/:sessionId', async function(req,res){
         let productQuantity = product.get('stock_no');
         let updatedStock = productQuantity - orderQuantity;
 
-        console.log(productId, updatedStock)
-        // console.log(orderQuantity, productQuantity, updatedStock)
+        // console.log(productId, updatedStock)
+        // // console.log(orderQuantity, productQuantity, updatedStock)
         await cart.updateStockNo(productId, updatedStock)
 
         // empty user cart
@@ -92,7 +92,7 @@ router.get('/success/:sessionId', async function(req,res){
 
     }
 
-    // console.log(productId)
+    // // console.log(productId)
 
 
     res.render('checkout/success',{
@@ -115,18 +115,18 @@ router.post('/process_payment', express.raw({
 
     try {
         event = Stripe.webhooks.constructEvent(payLoad, signHeader, endpoint)
-        // console.log(event)
+        // // console.log(event)
         // if no error, event should contain details of payment
     } catch(e){
         res.send({
             'error': e.message
         })
-        console.log(e)
+        // console.log(e)
     }
     if (event.type == 'checkout.session.completed'){
         
         let stripeSession = event.data.object;
-        console.log(stripeSession)
+        // console.log(stripeSession)
         let orders = JSON.parse(stripeSession.metadata.orders);
         let amountTotal = stripeSession.amount_total / 100;
         let paymentStatus = stripeSession.payment_status;

@@ -68,10 +68,10 @@ router.get('/', checkIfAuthenticated, async function(req,res){
                     }
     
                     uppercaseName = newWords.join(" ")
-                    console.log(uppercaseName)
+                    // console.log(uppercaseName)
                     } else {
                     uppercaseName = form.data.name[0].toUpperCase() + form.data.name.substring(1);
-                    console.log(uppercaseName)
+                    // console.log(uppercaseName)
                 }
                     
                 query.where('name', 'like', '%' + uppercaseName + '%')
@@ -202,7 +202,7 @@ router.post('/create', checkIfAuthenticated, async function(req,res){
             newProduct.set('image_url', form.data.image_url);
             await newProduct.save();
 
-            // console.log(form.data.skin_types)
+            // // console.log(form.data.skin_types)
             
             if (form.data.skin_types) {
                 let selectedSkinTypes = form.data.skin_types.split(',');
@@ -330,7 +330,7 @@ router.post('/:product_id/update', checkIfAuthenticated, async function(req,res)
                 return skinTypeIds.includes(id) === false;
             });
             
-            // console.log("toremove=", toRemove);
+            // // console.log("toremove=", toRemove);
 
             await product.skinTypes().detach(toRemove);
             await product.skinTypes().attach(skinTypeIds)
