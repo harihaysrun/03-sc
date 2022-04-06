@@ -13,9 +13,7 @@ And with that in mind, I have come up with Sunny Central, a third-party retailer
 - promote the importance of using sunscreens
 - engage with customers by allowing them to send in requests of brands that are hard to get in SG
 
-Take a peak at the admin portal: [Sunny Central](https://nsy-03-sunscreen.herokuapp.com/)
-
-And visit the Sunny Central store [here](https://gleeful-tanuki-c97887.netlify.app/)!
+Take a peak at the admin portal [here](https://nsy-03-sunscreen.herokuapp.com/) and visit the Sunny Central store [here](https://gleeful-tanuki-c97887.netlify.app/)!
 
 To log in as the admin(aka shop owner), use:
 > **username:** teddy <br> **password:** abcdefghijk
